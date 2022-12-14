@@ -1,0 +1,52 @@
+.landingHeaderContainer {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+}
+
+    .landingLogoContainer {
+        height: 100%;
+        width: 15%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+        .landingLogoText {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+    .landingNavContainer {
+        height: 100%;
+        width: 15%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .landingNav {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .landingNavText {
+                cursor: pointer;
+                font-size: 18px;
+                transition: 0.1s linear;
+            }
+
+            .landingNavText:hover {
+                color: #008cff;
+                transition: 0.1s linear;
+            }
