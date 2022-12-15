@@ -5,7 +5,6 @@ import './LandingFooter.css'
 function LandingFooter() {
     return (
         <div className="landingFooterContainer">
-
         </div>
     )
 }
