@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import './LandingBody.css'
+
+import pic from './Images/ppl.png'
 
 function LandingBody() {
     function snowflakes() {
         let canvas = document.getElementById("snowfallBackground")
         let ctx = canvas.getContext("2d")
 
-        canvas.width = '800'
-        canvas.height = '800'
+        canvas.width = '1200'
+        canvas.height = '1200'
 
         // Define the wind direction and strength
         let wind = {
@@ -77,10 +79,28 @@ function LandingBody() {
         animate()
     }
 
+    // load on every refresh
+    useEffect(() => {
+        snowflakes()
+    }, [])
+
     return (
+        <React.Fragment>
+        <canvas id="snowfallBackground"></canvas>
         <div className="landingBodyContainer">
-            <canvas id="snowfallBackground" onClick={snowflakes}></canvas>
+            <div className="leftLandingBodyContainer">
+                <div className="leftLandingBodyImgContainer">
+                    <img className="leftLandingBodyImg" src={pic}></img>
+                </div>
+            </div>
+            <div className="rightLandingBodyContainer">
+                <div className="rightLandingBodyIntroContainer">
+                    <p className="rightLandingBodyIntroText">The Leading Social Platform.</p>
+                    <button className="rightLandingBodyIntroButton">Join Now</button>
+                </div>
+            </div>
         </div>
+        </React.Fragment>
     )
 }
 
