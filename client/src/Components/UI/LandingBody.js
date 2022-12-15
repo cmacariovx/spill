@@ -90,7 +90,7 @@ function LandingBody() {
         <div className="landingBodyContainer">
             <div className="leftLandingBodyContainer">
                 <div className="leftLandingBodyImgContainer">
-                    <img className="leftLandingBodyImg" src={pic}></img>
+                    <img className="leftLandingBodyImg" src={pic} alt=""></img>
                 </div>
             </div>
             <div className="rightLandingBodyContainer">
