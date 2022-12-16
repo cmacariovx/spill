@@ -22,6 +22,8 @@ function HomeMainBody() {
 
                 <div className="homeFeedContainer">
                     <HomePostCard />
+                    <HomePostCard />
+                    <HomePostCard />
                 </div>
 
                 <div className="paginationContainer">
