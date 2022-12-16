@@ -5,9 +5,8 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    border-radius: 10px;
-    background-color: #121212;
     padding: 30px;
+    border-bottom: 1px solid white;
 }
 
     .postCardUserContainer {
