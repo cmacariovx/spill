@@ -38,7 +38,7 @@ function LandingBody() {
 
             // If the snowflake has moved off the canvas, reset its position
             if (this.y > canvas.height) {
-                this.y = 0;
+                this.y = 0
             }
             if (this.x > canvas.height) {
                 this.x = 0
