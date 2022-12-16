@@ -1,5 +1,7 @@
 import React from "react";
 
+import HomePostCard from './HomePostCard'
+
 import './HomeMainBody.css'
 
 import personal from './Images/personal.jpg'
@@ -17,9 +19,11 @@ function HomeMainBody() {
                     </div>
                     <button className="postStatusButton">Post</button>
                 </div>
-                <div className="homeFeedContainer">
 
+                <div className="homeFeedContainer">
+                    <HomePostCard />
                 </div>
+
                 <div className="paginationContainer">
 
                 </div>
