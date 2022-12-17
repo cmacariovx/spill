@@ -33,7 +33,7 @@ function HomeMainBody() {
             <div className="homeMainBodyRight">
                 <div className="profileContainer">
                     <p className="profileUsername">@cmacariovv</p>
-                    <img src={personal} className="profileImg" />
+                    <img src={personal} className="profileImg" alt=""/>
                 </div>
                 <div className="searchContainer">
                     <input className="searchInput" placeholder="Find a User"></input>
@@ -43,7 +43,7 @@ function HomeMainBody() {
                         <p className="topCreatorsTitleText">Top Creators</p>
                     </div>
                     <div className="topCreatorsListContainer">
-                        
+
                     </div>
                 </div>
             </div>
