@@ -35,11 +35,16 @@ function HomeMainBody() {
                     <p className="profileUsername">@cmacariovv</p>
                     <img src={personal} className="profileImg" />
                 </div>
-                <div className="recommendedPostsContainer">
-
+                <div className="searchContainer">
+                    <input className="searchInput" placeholder="Find a User"></input>
                 </div>
-                <div className="recommendedCreatorsContainer">
-
+                <div className="topCreatorsContainer">
+                    <div className="topCreatorsTitleContainer">
+                        <p className="topCreatorsTitleText">Top Creators</p>
+                    </div>
+                    <div className="topCreatorsListContainer">
+                        
+                    </div>
                 </div>
             </div>
         </div>

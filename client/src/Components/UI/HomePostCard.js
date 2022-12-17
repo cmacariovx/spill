@@ -9,13 +9,13 @@ function HomePostCard() {
         <div className="homePostCardContainer">
             <div className="postCardUserContainer">
                 <p className="postCardUsername">@cmacariovv</p>
-                <img className="postCardUserPic" src={personal} />
+                <img className="postCardUserPic" src={personal} alt=""/>
             </div>
             <div className="postCardBodyContainer">
                 <p className="postMainText">Who's ready for Argentina vs. France?</p>
             </div>
             <div className="postCardInteractContainer">
-                <i class="fa-regular fa-thumbs-up"></i>
+                <i className="fa-regular fa-thumbs-up"></i>
                 <p className="likeCount">577</p>
             </div>
         </div>
