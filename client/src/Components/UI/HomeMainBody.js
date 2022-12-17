@@ -1,6 +1,7 @@
 import React from "react";
 
 import HomePostCard from './HomePostCard'
+import TopCreatorContainer from "./TopCreatorContainer";
 
 import './HomeMainBody.css'
 
@@ -43,7 +44,7 @@ function HomeMainBody() {
                         <p className="topCreatorsTitleText">Top Creators</p>
                     </div>
                     <div className="topCreatorsListContainer">
-
+                        <TopCreatorContainer />
                     </div>
                 </div>
             </div>

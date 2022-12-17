@@ -1,0 +1,49 @@
+.topCreatorContainer {
+    height: 18%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgb(24, 24, 24);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+    .topCreatorPositionContainer {
+        height: 40%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+        .topCreatorPositionText {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+    .topCreatorUserContainer {
+        height: 60%;
+        width: 65%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .topCreatorPic {
+            height: 30px;
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .topCreatorUserText {
+            font-size: 14px;
+            font-weight: bold;
+        }
