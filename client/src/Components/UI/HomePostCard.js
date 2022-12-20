@@ -4,9 +4,9 @@ import './HomePostCard.css'
 
 import personal from './Images/personal.jpg'
 
-function HomePostCard() {
+function HomePostCard(props) {
     return (
-        <div className="homePostCardContainer">
+        <div className="homePostCardContainer" onClick={props.onShowCard}>
             <div className="postCardUserContainer">
                 <p className="postCardUsername">@cmacariovv</p>
                 <img className="postCardUserPic" src={personal} alt=""/>

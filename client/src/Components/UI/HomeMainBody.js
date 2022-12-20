@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
+import HomeDetailedPostCard from "./HomeDetailedPostCard";
 
 import './HomeMainBody.css'
 
 import personal from './Images/personal.jpg'
 
 function HomeMainBody() {
+    let [cardClick, setCardClick] = useState(false)
+
+    function detailedCard() {
+        setCardClick(true)
+    }
+
     return (
         <div className="homeMainBodyContainer">
             <div className="homeMainBodyLeft">
@@ -22,7 +29,8 @@ function HomeMainBody() {
                 </div>
 
                 <div className="homeFeedContainer">
-                    <HomePostCard />
+                    {cardClick && <HomeDetailedPostCard />}
+                    <HomePostCard onShowCard={detailedCard}/>
                     <HomePostCard />
                     <HomePostCard />
                 </div>
