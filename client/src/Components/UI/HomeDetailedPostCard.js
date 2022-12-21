@@ -12,7 +12,7 @@ function HomeDetailedPostCard() {
             <div className="homeDetailedLeftBody">
                 <div className="homeDetailedProfileContainer">
                     <img src={profilePicDetailed} className="homeDetailedProfilePic"></img>
-                    <p className="homeDetailedProfileUsername">@cmacariovv</p>
+                    <p className="homeDetailedProfileUsername">@cmacariovx</p>
                 </div>
                 <div className="homeDetailedPostContainer">
                     <p className="homeDetailedPostText">Who's ready for Argentina vs. France?</p>

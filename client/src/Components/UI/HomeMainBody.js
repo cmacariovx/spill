@@ -41,7 +41,7 @@ function HomeMainBody() {
             </div>
             <div className="homeMainBodyRight">
                 <div className="profileContainer">
-                    <p className="profileUsername">@cmacariovv</p>
+                    <p className="profileUsername">@cmacariovx</p>
                     <img src={personal} className="profileImg" alt=""/>
                 </div>
                 <div className="searchContainer">

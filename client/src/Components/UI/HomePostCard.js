@@ -8,7 +8,7 @@ function HomePostCard(props) {
     return (
         <div className="homePostCardContainer" onClick={props.onShowCard}>
             <div className="postCardUserContainer">
-                <p className="postCardUsername">@cmacariovv</p>
+                <p className="postCardUsername">@cmacariovx</p>
                 <img className="postCardUserPic" src={personal} alt=""/>
             </div>
             <div className="postCardBodyContainer">
