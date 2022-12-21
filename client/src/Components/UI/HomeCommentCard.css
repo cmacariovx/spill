@@ -1,0 +1,48 @@
+.homeCommentCardContainer {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.233);
+    padding: 5px 0;
+}
+
+    .homeCommentProfileContainer {
+        height: 30%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+        .homeCommentProfilePic {
+            height: 20px;
+            width: auto;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-right: 5px;
+        }
+
+        .homeCommentUsername {
+            font-size: 12px;
+        }
+
+
+    .homeCommentBodyContainer {
+        height: 70%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+        .homeCommentBodyText {
+            font-size: 12px;
+        }

@@ -88,4 +88,38 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        border-left: 1px solid rgba(255, 255, 255, 0.274);
+        padding-left: 30px;
     }
+
+        .homeDetailedCloseButtonContainer {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .homeDetailedCommentsTitle {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .fa-xmark {
+                font-size: 26px;
+                cursor: pointer;
+                transition: linear 0.1s
+            }
+
+            .fa-xmark:hover {
+                color:rgba(102, 189, 255, 1);
+                transition: linear 0.1s
+            }
+
+        .homeDetailedCommentsFeedContainer {
+            height: 70%;
+            width: 100%;
+            overflow-y: scroll;
+            padding-right: 15px;
+        }
