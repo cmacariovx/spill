@@ -33,7 +33,10 @@ function HomeDetailedPostCard() {
                     <HomeCommentCard />
                     <HomeCommentCard />
                 </div>
-                <div className="homeDetailedCommentInputContainer"></div>
+                <div className="homeDetailedCommentsInputContainer">
+                    <input className="homeDetailedCommentsInput" placeholder="Add a Comment"></input>
+                    <i class="fa-regular fa-paper-plane homeDetailedPostCommentButton"></i>
+                </div>
             </div>
         </div>
     )

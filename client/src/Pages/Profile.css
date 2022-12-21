@@ -1,0 +1,167 @@
+.profilePageContainer {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(12, 12, 12);
+}
+
+    .mainProfileBodyContainer {
+        height: 100%;
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: rgb(24, 24, 24);
+        padding: 40px 100px;
+    }
+
+        .mainProfileBodyIntroContainer {
+            height: 20%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .mainProfileIntroPic {
+                height: 120px;
+                width: auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                border: solid 5px black;
+            }
+
+            .mainProfileIntroCredentialsContainer {
+                height: 30%;
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-left: 20px;
+            }
+
+                .mainProfileNameText {
+                    font-size: 22px;
+                    font-weight: bold;
+                }
+
+                .mainProfileUsernameText {
+                    font-size: 16px;
+                    opacity: 0.5;
+                }
+
+            .mainProfileIntroStatsContainer {
+                height: 25%;
+                width: 60%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-left: 60px;
+            }
+
+                .mainProfileFollowersContainer {
+                    height: 100%;
+                    width: 25%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .mainProfileFollowingContainer {
+                    height: 100%;
+                    width: 25%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .mainProfilePostsNumberContainer {
+                    height: 100%;
+                    width: 25%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .mainProfileStatTitle {
+                        font-size: 16px;
+                    }
+
+                    .mainProfileStatNumber {
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+
+        .mainProfileBodyFollowContainer {
+            height: 5%;
+            width: 30%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .followButton {
+                height: 45px;
+                width: 110px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(42, 42, 42);
+                border-radius: 5px;
+                padding: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: linear 0.1s;
+            }
+
+                .followButton:hover {
+                    background-color: rgb(32, 32, 32);
+                    transition: linear 0.1s;
+                }
+
+            .editButton {
+                height: 45px;
+                width: 110px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(42, 42, 42);
+                border-radius: 5px;
+                padding: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: linear 0.1s;
+            }
+
+                .editButton:hover {
+                    background-color: rgb(32, 32, 32);
+                    transition: linear 0.1s;
+                }
+
+
+        .mainProfilePostsFeedContainer {
+            height: 70%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 40px;
+        }
