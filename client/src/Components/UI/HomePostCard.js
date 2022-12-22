@@ -16,7 +16,7 @@ function HomePostCard(props) {
             </div>
             <div className="postCardInteractContainer">
                 <i className="fa-regular fa-thumbs-up"></i>
-                <p className="likeCount">576</p>
+                <p className="likeCount">756</p>
             </div>
         </div>
     )
