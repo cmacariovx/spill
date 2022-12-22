@@ -31,8 +31,9 @@ function HomeMainBody() {
         setDetailedData(detailedCardDataObj)
     }
 
-    function dropdownHandler() {
+    function dropdownHandler(event) {
         setDropdownBool(true)
+        console.log(event)
     }
 
     function dropdownHandlerClose() {
@@ -60,7 +61,7 @@ function HomeMainBody() {
                 </div>
             </div>
             <div className="homeMainBodyRight">
-                <div className="profileContainer" onClick={() => {dropdownHandler(); dropdownHandlerClose();}}>
+                <div className="profileContainer" onClick={dropdownHandler} onMouseLeave={dropdownHandlerClose}>
                     <p className="profileUsername">@cmacariovx</p>
                     <img src={personal} className="profileImg" alt=""/>
                     {dropdownBool && <HomeDropDown />}
