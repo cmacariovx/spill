@@ -14,6 +14,10 @@ function Profile() {
         setCardClick2(true)
     }
 
+    function closeCard2() {
+        setCardClick2(false)
+    }
+
     return (
         <div className="profilePageContainer">
             <div className="mainProfileBodyContainer">
@@ -43,7 +47,7 @@ function Profile() {
                     <button className="editButton">Edit Profile</button>
                 </div>
                 <div className="mainProfilePostsFeedContainer">
-                    {cardClick2 && <HomeDetailedPostCard />}
+                    {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2}/>}
                     <HomePostCard onShowCard={detailedCard2}/>
                 </div>
             </div>

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useSyncExternalStore } from "react";
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
 import HomeDetailedPostCard from "./HomeDetailedPostCard";
+import HomeDropDown from "./HomeDropDown";
 
 import './HomeMainBody.css'
 
@@ -10,9 +11,32 @@ import personal from './Images/personal.jpg'
 
 function HomeMainBody() {
     let [cardClick, setCardClick] = useState(false)
+    let [detailedData, setDetailedData] = useState({})
+    let [dropdownBool, setDropdownBool] = useState(false)
 
     function detailedCard() {
         setCardClick(true)
+    }
+
+    function closeCard(event) {
+        if (event.target.className == "backdrop" || event.target.className == "fa-solid fa-xmark") setCardClick(false)
+    }
+
+    function detailedCardDataHandler(enteredDetailedCardDataObj) {
+        let detailedCardDataObj = {
+            ...enteredDetailedCardDataObj,
+            id: Math.random().toString()
+        }
+
+        setDetailedData(detailedCardDataObj)
+    }
+
+    function dropdownHandler() {
+        setDropdownBool(true)
+    }
+
+    function dropdownHandlerClose() {
+        if (dropdownBool) setDropdownBool(false)
     }
 
     return (
@@ -29,20 +53,17 @@ function HomeMainBody() {
                 </div>
 
                 <div className="homeFeedContainer">
-                    {cardClick && <HomeDetailedPostCard />}
-                    <HomePostCard onShowCard={detailedCard}/>
-                    <HomePostCard />
-                    <HomePostCard />
-                </div>
-
-                <div className="paginationContainer">
-
+                    {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData}/>}
+                    <HomePostCard onShowCard={detailedCard} onDetailedCardDataHandler={detailedCardDataHandler}/>
+                    <HomePostCard onShowCard={detailedCard} onDetailedCardDataHandler={detailedCardDataHandler}/>
+                    <HomePostCard onShowCard={detailedCard} onDetailedCardDataHandler={detailedCardDataHandler}/>
                 </div>
             </div>
             <div className="homeMainBodyRight">
-                <div className="profileContainer">
+                <div className="profileContainer" onClick={() => {dropdownHandler(); dropdownHandlerClose();}}>
                     <p className="profileUsername">@cmacariovx</p>
                     <img src={personal} className="profileImg" alt=""/>
+                    {dropdownBool && <HomeDropDown />}
                 </div>
                 <div className="searchContainer">
                     <input className="searchInput" placeholder="Find a User"></input>

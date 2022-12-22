@@ -102,12 +102,14 @@
 
         .profileContainer {
             height: 60px;
-            width: 170px;
+            width: 190px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
+            border-radius: 5px;
+            padding: 15px;
         }
 
             .profileUsername {
@@ -138,7 +140,7 @@
                 justify-content: flex-end;
                 align-items: center;
                 font-size: 16px;
-                border: 2px solid white;
+                border: 2px solid rgba(255, 255, 255, 0.148);
                 border-radius: 10px;
                 padding: 10px;
             }

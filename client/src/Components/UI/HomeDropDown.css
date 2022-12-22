@@ -1,0 +1,34 @@
+.homeDropDownContainer {
+    height: 200px;
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #212121;
+    z-index: 1;
+    position: absolute;
+    top: 110px;
+    border-radius: 5px;
+}
+
+    .optionContainer {
+        height: 33%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 10px 20px;
+        transition: 0.1s linear;
+    }
+
+    .optionContainer:hover {
+        background-color: rgb(24, 24, 24);
+        transition: 0.1s linear;
+    }
+
+        .optionText {
+            font-size: 14px;
+            font-weight: bold;
+        }
