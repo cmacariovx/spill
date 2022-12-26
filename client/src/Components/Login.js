@@ -17,11 +17,11 @@ function Login() {
                     </div>
                     <div className="loginInputContainer">
                         <p className="loginPasswordText">Password</p>
-                        <input type="password" className="loginInput" id="loginInput3"></input>
+                        <input type="password" className="loginInput" id="loginInput2"></input>
                     </div>
                     <div className="loginButtonsContainer">
                         <Link to="/home">
-                            <button className="loginButton">Login</button>
+                            <button className="loginButton">Log In</button>
                         </Link>
                         <Link to="/home">
                             <button className="demoLoginButton">Demo Login</button>

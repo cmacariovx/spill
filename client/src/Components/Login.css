@@ -18,10 +18,11 @@
         background-color: rgb(14, 14, 14);
         border-radius: 20px;
         padding: 50px 60px;
+        margin-bottom: 150px;
     }
 
         .loginHeaderContainer {
-            height: 15%;
+            height: 10%;
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -35,7 +36,7 @@
             }
 
         .loginBodyContainer {
-            height: 75%;
+            height: 70%;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -115,5 +116,5 @@
                 font-weight: bold;
                 font-size: 14px;
                 color: rgb(45, 157, 255);
-                margin-left: 10px;
+                margin-left: 8px;
             }

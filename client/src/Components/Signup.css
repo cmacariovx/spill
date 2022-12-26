@@ -1,0 +1,126 @@
+.signupBackdrop {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(24, 24, 24);
+}
+
+    .signupContainer {
+        height: 600px;
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(14, 14, 14);
+        border-radius: 20px;
+        padding: 50px 60px;
+        margin-bottom: 150px;
+    }
+
+        .signupHeaderContainer {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .signupHeaderText {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+        .signupBodyContainer {
+            height: 80%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+            .signupInputContainer {
+                height: 40%;
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+                .signupInput {
+                    height: 50px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    border-bottom: 2px solid white;
+                    font-size: 18px;
+                    transition: 0.1s linear;
+                }
+
+                .signupInput:invalid {
+                    border-bottom: 2px solid rgb(255, 75, 75);
+                    transition: 0.1s linear;
+                }
+
+            .signupButtonsContainer {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .signupButton {
+                    height: 45px;
+                    width: 90px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: white;
+                    border-radius: 5px;
+                    margin-right: 15px;
+                    color: #0f0f0f;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+
+                .demosignupButton {
+                    height: 45px;
+                    width: 90px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: rgb(38, 38, 38);
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+        .signupFooterContainer {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+            .signupFooterText {
+                font-size: 14px;
+            }
+
+            .signupFooterLoginLink {
+                font-weight: bold;
+                font-size: 14px;
+                color: rgb(45, 157, 255);
+                margin-left: 8px;
+            }
