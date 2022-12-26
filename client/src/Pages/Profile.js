@@ -22,7 +22,7 @@ function Profile() {
         <div className="profilePageContainer">
             <div className="mainProfileBodyContainer">
                 <div className="mainProfileBodyIntroContainer">
-                    <img className="mainProfileIntroPic" src={mainProfileBodyPic}></img>
+                    <img className="mainProfileIntroPic" src={mainProfileBodyPic} alt=""></img>
                     <div className="mainProfileIntroCredentialsContainer">
                         <p className="mainProfileNameText">Carlos Macario</p>
                         <p className="mainProfileUsernameText">@cmacariovx</p>

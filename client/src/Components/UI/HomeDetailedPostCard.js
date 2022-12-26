@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import './HomeDetailedPostCard.css'
 
@@ -14,7 +14,7 @@ function HomeDetailedPostCard(props) {
             <div className="homeDetailedPostCard">
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer">
-                        <img src={profilePicDetailed} className="homeDetailedProfilePic"></img>
+                        <img src={profilePicDetailed} className="homeDetailedProfilePic" alt=""></img>
                         <p className="homeDetailedProfileUsername">{detailedCardData.postCardUsername}</p>
                     </div>
                     <div className="homeDetailedPostContainer">

@@ -1,4 +1,4 @@
-import React, { useState, useSyncExternalStore } from "react";
+import React, { useState } from "react";
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
@@ -19,7 +19,7 @@ function HomeMainBody() {
     }
 
     function closeCard(event) {
-        if (event.target.className == "backdrop" || event.target.className == "fa-solid fa-xmark") setCardClick(false)
+        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark") setCardClick(false)
     }
 
     function detailedCardDataHandler(enteredDetailedCardDataObj) {
