@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 
 import './LandingHeader.css'
 
@@ -10,8 +11,8 @@ function LandingHeader() {
             </div>
             <div className="landingNavContainer">
                 <ul className="landingNav">
-                    <li className="landingNavText">Log In</li>
-                    <li className="landingNavText">Sign Up</li>
+                    <Link className="landingNavText" to="/login">Log In</Link>
+                    <Link className="landingNavText" to="/signup">Sign Up</Link>
                 </ul>
             </div>
         </div>

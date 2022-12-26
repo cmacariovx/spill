@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 import './App.css'
 
@@ -9,9 +10,11 @@ import Profile from './Pages/Profile'
 function App() {
   return (
     <div className="app">
-      {/* <Landing /> */}
-      <Home />
-      {/* <Profile /> */}
+      <Routes>
+        <Route path='/' exact element={<Landing />} />
+        <Route path='/home' exact element={<Home />} />
+        <Route path='/profile/:username' exact element={<Profile />} /> {/*path will be username*/}
+      </Routes>
     </div>
   )
 }

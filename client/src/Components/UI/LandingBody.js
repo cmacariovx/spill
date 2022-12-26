@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from 'react-router-dom'
 
 import './LandingBody.css'
 
@@ -96,7 +97,9 @@ function LandingBody() {
             <div className="rightLandingBodyContainer">
                 <div className="rightLandingBodyIntroContainer">
                     <p className="rightLandingBodyIntroText">The Leading Social Platform.</p>
-                    <button className="rightLandingBodyIntroButton">Join Now</button>
+                    <Link to="signup">
+                        <button className="rightLandingBodyIntroButton">Join Now</button>
+                    </Link>
                 </div>
             </div>
         </div>

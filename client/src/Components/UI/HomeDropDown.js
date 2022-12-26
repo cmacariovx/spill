@@ -1,19 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import './HomeDropDown.css'
 
 function HomeDropDown() {
     return (
         <div className="homeDropDownContainer">
-            <div className="optionContainer" id='profileText'>
+            <Link to="/profile/cm" className="optionContainer" id='profileText'>
                 <p className="optionText">Profile</p>
-            </div>
-            <div className="optionContainer" id='settingsText'>
+            </Link>
+            <Link className="optionContainer" id='settingsText'>
                 <p className="optionText">Settings</p>
-            </div>
-            <div className="optionContainer" id='logoutText'>
+            </Link>
+            <Link to="/" className="optionContainer" id='logoutText'>
                 <p className="optionText">Logout</p>
-            </div>
+            </Link>
         </div>
     )
 }
