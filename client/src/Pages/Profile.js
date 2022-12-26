@@ -38,7 +38,7 @@ function Profile() {
                         </div>
                         <div className="mainProfilePostsNumberContainer">
                             <p className="mainProfileStatTitle">Posts</p>
-                            <p className="mainProfileStatNumber">283</p>
+                            <p className="mainProfileStatNumber">284</p>
                         </div>
                     </div>
                 </div>
