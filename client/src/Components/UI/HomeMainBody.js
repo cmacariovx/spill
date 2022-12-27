@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
@@ -13,6 +13,8 @@ function HomeMainBody() {
     let [cardClick, setCardClick] = useState(false)
     let [detailedData, setDetailedData] = useState({})
     let [dropdownBool, setDropdownBool] = useState(false)
+
+    let postTextData = useRef()
 
     function detailedCard() {
         setCardClick(true)
@@ -40,6 +42,11 @@ function HomeMainBody() {
         if (dropdownBool) setDropdownBool(false)
     }
 
+    function addPostHandler() {
+        let postTextDataMain = postTextData.current.value
+        console.log(postTextDataMain)
+    }
+
     return (
         <div className="homeMainBodyContainer">
             <div className="homeMainBodyLeft">
@@ -48,9 +55,9 @@ function HomeMainBody() {
                 </div>
                 <div className="statusUpdateContainer">
                     <div className="statusUpdateInputContainer">
-                        <textarea className="statusUpdateInput" rows='4' cols='40' placeholder="How's your day been?"></textarea>
+                        <textarea className="statusUpdateInput" rows='4' cols='40' placeholder="How's your day been?" ref={postTextData}></textarea>
                     </div>
-                    <button className="postStatusButton">Post</button>
+                    <button className="postStatusButton" onClick={addPostHandler}>Post</button>
                 </div>
 
                 <div className="homeFeedContainer">
