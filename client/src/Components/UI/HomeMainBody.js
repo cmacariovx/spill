@@ -38,8 +38,7 @@ function HomeMainBody() {
         let newPost = {
             'username': '@cmacariovx',
             'mainBodyText': postTextDataMain,
-            'likeCount': 0,
-            'id': 7
+            'likeCount': 0
         }
 
         setListOfPosts(prevListOfPosts => {

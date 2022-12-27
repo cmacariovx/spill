@@ -38,8 +38,6 @@ function HomeDetailedPostCard(props) {
             'commentBodyText': currentCommentData.current.value,
         }
 
-        console.log(currentCommentData)
-
         setListOfComments(prevListOfComments => {
             return [newComment, ...prevListOfComments]
         })
