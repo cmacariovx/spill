@@ -24,15 +24,6 @@ function HomeMainBody() {
         if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark") setCardClick(false)
     }
 
-    function detailedCardDataHandler(enteredDetailedCardDataObj) {
-        let detailedCardDataObj = {
-            ...enteredDetailedCardDataObj,
-            id: Math.random().toString()
-        }
-
-        setDetailedData(detailedCardDataObj)
-    }
-
     function dropdownHandler(event) {
         setDropdownBool(true)
         console.log(event)
@@ -45,6 +36,31 @@ function HomeMainBody() {
     function addPostHandler() {
         let postTextDataMain = postTextData.current.value
         console.log(postTextDataMain)
+    }
+
+    let mainPostFeedPosts = [
+        {
+            'username': '@cmacariovx',
+            'mainBodyText': 'Warzone 2 is looking a bit more polished now!',
+            'likeCount': 543,
+            'id': 1
+        },
+        {
+            'username': '@anon123',
+            'mainBodyText': 'Testing',
+            'likeCount': 2,
+            'id': 2
+        },
+        {
+            'username': '@guest444',
+            'mainBodyText': 'Does Socia have star potential?',
+            'likeCount': 991,
+            'id': 3
+        }
+    ]
+
+    function detailedCardDataHandler(detailedPostData) {
+        setDetailedData(detailedPostData)
     }
 
     return (
@@ -62,9 +78,7 @@ function HomeMainBody() {
 
                 <div className="homeFeedContainer">
                     {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData}/>}
-                    <HomePostCard onShowCard={detailedCard} onDetailedCardDataHandler={detailedCardDataHandler}/>
-                    <HomePostCard onShowCard={detailedCard} onDetailedCardDataHandler={detailedCardDataHandler}/>
-                    <HomePostCard onShowCard={detailedCard} onDetailedCardDataHandler={detailedCardDataHandler}/>
+                    {mainPostFeedPosts.map(post => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler}/>)}
                 </div>
             </div>
             <div className="homeMainBodyRight">

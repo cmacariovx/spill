@@ -5,30 +5,22 @@ import './HomePostCard.css'
 import personal from './Images/personal.jpg'
 
 function HomePostCard(props) {
-    let homePostCardDataObj = {
-        'postCardUsername': '@cmacariovx',
-        'postCardMainText': "Who's ready for Argentina vs. France?",
-        'postCardLikeCount': 875
-    }
-
-    let [homePostCardData, setHomePostCardData] = useState(homePostCardDataObj)
-
     function sendCardData() {
-        props.onDetailedCardDataHandler(homePostCardData)
+        props.onDetailedCardDataHandler(props.homePostCardData)
     }
 
     return (
         <div className="homePostCardContainer" onClick={() => {props.onShowCard(); sendCardData();}}>
             <div className="postCardUserContainer">
-                <p className="postCardUsername">{homePostCardData.postCardUsername}</p>
+                <p className="postCardUsername">{props.homePostCardData.username}</p>
                 <img className="postCardUserPic" src={personal} alt=""/>
             </div>
             <div className="postCardBodyContainer">
-                <p className="postMainText">{homePostCardData.postCardMainText}</p>
+                <p className="postMainText">{props.homePostCardData.mainBodyText}</p>
             </div>
             <div className="postCardInteractContainer">
                 <i className="fa-regular fa-thumbs-up"></i>
-                <p className="likeCount">{homePostCardData.postCardLikeCount}</p>
+                <p className="likeCount">{props.homePostCardData.likeCount}</p>
             </div>
         </div>
     )

@@ -15,14 +15,14 @@ function HomeDetailedPostCard(props) {
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer">
                         <img src={profilePicDetailed} className="homeDetailedProfilePic" alt=""></img>
-                        <p className="homeDetailedProfileUsername">{detailedCardData.postCardUsername}</p>
+                        <p className="homeDetailedProfileUsername">{detailedCardData.username}</p>
                     </div>
                     <div className="homeDetailedPostContainer">
-                        <p className="homeDetailedPostText">{detailedCardData.postCardMainText}</p>
+                        <p className="homeDetailedPostText">{detailedCardData.mainBodyText}</p>
                     </div>
                     <div className="homeDetailedInteractContainer">
                         <i className="fa-regular fa-thumbs-up fa-222"></i>
-                        <p className="homeLikeCount">{detailedCardData.postCardLikeCount}</p>
+                        <p className="homeLikeCount">{detailedCardData.likeCount}</p>
                     </div>
                 </div>
                 <div className="homeDetailedRightBody">
