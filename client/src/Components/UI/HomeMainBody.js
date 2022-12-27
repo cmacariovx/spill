@@ -35,7 +35,16 @@ function HomeMainBody() {
 
     function addPostHandler() {
         let postTextDataMain = postTextData.current.value
-        console.log(postTextDataMain)
+        let newPost = {
+            'username': '@cmacariovx',
+            'mainBodyText': postTextDataMain,
+            'likeCount': 0,
+            'id': 7
+        }
+
+        setListOfPosts(prevListOfPosts => {
+            return [newPost, ...prevListOfPosts]
+        })
     }
 
     let mainPostFeedPosts = [
@@ -43,21 +52,20 @@ function HomeMainBody() {
             'username': '@cmacariovx',
             'mainBodyText': 'Warzone 2 is looking a bit more polished now!',
             'likeCount': 543,
-            'id': 1
         },
         {
             'username': '@anon123',
             'mainBodyText': 'Testing',
             'likeCount': 2,
-            'id': 2
         },
         {
             'username': '@guest444',
             'mainBodyText': 'Does Socia have star potential?',
             'likeCount': 991,
-            'id': 3
         }
     ]
+
+    let [listOfPosts, setListOfPosts] = useState(mainPostFeedPosts)
 
     function detailedCardDataHandler(detailedPostData) {
         setDetailedData(detailedPostData)
@@ -78,7 +86,7 @@ function HomeMainBody() {
 
                 <div className="homeFeedContainer">
                     {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData}/>}
-                    {mainPostFeedPosts.map(post => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler}/>)}
+                    {listOfPosts.map((post, index) => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler} key={index}/>)}
                 </div>
             </div>
             <div className="homeMainBodyRight">

@@ -4,15 +4,15 @@ import './HomeCommentCard.css'
 
 import userProfilePic from './Images/personal.jpg'
 
-function HomeCommentCard() {
+function HomeCommentCard(props) {
     return (
         <div className="homeCommentCardContainer">
             <div className="homeCommentProfileContainer">
                 <img className="homeCommentProfilePic" src={userProfilePic} alt=""></img>
-                <p className="homeCommentUsername">@cmacariovv</p>
+                <p className="homeCommentUsername">{props.commentData.commentUsername}</p>
             </div>
             <div className="homeCommentBodyContainer">
-                <p className="homeCommentBodyText">What a game that was!</p>
+                <p className="homeCommentBodyText">{props.commentData.commentBodyText}</p>
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import './HomeDetailedPostCard.css'
 
@@ -8,6 +8,42 @@ import HomeCommentCard from "./HomeCommentCard";
 
 function HomeDetailedPostCard(props) {
     let [detailedCardData, setDetailedCardData] = useState(props.detailedCardData)
+
+    let commentsMainList = [
+        {
+            'commentUsername': '@cmacariovx',
+            'commentBodyText': 'Agreed!',
+        },
+        {
+            'commentUsername': '@anon1234',
+            'commentBodyText': 'Yea for sure',
+        },
+        {
+            'commentUsername': '@guest444',
+            'commentBodyText': 'Ehh not seeing it.',
+        },
+        {
+            'commentUsername': '@0re',
+            'commentBodyText': 'Lets run some duos',
+        }
+    ]
+
+    let [listOfComments, setListOfComments] = useState(commentsMainList)
+
+    let currentCommentData = useRef()
+
+    function addCommentHandler() {
+        let newComment = {
+            'commentUsername': '@cmacariovx',
+            'commentBodyText': currentCommentData.current.value,
+        }
+
+        console.log(currentCommentData)
+
+        setListOfComments(prevListOfComments => {
+            return [newComment, ...prevListOfComments]
+        })
+    }
 
     return (
         <div className="backdrop" onClick={props.onCloseCard}>
@@ -31,14 +67,11 @@ function HomeDetailedPostCard(props) {
                         <i className="fa-solid fa-xmark" onClick={props.onCloseCard}></i>
                     </div>
                     <div className="homeDetailedCommentsFeedContainer">
-                        <HomeCommentCard />
-                        <HomeCommentCard />
-                        <HomeCommentCard />
-                        <HomeCommentCard />
+                        {listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} key={index}/>)}
                     </div>
                     <div className="homeDetailedCommentsInputContainer">
-                        <input className="homeDetailedCommentsInput" placeholder="Add a Comment"></input>
-                        <i className="fa-regular fa-paper-plane homeDetailedPostCommentButton"></i>
+                        <input className="homeDetailedCommentsInput" placeholder="Add a Comment" ref={currentCommentData}></input>
+                        <i className="fa-regular fa-paper-plane homeDetailedPostCommentButton" onClick={addCommentHandler}></i>
                     </div>
                 </div>
             </div>
