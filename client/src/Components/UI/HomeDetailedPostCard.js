@@ -24,7 +24,7 @@ function HomeDetailedPostCard(props) {
         },
         {
             'commentUsername': '@0re',
-            'commentBodyText': 'Lets run some duos',
+            'commentBodyText': "Let's run some duos",
         }
     ]
 
