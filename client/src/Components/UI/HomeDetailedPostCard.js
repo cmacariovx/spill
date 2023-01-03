@@ -12,7 +12,7 @@ function HomeDetailedPostCard(props) {
     let commentsMainList = [
         {
             'commentUsername': '@cmacariovx',
-            'commentBodyText': 'Agreed!',
+            'commentBodyText': 'Agreed',
         },
         {
             'commentUsername': '@anon1234',
