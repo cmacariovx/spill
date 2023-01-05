@@ -20,7 +20,7 @@ function HomeDetailedPostCard(props) {
         },
         {
             'commentUsername': '@guest444',
-            'commentBodyText': 'Ehh not seeing it',
+            'commentBodyText': 'Eh not seeing it',
         },
         {
             'commentUsername': '@0re',
