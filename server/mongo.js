@@ -1,6 +1,7 @@
 const MongoClient = require("mongodb").MongoClient
+require("dotenv").config()
 
-const mongoUrl = "mongodb+srv://cmacariovx:ZDW5TyX1jvCT7RNB@cluster0.2b2mmoz.mongodb.net/?retryWrites=true&w=majority"
+const mongoUrl = process.env.MONGO_URL
 
 const mainFetch = async (req, res, next) => {
     const newUser = {
