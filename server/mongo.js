@@ -32,7 +32,7 @@ const mainGet = async (req, res, next) => {
         users = await db.collection("users").find().toArray()
     }
     catch (error) {
-        return res.json({"message": "Could not get users."})
+        return res.json({"message": "Could not fetch users."})
     }
 
     client.close()
