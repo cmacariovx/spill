@@ -15,7 +15,7 @@ const mainFetch = async (req, res, next) => {
         const db = client.db()
         const result = await db.collection("users").insertOne(newUser)
     } catch (error) {
-        return res.json({"message": "Could not store data."})
+        return res.json({"message": "Could not store data"})
     }
 
     client.close()
@@ -32,7 +32,7 @@ const mainGet = async (req, res, next) => {
         users = await db.collection("users").find().toArray()
     }
     catch (error) {
-        return res.json({"message": "Could not fetch users."})
+        return res.json({"message": "Could not fetch users"})
     }
 
     client.close()
