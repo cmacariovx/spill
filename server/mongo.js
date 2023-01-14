@@ -41,18 +41,18 @@ const mainGet = async (req, res, next) => {
 
 async function userSignup(req, res, next, newUser) {
     const client = new MongoClient(mongoUrl)
-
+    let result
     try {
         await client.connect()
         const db = client.db()
-        const result = await db.collection("users").insertOne(newUser)
+        result = await db.collection("users").insertOne(newUser)
     }
     catch (error) {
         return res.json({'message': 'Could not add user.'})
     }
 
     client.close()
-    res.json(newUser)
+    res.json(result)
 }
 
 exports.mainFetch = mainFetch
