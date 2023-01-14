@@ -2,11 +2,9 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const mongoPractice = require("./mongo")
 
-const mainRouter = require('./routes/mainRoutes')
+const authRouter = require('./routes/authRoutes')
 
 const app = express()
-
-// app.use("/", mainRouter)
 
 app.use(bodyParser.json())
 
@@ -17,6 +15,8 @@ app.use((req, res, next) => {
 
     next()
 })
+
+app.use("/", authRouter)
 
 app.post("/users", mongoPractice.mainFetch)
 
