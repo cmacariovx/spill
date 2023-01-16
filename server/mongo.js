@@ -74,7 +74,7 @@ async function userLogin (req, res, next, userCredentials) {
         user = await db.collection("users").findOne({"username": userCredentials.username})
     }
     catch (error) {
-        return res.json({"message": "Could not find user"})
+        return res.json({"message": "Could not find user."})
     }
 
     client.close()

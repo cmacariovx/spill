@@ -26,7 +26,7 @@ async function userLoginMain (req, res, next) {
 
     let mongoFindUser = await mongoConnections.userLogin(req, res, next, userCredentials)
 
-    if (!mongoFindUser) {    // being called before promise is fulfilled and stopping code
+    if (!mongoFindUser) {
         console.log("User not found")
         return null
     }
