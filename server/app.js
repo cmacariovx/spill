@@ -3,6 +3,7 @@ const bodyParser = require("body-parser")
 const mongoPractice = require("./mongo")
 
 const authRouter = require('./routes/authRoutes')
+const homeRouter = require('./routes/homeRoutes')
 
 const app = express()
 
@@ -16,11 +17,9 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use("/", authRouter)
+app.use("/auth", authRouter)
 
-app.post("/users", mongoPractice.mainFetch)
-
-app.get("/users", mongoPractice.mainGet)
+app.use("/", homeRouter)
 
 app.use((req, res, next) => {
     const error = new Error("Could not find this route.")

@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth-context";
 
 import './Signup.css'
 
@@ -8,10 +9,12 @@ function Signup() {
     let emailInputRef = useRef()
     let passwordInputRef = useRef()
 
+    const auth = useContext(AuthContext)
+
     async function signupUserHandler(event) {
         event.preventDefault()
 
-        const response = await fetch('http://localhost:5000/signup', {
+        const response = await fetch('http://localhost:5000/auth/signup', {
             method: 'POST',
             body: JSON.stringify({
                 'username': usernameInputRef.current.value,
@@ -25,6 +28,7 @@ function Signup() {
         
         const data = await response.json()
         console.log(data)
+        auth.login(data.userId, data.token)
     }
 
     return (
@@ -57,7 +61,7 @@ function Signup() {
                 </div>
                 <div className="signupFooterContainer">
                     <p className="signupFooterText">Already Have an Account?</p>
-                    <Link className="signupFooterLoginLink" to="/login">Log In</Link>
+                    <Link className="signupFooterLoginLink" to="/auth/login">Log In</Link>
                 </div>
             </div>
         </div>

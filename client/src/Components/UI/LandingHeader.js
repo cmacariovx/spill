@@ -11,8 +11,8 @@ function LandingHeader() {
             </div>
             <div className="landingNavContainer">
                 <ul className="landingNav">
-                    <Link className="landingNavText" to="/login">Log In</Link>
-                    <Link className="landingNavText" to="/signup">Sign Up</Link>
+                    <Link className="landingNavText" to="/auth/login">Log In</Link>
+                    <Link className="landingNavText" to="/auth/signup">Sign Up</Link>
                 </ul>
             </div>
         </div>

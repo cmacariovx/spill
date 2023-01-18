@@ -5,6 +5,6 @@ const router = express.Router()
 
 router.post('/signup', authControllers.userSignup)
 
-router.post('/login', authControllers.userLoginMain)
+router.post('/login', authControllers.userLoginMain) // Options request made here on login credentials
 
 module.exports = router

@@ -1,5 +1,7 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
+
+import { AuthContext } from "../context/auth-context";
 
 import './Login.css'
 
@@ -7,11 +9,13 @@ function Login() {
     let usernameInputRef2 = useRef()
     let passwordInputRef2 = useRef()
 
+    const auth = useContext(AuthContext)
+
     async function loginUserHandler(event) {
         event.preventDefault()
 
-        const response = await fetch('http://localhost:5000/login', {
-            method: 'POST',
+        const response = await fetch('http://localhost:5000/auth/login', {  // a null return in a authController ends fetch early
+            method: 'POST',                                      // options request doesnt make it to POST when credentials are wrong
             body: JSON.stringify({
                 'username': usernameInputRef2.current.value,
                 'password': passwordInputRef2.current.value
@@ -23,6 +27,8 @@ function Login() {
         
         const data = await response.json()
         console.log(data)
+
+        auth.login(data.userId, data.token)
     }
     return (
         <div className="loginBackdrop">
@@ -50,7 +56,7 @@ function Login() {
                 </div>
                 <div className="loginFooterContainer">
                     <p className="loginFooterText">Don't Have an Account?</p>
-                    <Link className="loginFooterSignupLink" to="/signup">Sign Up</Link>
+                    <Link className="loginFooterSignupLink" to="/auth/signup">Sign Up</Link>
                 </div>
             </div>
         </div>

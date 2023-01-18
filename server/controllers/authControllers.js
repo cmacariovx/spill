@@ -21,7 +21,7 @@ async function userSignup (req, res, next) {
 }
 
 async function userLoginMain (req, res, next) {
-    const { username, password } = req.body
+    const { username, password } = req.body     // post request after options successfully sends payload
 
     let userCredentials = {
         "username": username,
@@ -32,7 +32,8 @@ async function userLoginMain (req, res, next) {
 
     if (!mongoFindUser) {
         console.log("User not found")
-        return null
+        // res.status(401).json({message: "Authorization failed"}) // adding this allows access even with wrong credentials
+        return null                    //post request cut short -------------
     }
 
     console.log(mongoFindUser)
@@ -41,7 +42,8 @@ async function userLoginMain (req, res, next) {
 
     if (!isValidPassword) {
         console.log("Invalid Credentials")
-        return
+        // res.status(401).json({message: "Authorization failed"}) // adding this allows access even with wrong credentials
+        return null                     // post request cut short ----------------
     }
     
     console.log("Success") // Logic for logging in user

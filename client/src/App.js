@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { useState, useCallback, useEffect } from 'react'
+import { Route, Routes, Navigate } from 'react-router-dom'
 
 import './App.css'
 
@@ -9,16 +9,71 @@ import Profile from './Pages/Profile'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
 
+import { AuthContext } from './context/auth-context'
+
 function App() {
-  return (
-    <div className="app">
+  const [token, setToken] = useState(null)
+  const [userId, setUserId] = useState(null)
+
+  const login = useCallback((uid, token) => {
+    setToken(token)
+    setUserId(uid)
+    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token}))
+  }, [])
+
+  const logout = useCallback(() => {
+    setToken(null)
+    setUserId(null)
+  }, [])
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+    if (storedData && storedData.token) {
+      login(storedData.userId, storedData.token)
+    }
+  }, [login])
+
+  let routes
+
+  if (token) {
+    routes = (
+      <Routes>
+        <Route path='/home' exact element={<Home />} />
+        <Route path='/profile/:username' exact element={<Profile />} />
+        <Route
+        path="*"
+        element={<Navigate to="/home" replace />}
+        />
+      </Routes>
+    )
+  }
+  else {
+    routes = (
       <Routes>
         <Route path='/' exact element={<Landing />} />
-        <Route path='/home' exact element={<Home />} />
-        <Route path='/profile/:username' exact element={<Profile />} /> {/*path will be username*/}
-        <Route path='/login' exact element={<Login />} />
-        <Route path='/signup' exact element={<Signup />} />
+        <Route path='/auth/login' exact element={<Login />} />
+        <Route path='/auth/signup' exact element={<Signup />} />
+        <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+        />
       </Routes>
+    )
+  }
+
+  return (
+    <div className="app">
+      <AuthContext.Provider 
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          userId: userId,
+          login: login,
+          logout: logout
+        }}
+      >
+        {routes}
+      </AuthContext.Provider>
     </div>
   )
 }
