@@ -14,9 +14,7 @@ async function userSignup (req, res, next, newUser) {
 
         if (existingUser) {
             client.close()
-            console.log(existingUser)
-            res.json(existingUser)
-            return null              // Return an error modal
+            return next({message: "Username already exists"})              // Return an error modal
         }
 
         result = await db.collection("users").insertOne(newUser)
@@ -26,7 +24,7 @@ async function userSignup (req, res, next, newUser) {
     }
 
     client.close()
-    res.json(result)
+    // res.json(result)
 }
 
 async function userLogin (req, res, next, userCredentials) {

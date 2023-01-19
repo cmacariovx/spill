@@ -17,10 +17,17 @@ async function userSignup (req, res, next) {
     }
 
     let mongoConnect = await mongoConnections.userSignup(req, res, next, createdUser)
+
+    let loginUserData = {
+        username: createdUser.username,
+        password: createdUser.password
+    }
+
+    let loginUser = await userLoginMain(req, res, next, loginUserData)
 }
 
-async function userLoginMain (req, res, next) {
-    const { username, password } = req.body
+async function userLoginMain (req, res, next, signup = null) {
+    const { username, password } = req.body || signup
 
     let userCredentials = {
         "username": username,
