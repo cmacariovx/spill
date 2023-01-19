@@ -31,6 +31,25 @@ function Signup() {
         auth.login(data.userId, data.token)
     }
 
+    async function demoLoginUserHandlerSignup(event) {
+        event.preventDefault()
+
+        const response = await fetch('http://localhost:5000/auth/login', {  // a null return in a authController ends fetch early
+            method: 'POST',                                      // options request doesnt make it to POST when credentials are wrong
+            body: JSON.stringify({
+                'username': 'demo',
+                'password': 'demologin'
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        
+        const data = await response.json()
+
+        auth.login(data.userId, data.token)
+    }
+
     return (
         <div className="signupBackdrop">
             <div className="signupContainer">
@@ -55,7 +74,7 @@ function Signup() {
                             <button className="signupButton" onClick={signupUserHandler}>Sign Up</button>
                         </Link>
                         <Link to="/home">
-                            <button className="demosignupButton">Demo Login</button>
+                            <button className="demosignupButton" onClick={demoLoginUserHandlerSignup}>Demo Login</button>
                         </Link>
                     </div>
                 </div>
