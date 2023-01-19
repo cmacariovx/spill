@@ -17,11 +17,10 @@ async function userSignup (req, res, next) {
     }
 
     let mongoConnect = await mongoConnections.userSignup(req, res, next, createdUser)
-    console.log(mongoConnect)
 }
 
 async function userLoginMain (req, res, next) {
-    const { username, password } = req.body     // post request after options successfully sends payload
+    const { username, password } = req.body
 
     let userCredentials = {
         "username": username,
@@ -31,22 +30,14 @@ async function userLoginMain (req, res, next) {
     let mongoFindUser = await mongoConnections.userLogin(req, res, next, userCredentials)
 
     if (!mongoFindUser) {
-        console.log("User not found")
-        // res.status(401).json({message: "Authorization failed"}) // adding this allows access even with wrong credentials
-        return null                    //post request cut short -------------
+        return next({message: "Invalid Credentials"})                  //post request cut short -------------
     }
-
-    console.log(mongoFindUser)
 
     let isValidPassword = await bcrypt.compare(password, mongoFindUser.password)
 
     if (!isValidPassword) {
-        console.log("Invalid Credentials")
-        // res.status(401).json({message: "Authorization failed"}) // adding this allows access even with wrong credentials
-        return null                     // post request cut short ----------------
+        return next({message: "Invalid Password"})                     // post request cut short ----------------
     }
-    
-    console.log("Success") // Logic for logging in user
 
     let token = jwt.sign({userId: mongoFindUser._id.toString(), username: mongoFindUser.username}, jwtSecret)
 
