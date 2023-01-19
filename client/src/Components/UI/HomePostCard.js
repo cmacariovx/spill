@@ -12,11 +12,11 @@ function HomePostCard(props) {
     return (
         <div className="homePostCardContainer" onClick={() => {props.onShowCard(); sendCardData();}}>
             <div className="postCardUserContainer">
-                <p className="postCardUsername">{props.homePostCardData.username}</p>
+                <p className="postCardUsername">{props.homePostCardData.userId}</p>
                 <img className="postCardUserPic" src={personal} alt=""/>
             </div>
             <div className="postCardBodyContainer">
-                <p className="postMainText">{props.homePostCardData.mainBodyText}</p>
+                <p className="postMainText">{props.homePostCardData.mainText}</p>
             </div>
             <div className="postCardInteractContainer">
                 <i className="fa-regular fa-thumbs-up"></i>

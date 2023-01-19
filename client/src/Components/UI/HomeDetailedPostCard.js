@@ -49,10 +49,10 @@ function HomeDetailedPostCard(props) {
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer">
                         <img src={profilePicDetailed} className="homeDetailedProfilePic" alt=""></img>
-                        <p className="homeDetailedProfileUsername">{detailedCardData.username}</p>
+                        <p className="homeDetailedProfileUsername">{detailedCardData.userId}</p>
                     </div>
                     <div className="homeDetailedPostContainer">
-                        <p className="homeDetailedPostText">{detailedCardData.mainBodyText}</p>
+                        <p className="homeDetailedPostText">{detailedCardData.mainText}</p>
                     </div>
                     <div className="homeDetailedInteractContainer">
                         <i className="fa-regular fa-thumbs-up fa-222"></i>

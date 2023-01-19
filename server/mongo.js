@@ -44,5 +44,28 @@ async function userLogin (req, res, next, userCredentials) {
     return user
 }
 
+async function createPostMongo(req, res, next, postData) {
+    const client = new MongoClient(mongoUrl)
+    let response
+    try {
+        await client.connect()
+        const db = client.db()
+        response = await db.collection("posts").insertOne({
+            'userId': postData.userId,
+            'mainText': postData.mainText,
+            'timePosted': postData.timePosted,
+            'likeCount': 0,
+            'comments': []
+        })
+    }
+    catch(error) {
+        return res.json({"message": "Could not create post"})
+    }
+
+    client.close()
+    res.json(response)
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
+exports.createPostMongo = createPostMongo

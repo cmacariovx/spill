@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRouter)
 
-app.use("/", homeRouter)
+app.use("/home", homeRouter)
 
 app.use((req, res, next) => {
     const error = new Error("Could not find this route.")

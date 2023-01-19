@@ -37,34 +37,54 @@ function HomeMainBody() {
         if (dropdownBool) setDropdownBool(false)
     }
 
-    function addPostHandler() {
+    async function addPostHandler() {
         let postTextDataMain = postTextData.current.value
         let newPost = {
-            'username': '@cmacariovx',
-            'mainBodyText': postTextDataMain,
-            'likeCount': 0
+            'userId': auth.userId,
+            'mainText': postTextDataMain,
+            'timePosted': Date.now(),
+            'likeCount': 0,
+            'comments': []
         }
 
-        setListOfPosts(prevListOfPosts => {
+        const response = await fetch('http://localhost:5000/home/createPost', {
+            method: 'POST',
+            body: JSON.stringify(newPost),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + auth.token
+            }
+        })
+
+        const data = await response.json()
+        console.log(data)
+
+        setListOfPosts(prevListOfPosts => {  // change to db fetch
             return [newPost, ...prevListOfPosts]
         })
     }
 
     let mainPostFeedPosts = [
         {
-            'username': '@cmacariovx',
-            'mainBodyText': 'Warzone 2 is looking a bit more polished now!',
+            'userId': '@cmacariovx',
+            'mainText': 'Warzone 2 is looking a bit more polished now!',
+            'timePosted': Date.now(),
             'likeCount': 543,
+            'comments': []
         },
         {
-            'username': '@anon123',
-            'mainBodyText': 'Testing',
+            'userId': '@anon123',
+            'mainText': 'Testing',
+            'timePosted': Date.now(),
             'likeCount': 2,
+            'comments': []
         },
         {
-            'username': '@guest444',
-            'mainBodyText': 'Does Socia have star potential?',
+            'userId': '@guest444',
+            'mainText': 'Does Socia have star potential?',
+            'timePosted': Date.now(),
             'likeCount': 991,
+            'comments': []
         }
     ]
 
