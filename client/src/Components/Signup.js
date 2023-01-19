@@ -6,6 +6,7 @@ import './Signup.css'
 
 function Signup() {
     let usernameInputRef = useRef()
+    let fullNameInputRef = useRef()
     let emailInputRef = useRef()
     let passwordInputRef = useRef()
 
@@ -18,6 +19,7 @@ function Signup() {
             method: 'POST',
             body: JSON.stringify({
                 'username': usernameInputRef.current.value,
+                'fullName': fullNameInputRef.current.value,
                 'email': emailInputRef.current.value,
                 'password': passwordInputRef.current.value
             }),
@@ -60,6 +62,10 @@ function Signup() {
                     <div className="signupInputContainer">
                         <p className="signupUsernameText">Username</p>
                         <input className="signupInput" id="signupInput1" ref={usernameInputRef}></input>
+                    </div>
+                    <div className="signupInputContainer">
+                        <p className="signupUsernameText">Full Name</p>
+                        <input className="signupInput" id="signupInput4" ref={fullNameInputRef}></input>
                     </div>
                     <div className="signupInputContainer">
                         <p className="signupPasswordText">Email</p>

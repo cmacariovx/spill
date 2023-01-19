@@ -64,7 +64,7 @@ function HomeMainBody() {
         })
     }
 
-    let mainPostFeedPosts = [
+    let mainPostFeedPosts = [ // load an array of 10
         {
             'userId': '@cmacariovx',
             'mainText': 'Warzone 2 is looking a bit more polished now!',

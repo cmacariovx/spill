@@ -6,14 +6,19 @@ require("dotenv").config()
 const jwtSecret = process.env.JWT_SECRET
 
 async function userSignup (req, res, next) {
-    const { username, email, password } = req.body
+    const { username, fullName, email, password } = req.body
 
     let hashedPassword = await bcrypt.hash(password, 12)
 
     const createdUser = {
         'username': username,
+        'fullName': fullName,
         'email': email,
-        'password': hashedPassword
+        'password': hashedPassword, // add profile pic link ----------------------------------------------
+        'followers': [],
+        'following': [],
+        'verified': false,
+        'interactedPosts': []
     }
 
     let mongoConnect = await mongoConnections.userSignup(req, res, next, createdUser)
