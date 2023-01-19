@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
 import HomeDetailedPostCard from "./HomeDetailedPostCard";
 import HomeDropDown from "./HomeDropDown";
+
+import { AuthContext } from "../../context/auth-context";
 
 import './HomeMainBody.css'
 
@@ -13,6 +15,8 @@ function HomeMainBody() {
     let [cardClick, setCardClick] = useState(false)
     let [detailedData, setDetailedData] = useState({})
     let [dropdownBool, setDropdownBool] = useState(false)
+
+    const auth = useContext(AuthContext)
 
     let postTextData = useRef()
 
