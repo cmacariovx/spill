@@ -12,9 +12,10 @@ async function userSignup (req, res, next) {
 
     const createdUser = {
         'username': username,
+        'usernameSpread': username.split("").join(" "),
         'fullName': fullName,
         'email': email,
-        'password': hashedPassword, // add profile pic link ----------------------------------------------
+        'password': hashedPassword, // add profile pic link
         'followers': [],
         'following': [],
         'verified': false,

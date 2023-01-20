@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
@@ -15,6 +15,7 @@ function HomeMainBody() {
     let [cardClick, setCardClick] = useState(false)
     let [detailedData, setDetailedData] = useState({})
     let [dropdownBool, setDropdownBool] = useState(false)
+    let [searchTerm, setSearchTerm] = useState('')
 
     const auth = useContext(AuthContext)
 
@@ -30,7 +31,6 @@ function HomeMainBody() {
 
     function dropdownHandler(event) {
         setDropdownBool(true)
-        console.log(event)
     }
 
     function dropdownHandlerClose() {
@@ -94,6 +94,33 @@ function HomeMainBody() {
         setDetailedData(detailedPostData)
     }
 
+    useEffect(() => {
+        const typingTimeout = setTimeout(() => {
+            let searchedUsers
+
+            async function fetchSearchedUsers() {
+                let response = await fetch('http://localhost:5000/home/searchUsers', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'searchTerm': "c"
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + auth.token
+                    }
+                })
+
+                searchedUsers = await response.json()
+            }
+
+            fetchSearchedUsers()
+            console.log(searchedUsers)
+
+        }, 500)
+    
+        return () => clearTimeout(typingTimeout)
+    }, [searchTerm])
+
     return (
         <div className="homeMainBodyContainer">
             <div className="homeMainBodyLeft">
@@ -119,7 +146,7 @@ function HomeMainBody() {
                     {dropdownBool && <HomeDropDown />}
                 </div>
                 <div className="searchContainer">
-                    <input className="searchInput" placeholder="Find a User"></input>
+                    <input className="searchInput" placeholder="Find a User" onChange={(e) => setSearchTerm(e.target.value)}></input>
                 </div>
                 <div className="topCreatorsContainer">
                     <div className="topCreatorsTitleContainer">

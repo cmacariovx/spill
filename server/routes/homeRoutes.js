@@ -9,4 +9,6 @@ router.use(checkAuth)
 
 router.post("/createPost", homeControllers.createPost)
 
+router.post("/searchUsers", homeControllers.searchUsers)
+
 module.exports = router

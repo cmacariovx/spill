@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth-context";
 
 import './HomeDropDown.css'
 
 function HomeDropDown() {
+    const auth = useContext(AuthContext)
+
+    async function logoutHandler(event) {
+        event.preventDefault()
+        auth.logout()
+    }
+
     return (
         <div className="homeDropDownContainer">
             <Link to="/profile/cm" className="optionContainer" id='profileText'>
@@ -12,7 +20,7 @@ function HomeDropDown() {
             <Link className="optionContainer" id='settingsText'>
                 <p className="optionText">Settings</p>
             </Link>
-            <Link to="/" className="optionContainer" id='logoutText'>
+            <Link to="/" className="optionContainer" id='logoutText' onClick={logoutHandler}>
                 <p className="optionText">Logout</p>
             </Link>
         </div>

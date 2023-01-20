@@ -17,4 +17,16 @@ async function createPost(req, res, next) {
     let mongoCreatePost = await mongoConnections.createPostMongo(req, res, next, postData)
 }
 
+async function searchUsers(req, res, next) {
+    const { searchTerm } = req.body
+    
+    const searchData = {
+        searchTerm: searchTerm
+    }
+
+    let mongoSearchUsers = await mongoConnections.searchUsersMongo(req, res, next, searchData)
+    console.log(mongoSearchUsers)
+}
+
 exports.createPost = createPost
+exports.searchUsers = searchUsers

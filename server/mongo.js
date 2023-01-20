@@ -66,6 +66,53 @@ async function createPostMongo(req, res, next, postData) {
     res.json(response)
 }
 
+async function searchUsersMongo(req, res, next, searchData) {
+    const client = new MongoClient(mongoUrl)
+    let response = await client.db("test").collection("users").aggregate([
+        {
+            $search: {
+                index: "default",
+                compound: {
+                    must: [
+                        {
+                            text: {
+                                query: searchData.searchTerm,
+                                path: "usernameSpread",
+                                fuzzy: {
+                                    maxEdits: 1,
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            $limit: 10
+        },
+        {
+            $project: {
+                _id: 1,
+                username: 1,
+                usernameSpread: 1,
+                fullName: 1,
+                email: 1,
+                password: 1,
+                followers: 1,
+                following: 1,
+                verified: 1,
+                interactedPosts: 1,
+                score: { $meta: "searchScore" }
+            }
+        }
+
+    ]).toArray()
+
+    res.json(response)
+    return response
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createPostMongo = createPostMongo
+exports.searchUsersMongo = searchUsersMongo
