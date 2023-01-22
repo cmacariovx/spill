@@ -107,8 +107,7 @@ async function searchUsersMongo(req, res, next, searchData) {
         }
 
     ]).toArray()
-
-    res.json(response)
+    
     return response
 }
 

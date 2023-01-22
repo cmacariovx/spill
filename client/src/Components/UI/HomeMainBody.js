@@ -4,6 +4,7 @@ import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
 import HomeDetailedPostCard from "./HomeDetailedPostCard";
 import HomeDropDown from "./HomeDropDown";
+import HomeSearchDropDown from "./HomeSearchDropDown";
 
 import { AuthContext } from "../../context/auth-context";
 
@@ -15,7 +16,9 @@ function HomeMainBody() {
     let [cardClick, setCardClick] = useState(false)
     let [detailedData, setDetailedData] = useState({})
     let [dropdownBool, setDropdownBool] = useState(false)
+    let [searchingBool, setSearchingBool] = useState(false)
     let [searchTerm, setSearchTerm] = useState('')
+    let [receivedUsers, setReceivedUsers] = useState(null)
 
     const auth = useContext(AuthContext)
 
@@ -94,32 +97,35 @@ function HomeMainBody() {
         setDetailedData(detailedPostData)
     }
 
+    async function fetchSearchedUsers() {
+        let response = await fetch('http://localhost:5000/home/searchUsers', {
+            method: 'POST',
+            body: JSON.stringify({
+                'searchTerm': searchTerm
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + auth.token
+            }
+        })
+
+        let searchedUsers = await response.json()
+        return searchedUsers
+    }
+
     useEffect(() => {
         const typingTimeout = setTimeout(() => {
-            let searchedUsers
-
-            async function fetchSearchedUsers() {
-                let response = await fetch('http://localhost:5000/home/searchUsers', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        'searchTerm': "c"
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + auth.token
-                    }
-                })
-
-                searchedUsers = await response.json()
-            }
-
-            fetchSearchedUsers()
-            console.log(searchedUsers)
-
+            getUsersData(fetchSearchedUsers)
         }, 500)
     
         return () => clearTimeout(typingTimeout)
     }, [searchTerm])
+
+    async function getUsersData(cb) {
+        const fetchedUsers = await cb()
+        setSearchingBool(true)
+        setReceivedUsers(fetchedUsers)
+    }
 
     return (
         <div className="homeMainBodyContainer">
@@ -147,6 +153,7 @@ function HomeMainBody() {
                 </div>
                 <div className="searchContainer">
                     <input className="searchInput" placeholder="Find a User" onChange={(e) => setSearchTerm(e.target.value)}></input>
+                    {searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} />}
                 </div>
                 <div className="topCreatorsContainer">
                     <div className="topCreatorsTitleContainer">

@@ -24,8 +24,9 @@ async function searchUsers(req, res, next) {
         searchTerm: searchTerm
     }
 
+    if (!searchTerm) return null
     let mongoSearchUsers = await mongoConnections.searchUsersMongo(req, res, next, searchData)
-    console.log(mongoSearchUsers)
+    res.json(mongoSearchUsers)
 }
 
 exports.createPost = createPost
