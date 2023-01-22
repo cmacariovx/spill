@@ -115,7 +115,7 @@ function HomeMainBody() {
 
     useEffect(() => {
         const typingTimeout = setTimeout(() => {
-            getUsersData(fetchSearchedUsers)
+            getUsersData(fetchSearchedUsers)     // while fetching load spinner
         }, 500)
     
         return () => clearTimeout(typingTimeout)

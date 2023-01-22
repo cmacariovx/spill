@@ -2,9 +2,11 @@ import React from "react";
 
 import './HomeSearchDropDownItem.css'
 
-function HomeSearchDropDownItem() {
+function HomeSearchDropDownItem(props) {
     return (
-        <div className="homeSearchDropDownItem"></div>
+        <div className="homeSearchDropDownItem">
+
+        </div>
     )
 }
 
