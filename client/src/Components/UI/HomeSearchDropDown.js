@@ -7,10 +7,9 @@ import HomeSearchDropDownItem from "./HomeSearchDropDownItem";
 function HomeSearchDropDown(props) {
     return (
         <div className="homeSearchDropDown">
-            {props.fetchedUsersArr.map((user, index) => {
-                console.log(user)
-                // <HomeSearchDropDownItem/>
-            })}
+            {props.fetchedUsersArr.map((user, index) => (
+                <HomeSearchDropDownItem key={user._id} userData={user}/>
+            ))}
         </div>
     )
 }
