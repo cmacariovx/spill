@@ -12,7 +12,7 @@ import './HomeMainBody.css'
 
 import personal from './Images/personal.jpg'
 
-function HomeMainBody() {
+function HomeMainBody(props) {
     let [cardClick, setCardClick] = useState(false)
     let [detailedData, setDetailedData] = useState({})
     let [dropdownBool, setDropdownBool] = useState(false)
@@ -127,6 +127,10 @@ function HomeMainBody() {
         setReceivedUsers(fetchedUsers)
     }
 
+    function homeMainFindUserProfileHandler(username) {
+        props.onHomeFindUserProfileHandler(username)
+    }
+
     return (
         <div className="homeMainBodyContainer">
             <div className="homeMainBodyLeft">
@@ -153,7 +157,7 @@ function HomeMainBody() {
                 </div>
                 <div className="searchContainer">
                     <input className="searchInput" placeholder="Find a User" onChange={(e) => setSearchTerm(e.target.value)}></input>
-                    {searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} />}
+                    {searchingBool && <HomeSearchDropDown onHomeFindUserProfile={homeMainFindUserProfileHandler} fetchedUsersArr={receivedUsers} />}
                 </div>
                 <div className="topCreatorsContainer">
                     <div className="topCreatorsTitleContainer">

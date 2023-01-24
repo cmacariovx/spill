@@ -4,10 +4,13 @@ import HomeMainBody from "../Components/UI/HomeMainBody";
 
 import './Home.css'
 
-function Home() {
+function Home(props) {
+    function homeTopFindUserProfileHandler(username) {
+        props.onAppFindUserProfileHandler(username)
+    }
     return (
         <div className="homeContainer">
-            <HomeMainBody />
+            <HomeMainBody onHomeFindUserProfileHandler={homeTopFindUserProfileHandler}/>
         </div>
     )
 }

@@ -8,12 +8,15 @@ import Home from './Pages/Home'
 import Profile from './Pages/Profile'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
+import AppPrivateRoutes from './AppRoutes/AppPrivateRoutes'
+import AppPublicRoutes from'./AppRoutes/AppPublicRoutes'
 
 import { AuthContext } from './context/auth-context'
 
 function App() {
   const [token, setToken] = useState(null)
   const [userId, setUserId] = useState(null)
+  const [profileUsername, setProfileUsername] = useState(null)
 
   const login = useCallback((uid, token) => {
     setToken(token)
@@ -34,33 +37,37 @@ function App() {
     }
   }, [login])
 
-  let routes
+  function appUserProfileHandler(username) {
+    setProfileUsername(username)
+  } 
 
-  if (token) {
-    routes = (
-      <Routes>
-        <Route path='/home' exact element={<Home />} />
-        <Route path='/profile/:username' exact element={<Profile />} />
-        <Route
-        path="*"
-        element={<Navigate to="/home" replace />}
-        />
-      </Routes>
-    )
-  }
-  else {
-    routes = (
-      <Routes>
-        <Route path='/' exact element={<Landing />} />
-        <Route path='/auth/login' exact element={<Login />} />
-        <Route path='/auth/signup' exact element={<Signup />} />
-        <Route
-        path="*"
-        element={<Navigate to="/" replace />}
-        />
-      </Routes>
-    )
-  }
+  // let routes
+
+  // if (token) {
+  //   routes = (
+  //     <Routes>
+  //       <Route path='/home' exact element={<Home onAppFindUserProfileHandler={appUserProfileHandler}/>} />
+  //       <Route path='/profile/:username' exact element={<Profile usernameProfile={profileUsername}/>} />
+  //       {/* <Route
+  //       path="*"
+  //       element={<Navigate to="/home" replace />}
+  //       /> */}
+  //     </Routes>
+  //   )
+  // }
+  // else {
+  //   routes = (
+  //     <Routes>
+  //       <Route path='/' exact element={<Landing />} />
+  //       <Route path='/auth/login' exact element={<Login />} />
+  //       <Route path='/auth/signup' exact element={<Signup />} />
+  //       {/* <Route
+  //       path="*"
+  //       element={<Navigate to="/" replace />}
+  //       /> */}
+  //     </Routes>
+  //   )
+  // }
 
   return (
     <div className="app">
@@ -73,7 +80,26 @@ function App() {
           logout: logout
         }}
       >
-        {routes}
+        <Routes>
+          <Route element={<AppPublicRoutes />}>
+            <Route path='/' exact element={<Landing />} />
+            <Route path='/auth/login' exact element={<Login />} />
+            <Route path='/auth/signup' exact element={<Signup />} />
+            <Route
+            path="*"
+            element={<Navigate to="/" replace />}
+            />
+          </Route>
+
+          <Route element={<AppPrivateRoutes />}>
+            <Route path='/home' exact element={<Home onAppFindUserProfileHandler={appUserProfileHandler}/>} />
+            <Route path='/profile/:username' exact element={<Profile usernameProfile={profileUsername}/>} />
+            <Route
+            path="*"
+            element={<Navigate to="/home" replace />}
+            />
+          </Route>
+        </Routes>
       </AuthContext.Provider>
     </div>
   )

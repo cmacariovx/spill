@@ -107,11 +107,23 @@ async function searchUsersMongo(req, res, next, searchData) {
         }
 
     ]).toArray()
-    
+
     return response
+}
+
+async function fetchUserProfileMongo(req, res, next, username) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("users").findOne({"username": username})
+
+    client.close()
+    res.json(response)
 }
 
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createPostMongo = createPostMongo
 exports.searchUsersMongo = searchUsersMongo
+exports.fetchUserProfileMongo = fetchUserProfileMongo

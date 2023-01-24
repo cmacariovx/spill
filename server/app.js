@@ -4,6 +4,7 @@ const mongoPractice = require("./mongo")
 
 const authRouter = require('./routes/authRoutes')
 const homeRouter = require('./routes/homeRoutes')
+const profileRouter = require('./routes/profileRoutes')
 
 const app = express()
 
@@ -20,6 +21,8 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter)
 
 app.use("/home", homeRouter)
+
+app.use("/profile", profileRouter)
 
 app.use((req, res, next) => {
     const error = new Error("Could not find this route.")

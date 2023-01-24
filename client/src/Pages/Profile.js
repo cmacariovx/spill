@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import './Profile.css'
 
@@ -6,10 +6,15 @@ import mainProfileBodyPic from '../Components/UI/Images/personal.jpg'
 
 import HomePostCard from "../Components/UI/HomePostCard"
 import HomeDetailedPostCard from "../Components/UI/HomeDetailedPostCard"
+import { AuthContext } from "../context/auth-context";
 
-function Profile() {
+function Profile(props) {
     let [cardClick2, setCardClick2] = useState(false)
     let [detailedCardData2, setDetailedCardData2] = useState({})
+    let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
+    let [userData, setUserData] = useState(null)
+
+    const auth = useContext(AuthContext)
 
     function detailedCard2() {
         setCardClick2(true)
@@ -42,6 +47,23 @@ function Profile() {
     function detailedCardDataHandler2(detailedPostData2) {
         setDetailedCardData2(detailedPostData2)
     }
+
+    async function fetchUserProfile() {
+        let response = await fetch("http://localhost:5000/profile/" + profileUsername, {
+            method: "POST",
+            body: JSON.stringify({profileUsername: profileUsername}),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        let data = await response.json()
+        setUserData(data)
+        console.log(data)
+    }
+
+    fetchUserProfile()
 
     return (
         <div className="profilePageContainer">
