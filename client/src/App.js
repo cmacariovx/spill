@@ -21,6 +21,7 @@ function App() {
   const login = useCallback((uid, token) => {
     setToken(token)
     setUserId(uid)
+    // setToken and setUserId fully reruns component and calls AppPrivateRoutes again with actual token
     localStorage.setItem('userData', JSON.stringify({userId: uid, token: token}))
   }, [])
 
@@ -39,7 +40,7 @@ function App() {
 
   function appUserProfileHandler(username) {
     setProfileUsername(username)
-  } 
+  }
 
   // let routes
 
@@ -93,7 +94,7 @@ function App() {
 
           <Route element={<AppPrivateRoutes />}>
             <Route path='/home' exact element={<Home onAppFindUserProfileHandler={appUserProfileHandler}/>} />
-            <Route path='/profile/:username' exact element={<Profile usernameProfile={profileUsername}/>} />
+            <Route path='/profile/:username' element={<Profile usernameProfile={profileUsername}/>} />
             <Route
             path="*"
             element={<Navigate to="/home" replace />}

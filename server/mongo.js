@@ -119,6 +119,7 @@ async function fetchUserProfileMongo(req, res, next, username) {
     let response = await db.collection("users").findOne({"username": username})
 
     client.close()
+    console.log(response)
     res.json(response)
 }
 

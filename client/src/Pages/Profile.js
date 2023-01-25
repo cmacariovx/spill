@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import './Profile.css'
 
@@ -63,7 +63,9 @@ function Profile(props) {
         console.log(data)
     }
 
-    fetchUserProfile()
+    useEffect(() => {
+        fetchUserProfile()
+    }, [])
 
     return (
         <div className="profilePageContainer">

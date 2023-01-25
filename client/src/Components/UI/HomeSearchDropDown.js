@@ -7,7 +7,7 @@ import HomeSearchDropDownItem from "./HomeSearchDropDownItem";
 function HomeSearchDropDown(props) {
 
     function homeFindUserProfileHandler(username) {
-        props.onHomeMainFindUserProfileHandler(username)
+        props.onHomeMainFindUserProfile(username)
     }
     return (
         <div className="homeSearchDropDown">

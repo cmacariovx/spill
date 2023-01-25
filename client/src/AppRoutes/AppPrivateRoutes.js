@@ -6,8 +6,10 @@ function AppPrivateRoutes() {
     const auth = useContext(AuthContext)
 
     return (
-        auth.token ? <Outlet /> : <Navigate to="/"/>
+        auth.token ? <Outlet /> : <Navigate to="/"/> // doesnt fail until request is made
     )
 }
+
+// console.log("Auth Token Failed: " + auth.token)
 
 export default AppPrivateRoutes

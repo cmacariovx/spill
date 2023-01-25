@@ -157,7 +157,7 @@ function HomeMainBody(props) {
                 </div>
                 <div className="searchContainer">
                     <input className="searchInput" placeholder="Find a User" onChange={(e) => setSearchTerm(e.target.value)}></input>
-                    {searchingBool && <HomeSearchDropDown onHomeFindUserProfile={homeMainFindUserProfileHandler} fetchedUsersArr={receivedUsers} />}
+                    {searchingBool && <HomeSearchDropDown onHomeMainFindUserProfile={homeMainFindUserProfileHandler} fetchedUsersArr={receivedUsers} />}
                 </div>
                 <div className="topCreatorsContainer">
                     <div className="topCreatorsTitleContainer">
