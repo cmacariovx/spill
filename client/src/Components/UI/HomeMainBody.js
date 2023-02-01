@@ -44,6 +44,7 @@ function HomeMainBody(props) {
         let postTextDataMain = postTextData.current.value
         let newPost = {
             'userId': auth.userId,
+            'creatorUsername': auth.username,
             'mainText': postTextDataMain,
             'timePosted': Date.now(),
             'likeCount': 0,
@@ -69,21 +70,24 @@ function HomeMainBody(props) {
 
     let mainPostFeedPosts = [ // load an array of 10
         {
-            'userId': '@cmacariovx',
+            'userId': '012',
+            'creatorUsername': 'cmacariovx',
             'mainText': 'Warzone 2 is looking a bit more polished now!',
             'timePosted': Date.now(),
             'likeCount': 543,
             'comments': []
         },
         {
-            'userId': '@anon123',
+            'userId': '013',
+            'creatorUsername': 'anon123',
             'mainText': 'Testing',
             'timePosted': Date.now(),
             'likeCount': 2,
             'comments': []
         },
         {
-            'userId': '@guest444',
+            'userId': '014',
+            'creatorUsername': 'guest444',
             'mainText': 'Does Socia have star potential?',
             'timePosted': Date.now(),
             'likeCount': 991,

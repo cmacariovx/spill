@@ -19,7 +19,7 @@ async function userSignup (req, res, next, newUser) {
 
         result = await db.collection("users").insertOne(newUser)
     }
-    catch (error) { 
+    catch (error) {
         return res.json({"message": "Could not add user"})
     }
 
@@ -52,6 +52,7 @@ async function createPostMongo(req, res, next, postData) {
         const db = client.db()
         response = await db.collection("posts").insertOne({
             'userId': postData.userId,
+            'creatorUser': postData.creatorUsername,
             'mainText': postData.mainText,
             'timePosted': postData.timePosted,
             'likeCount': 0,

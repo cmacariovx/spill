@@ -11,19 +11,19 @@ function HomeDetailedPostCard(props) {
 
     let commentsMainList = [
         {
-            'commentUsername': '@cmacariovx',
+            'commentUsername': 'cmacariovx',
             'commentBodyText': 'Agreed',
         },
         {
-            'commentUsername': '@anon1234',
+            'commentUsername': 'anon1234',
             'commentBodyText': 'Yea for sure',
         },
         {
-            'commentUsername': '@guest444',
+            'commentUsername': 'guest444',
             'commentBodyText': 'Eh not seeing it',
         },
         {
-            'commentUsername': '@0re',
+            'commentUsername': '0re',
             'commentBodyText': 'Lets run some duos',
         }
     ]
@@ -49,7 +49,7 @@ function HomeDetailedPostCard(props) {
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer">
                         <img src={profilePicDetailed} className="homeDetailedProfilePic" alt=""></img>
-                        <p className="homeDetailedProfileUsername">{detailedCardData.userId}</p>
+                        <p className="homeDetailedProfileUsername">{"@" + detailedCardData.creatorUsername}</p>
                     </div>
                     <div className="homeDetailedPostContainer">
                         <p className="homeDetailedPostText">{detailedCardData.mainText}</p>

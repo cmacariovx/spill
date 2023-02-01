@@ -12,7 +12,7 @@ function HomePostCard(props) {
     return (
         <div className="homePostCardContainer" onClick={() => {props.onShowCard(); sendCardData();}}>
             <div className="postCardUserContainer">
-                <p className="postCardUsername">{props.homePostCardData.userId}</p>
+                <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
                 <img className="postCardUserPic" src={personal} alt=""/>
             </div>
             <div className="postCardBodyContainer">

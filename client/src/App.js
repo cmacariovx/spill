@@ -16,29 +16,32 @@ import { AuthContext } from './context/auth-context'
 function App() {
   const [token, setToken] = useState(null)
   const [userId, setUserId] = useState(null)
-  const [profileUsername, setProfileUsername] = useState(null)
+  const [usernameAuth, setUsernameAuth] = useState(null)
   const [loadingLogin, setLoadingLogin] = useState(true)
 
-  const login = useCallback((uid, token) => {
+  // const [profileUsername, setProfileUsername] = useState(null)
+
+  const login = useCallback((uid, token, username) => {
     setToken(token)
     setUserId(uid)
-
+    setUsernameAuth(username)
     // updates state on every rerender/refresh if login is called and causes component to render for 2nd time
     // setToken and setUserId fully reruns component and calls AppPrivateRoutes again with actual token
 
-    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token}))
+    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token, username: username}))
   }, [])
 
   const logout = useCallback(() => {
     setToken(null)
     setUserId(null)
+    setUsernameAuth(null)
     localStorage.removeItem('userData')
   }, [])
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
     if (storedData && storedData.token) {
-      login(storedData.userId, storedData.token)
+      login(storedData.userId, storedData.token, storedData.username)
     }
     setLoadingLogin(false)
   }, [login]) // will run everytime and call login which will set token and userId state if userData is in localstorage
@@ -58,6 +61,7 @@ function App() {
           isLoggedIn: !!token,
           token: token,
           userId: userId,
+          username: usernameAuth,
           login: login,
           logout: logout
         }}

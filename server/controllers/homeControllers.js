@@ -4,10 +4,11 @@ require("dotenv").config()
 const jwtSecret = process.env.JWT_SECRET
 
 async function createPost(req, res, next) {
-    const { userId, mainText, timePosted, likeCount, comments } = req.body
+    const { userId, creatorUsername, mainText, timePosted, likeCount, comments } = req.body
 
     const postData = {
         userId: userId,
+        creatorUsername: creatorUsername,
         mainText: mainText,
         timePosted: timePosted,
         likeCount: 0,
@@ -19,7 +20,7 @@ async function createPost(req, res, next) {
 
 async function searchUsers(req, res, next) {
     const { searchTerm } = req.body
-    
+
     const searchData = {
         searchTerm: searchTerm
     }

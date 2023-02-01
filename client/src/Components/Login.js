@@ -24,10 +24,10 @@ function Login() {
                 'Content-Type': 'application/json'
             }
         })
-        
+
         const data = await response.json()
 
-        auth.login(data.userId, data.token)
+        auth.login(data.userId, data.token, data.username)
     }
     async function demoLoginUserHandler(event) {
         event.preventDefault()
@@ -42,10 +42,10 @@ function Login() {
                 'Content-Type': 'application/json'
             }
         })
-        
+
         const data = await response.json()
 
-        auth.login(data.userId, data.token)
+        auth.login(data.userId, data.token, data.username)
     }
     return (
         <div className="loginBackdrop">

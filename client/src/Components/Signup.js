@@ -27,10 +27,10 @@ function Signup() {
                 'Content-Type': 'application/json'
             }
         })
-        
+
         const data = await response.json()
         console.log(data)
-        auth.login(data.userId, data.token)
+        auth.login(data.userId, data.token, data.username)
     }
 
     async function demoLoginUserHandlerSignup(event) {
@@ -46,10 +46,10 @@ function Signup() {
                 'Content-Type': 'application/json'
             }
         })
-        
+
         const data = await response.json()
 
-        auth.login(data.userId, data.token)
+        auth.login(data.userId, data.token, data.username)
     }
 
     return (
