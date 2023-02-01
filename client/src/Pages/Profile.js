@@ -11,7 +11,7 @@ import { AuthContext } from "../context/auth-context";
 function Profile(props) {
     let [cardClick2, setCardClick2] = useState(false)
     let [detailedCardData2, setDetailedCardData2] = useState({})
-    let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
+    // let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
     let [userData, setUserData] = useState(null)
     let [dataFetched, setDataFetched] = useState(true)
 
@@ -49,7 +49,7 @@ function Profile(props) {
         setDetailedCardData2(detailedPostData2)
     }
 
-    async function fetchUserProfile() {
+    async function fetchUserProfile(profileUsername) {
         let response = await fetch("http://localhost:5000/profile/" + profileUsername, {
             method: "POST",
             body: JSON.stringify({profileUsername: profileUsername}),
@@ -66,11 +66,11 @@ function Profile(props) {
     }
 
     // async function populateProfilePage(userDataObj) {
-        
+
     // }
 
     useEffect(() => {
-        fetchUserProfile()
+        fetchUserProfile(window.location.pathname.slice(9))
     }, [])
 
     // useEffect(() => {

@@ -17,11 +17,15 @@ function App() {
   const [token, setToken] = useState(null)
   const [userId, setUserId] = useState(null)
   const [profileUsername, setProfileUsername] = useState(null)
+  const [loadingLogin, setLoadingLogin] = useState(true)
 
   const login = useCallback((uid, token) => {
     setToken(token)
     setUserId(uid)
+
+    // updates state on every rerender/refresh if login is called and causes component to render for 2nd time
     // setToken and setUserId fully reruns component and calls AppPrivateRoutes again with actual token
+
     localStorage.setItem('userData', JSON.stringify({userId: uid, token: token}))
   }, [])
 
@@ -36,43 +40,20 @@ function App() {
     if (storedData && storedData.token) {
       login(storedData.userId, storedData.token)
     }
-  }, [login])
+    setLoadingLogin(false)
+  }, [login]) // will run everytime and call login which will set token and userId state if userData is in localstorage
 
-  function appUserProfileHandler(username) {
-    setProfileUsername(username)
-  }
-
-  // let routes
-
-  // if (token) {
-  //   routes = (
-  //     <Routes>
-  //       <Route path='/home' exact element={<Home onAppFindUserProfileHandler={appUserProfileHandler}/>} />
-  //       <Route path='/profile/:username' exact element={<Profile usernameProfile={profileUsername}/>} />
-  //       {/* <Route
-  //       path="*"
-  //       element={<Navigate to="/home" replace />}
-  //       /> */}
-  //     </Routes>
-  //   )
+  // function appUserProfileHandler(username) {
+  //   setProfileUsername(username)
   // }
-  // else {
-  //   routes = (
-  //     <Routes>
-  //       <Route path='/' exact element={<Landing />} />
-  //       <Route path='/auth/login' exact element={<Login />} />
-  //       <Route path='/auth/signup' exact element={<Signup />} />
-  //       {/* <Route
-  //       path="*"
-  //       element={<Navigate to="/" replace />}
-  //       /> */}
-  //     </Routes>
-  //   )
-  // }
+  // usernameProfile={profileUsername}
+  // onAppFindUserProfileHandler={appUserProfileHandler}
 
-  return (
+  // -------------- this renders before useEffect
+
+  return ( // everything rerenders with actual token on second render
     <div className="app">
-      <AuthContext.Provider 
+      <AuthContext.Provider
         value={{
           isLoggedIn: !!token,
           token: token,
@@ -82,23 +63,17 @@ function App() {
         }}
       >
         <Routes>
-          <Route element={<AppPublicRoutes />}>
+          <Route element={<AppPublicRoutes isLoadingLogin={loadingLogin}/>}>
             <Route path='/' exact element={<Landing />} />
             <Route path='/auth/login' exact element={<Login />} />
             <Route path='/auth/signup' exact element={<Signup />} />
-            <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-            />
+            <Route path="*" element={<Navigate to="/" replace />}/>
           </Route>
 
-          <Route element={<AppPrivateRoutes />}>
-            <Route path='/home' exact element={<Home onAppFindUserProfileHandler={appUserProfileHandler}/>} />
-            <Route path='/profile/:username' element={<Profile usernameProfile={profileUsername}/>} />
-            <Route
-            path="*"
-            element={<Navigate to="/home" replace />}
-            />
+          <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
+            <Route path='/home' exact element={<Home/>} />
+            <Route path='/profile/:username' element={<Profile/>} />
+            <Route path="*" element={<Navigate to="/home" replace />}/>
           </Route>
         </Routes>
       </AuthContext.Provider>

@@ -117,7 +117,7 @@ function HomeMainBody(props) {
         const typingTimeout = setTimeout(() => {
             getUsersData(fetchSearchedUsers)     // while fetching load spinner
         }, 500)
-    
+
         return () => clearTimeout(typingTimeout)
     }, [searchTerm])
 
@@ -127,9 +127,10 @@ function HomeMainBody(props) {
         setReceivedUsers(fetchedUsers)
     }
 
-    function homeMainFindUserProfileHandler(username) {
-        props.onHomeFindUserProfileHandler(username)
-    }
+    // function homeMainFindUserProfileHandler(username) {
+    //     props.onHomeFindUserProfileHandler(username)
+    // }
+    // onHomeMainFindUserProfile={homeMainFindUserProfileHandler}
 
     return (
         <div className="homeMainBodyContainer">
@@ -157,7 +158,7 @@ function HomeMainBody(props) {
                 </div>
                 <div className="searchContainer">
                     <input className="searchInput" placeholder="Find a User" onChange={(e) => setSearchTerm(e.target.value)}></input>
-                    {searchingBool && <HomeSearchDropDown onHomeMainFindUserProfile={homeMainFindUserProfileHandler} fetchedUsersArr={receivedUsers} />}
+                    {searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} />}
                 </div>
                 <div className="topCreatorsContainer">
                     <div className="topCreatorsTitleContainer">

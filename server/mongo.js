@@ -19,7 +19,7 @@ async function userSignup (req, res, next, newUser) {
 
         result = await db.collection("users").insertOne(newUser)
     }
-    catch (error) {
+    catch (error) { 
         return res.json({"message": "Could not add user"})
     }
 

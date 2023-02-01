@@ -6,13 +6,14 @@ import HomeSearchDropDownItem from "./HomeSearchDropDownItem";
 
 function HomeSearchDropDown(props) {
 
-    function homeFindUserProfileHandler(username) {
-        props.onHomeMainFindUserProfile(username)
-    }
+    // function homeFindUserProfileHandler(username) {
+    //     props.onHomeMainFindUserProfile(username)
+    // }
+    // onFindUserProfileHandler={homeFindUserProfileHandler}
     return (
         <div className="homeSearchDropDown">
             {props.fetchedUsersArr.map((user, index) => (
-                <HomeSearchDropDownItem key={user._id} userData={user} onFindUserProfileHandler={homeFindUserProfileHandler}/>
+                <HomeSearchDropDownItem key={user._id} userData={user}/>
             ))}
         </div>
     )

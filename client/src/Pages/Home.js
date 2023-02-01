@@ -5,12 +5,13 @@ import HomeMainBody from "../Components/UI/HomeMainBody";
 import './Home.css'
 
 function Home(props) {
-    function homeTopFindUserProfileHandler(username) {
-        props.onAppFindUserProfileHandler(username)
-    }
+    // function homeTopFindUserProfileHandler(username) {
+    //     props.onAppFindUserProfileHandler(username)
+    // }
+    // onHomeFindUserProfileHandler={homeTopFindUserProfileHandler}
     return (
         <div className="homeContainer">
-            <HomeMainBody onHomeFindUserProfileHandler={homeTopFindUserProfileHandler}/>
+            <HomeMainBody />
         </div>
     )
 }
