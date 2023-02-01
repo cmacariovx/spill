@@ -17,7 +17,11 @@ async function userSignup (req, res, next) {
         'email': email,
         'password': hashedPassword, // add profile pic link
         'followers': [],
+        'followersNum': 0,
         'following': [],
+        'followingNum': 0,
+        'posts': [],
+        'postsNum': 0,
         'verified': false,
         'interactedPosts': []
     }
