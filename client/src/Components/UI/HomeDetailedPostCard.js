@@ -1,42 +1,45 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 
 import './HomeDetailedPostCard.css'
 
 import profilePicDetailed from './Images/personal.jpg'
 
 import HomeCommentCard from "./HomeCommentCard";
+import { AuthContext } from "../../context/auth-context";
 
 function HomeDetailedPostCard(props) {
     let [detailedCardData, setDetailedCardData] = useState(props.detailedCardData)
-
-    let commentsMainList = [
-        {
-            'commentUsername': 'cmacariovx',
-            'commentBodyText': 'Agreed',
-        },
-        {
-            'commentUserna': 'anon1234',
-            'commentBodyText': 'Yea for sure',
-        },
-        {
-            'commentUser': 'guest444',
-            'commentBodyText': 'Eh not seeing it',
-        },
-        {
-            'commentUser': '0re',
-            'commentBodyText': 'Lets run some duos',
-        }
-    ]
-
-    let [listOfComments, setListOfComments] = useState(commentsMainList)
+    let [listOfComments, setListOfComments] = useState([])
 
     let currentCommentData = useRef()
 
-    function addCommentHandler() {
+    const auth = useContext(AuthContext)
+
+    useEffect(() => {
+        setListOfComments(detailedCardData.comments)
+    }, [])
+
+    async function addCommentHandler() {
         let newComment = {
-            'commentUsername': '@cmacariovx',
+            'postId': detailedCardData._id,
+            'postCreatorId': detailedCardData.userId,
+            'postCreatorUsername': detailedCardData.creatorUser,
+            'commentUserId': auth.userId,
+            'commentUsername': auth.username,
             'commentBodyText': currentCommentData.current.value,
+            'commentTimePosted': Date.now()
         }
+
+        const response = await fetch("http://localhost:5000/home/createComment", {
+            method: "POST",
+            body: JSON.stringify(newComment),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
 
         setListOfComments(prevListOfComments => {
             return [newComment, ...prevListOfComments]
@@ -49,7 +52,7 @@ function HomeDetailedPostCard(props) {
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer">
                         <img src={profilePicDetailed} className="homeDetailedProfilePic" alt=""></img>
-                        <p className="homeDetailedProfileUsername">{"@" + detailedCardData.creatorUser}</p>
+                        <p className="homeDetailedProfileUsername">{"@" + detailedCardData.creatorUsername}</p>
                     </div>
                     <div className="homeDetailedPostContainer">
                         <p className="homeDetailedPostText">{detailedCardData.mainText}</p>

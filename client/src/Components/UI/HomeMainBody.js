@@ -20,6 +20,7 @@ function HomeMainBody(props) {
     let [searchTerm, setSearchTerm] = useState('')
     let [receivedUsers, setReceivedUsers] = useState(null)
     let [listOfPosts, setListOfPosts] = useState([])
+    let [addingPost, setAddingPost] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -42,6 +43,7 @@ function HomeMainBody(props) {
     }
 
     async function addPostHandler() {
+        setAddingPost(true)
         let postTextDataMain = postTextData.current.value
         let newPost = {
             'userId': auth.userId,
@@ -67,6 +69,10 @@ function HomeMainBody(props) {
         setListOfPosts(prevListOfPosts => {
             return [newPost, ...prevListOfPosts]
         })
+
+        setAddingPost(false)
+
+        console.log(newPost)
     }
 
     function detailedCardDataHandler(detailedPostData) {
@@ -146,7 +152,8 @@ function HomeMainBody(props) {
 
                 <div className="homeFeedContainer">
                     {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData}/>}
-                    {listOfPosts.map((post, index) => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler} key={index}/>)}
+
+                    {!addingPost ? (listOfPosts.map((post, index) => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler} key={index}/>)) : null}
                 </div>
             </div>
             <div className="homeMainBodyRight">

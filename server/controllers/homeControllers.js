@@ -66,8 +66,25 @@ async function fetchPosts(req, res, next) {
     let mongoFetchPosts = await mongoConnections.fetchPostsMongo(req, res, next, followingData, loggedInUsername)
 }
 
+async function createComment(req, res, next) {
+    const { postId, postCreatorId, postCreatorUsername, commentUserId, commentUsername, commentBodyText, commentTimePosted } = req.body
+
+    const commentData = {
+        postId: postId,
+        postCreatorId: postCreatorId,
+        postCreatorUsername: postCreatorUsername,
+        commentUserId: commentUserId,
+        commentUsername: commentUsername,
+        commentBodyText: commentBodyText,
+        commentTimePosted: commentTimePosted
+    }
+    
+    let mongoCreateComment = await mongoConnections.createCommentMongo(req, res, next, commentData)
+}
+
 exports.createPost = createPost
 exports.searchUsers = searchUsers
 exports.followUser = followUser
 exports.unfollowUser = unfollowUser
 exports.fetchPosts = fetchPosts
+exports.createComment = createComment

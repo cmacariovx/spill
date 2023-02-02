@@ -1,4 +1,5 @@
 const MongoClient = require("mongodb").MongoClient
+const ObjectId = require("mongodb").ObjectId
 require("dotenv").config()
 
 const mongoUrl = process.env.MONGO_URL
@@ -46,25 +47,39 @@ async function userLogin (req, res, next, userCredentials) {
 
 async function createPostMongo(req, res, next, postData) {
     const client = new MongoClient(mongoUrl)
-    let response
+    let response1
+    let response2
     try {
         await client.connect()
         const db = client.db()
-        response = await db.collection("posts").insertOne({
+        response1 = await db.collection("posts").insertOne({
             'userId': postData.userId,
-            'creatorUser': postData.creatorUsername,
+            'creatorUsername': postData.creatorUsername,
             'mainText': postData.mainText,
             'timePosted': postData.timePosted,
             'likeCount': 0,
             'comments': []
         })
+
+        response2 = await db.collection("users").updateOne({"username": postData.creatorUsername},
+        {
+            $push: {
+                posts: {
+                    postId: response1.insertedId
+                }
+            },
+            $inc: {
+                postsNum: 1
+            }
+        })
+
     }
     catch(error) {
         return res.json({"message": "Could not create post"})
     }
 
     client.close()
-    res.json(response)
+    res.json({response1: response1, response2: response2})
 }
 
 async function searchUsersMongo(req, res, next, searchData) {
@@ -223,13 +238,13 @@ async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) 
     try {
         const db = client.db()
         let collection = db.collection("posts")
-        let query = {creatorUser: {$in: [...following]}}
+        let query = {creatorUsername: {$in: [...following]}}
 
         const cursor = collection.find(query).sort({_id: -1}).limit(20)
 
         findAllResponse = await cursor.toArray()
 
-        const cursor2 = db.collection("posts").find({"creatorUser": loggedInUsername}).sort({_id: -1}).limit(1)
+        const cursor2 = db.collection("posts").find({"creatorUsername": loggedInUsername}).sort({_id: -1}).limit(1)
 
         findOneResponse = await cursor2.toArray()
     }
@@ -240,6 +255,35 @@ async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) 
     res.json({findOneResponse: findOneResponse, findAllResponse: findAllResponse})
 }
 
+async function createCommentMongo(req, res, next, commentData) {
+    const client = new MongoClient(mongoUrl)
+
+    let response
+    try {
+        await client.connect()
+        const db = client.db()
+        response = await db.collection("posts").updateOne({_id: new ObjectId(commentData.postId)}, {
+            $push: {
+                comments: {
+                    postId: commentData.postId,
+                    postCreatorId: commentData.postCreatorId,
+                    postCreatorUsername: commentData.postCreatorUsername,
+                    commentUserId: commentData.commentUserId,
+                    commentUsername: commentData.commentUsername,
+                    commentBodyText: commentData.commentBodyText,
+                    commentTimePosted: commentData.commentTimePosted
+                }
+            }
+        })
+    }
+    catch(error) {
+        return res.json({"message": "Could not create comment"})
+    }
+
+    client.close()
+    res.json(response)
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createPostMongo = createPostMongo
@@ -248,3 +292,4 @@ exports.fetchUserProfileMongo = fetchUserProfileMongo
 exports.addFollowerMongo = addFollowerMongo
 exports.removeFollowerMongo = removeFollowerMongo
 exports.fetchPostsMongo = fetchPostsMongo
+exports.createCommentMongo = createCommentMongo
