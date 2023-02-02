@@ -11,9 +11,10 @@ import { AuthContext } from "../context/auth-context";
 function Profile(props) {
     let [cardClick2, setCardClick2] = useState(false)
     let [detailedCardData2, setDetailedCardData2] = useState({})
-    // let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
     let [userData, setUserData] = useState(null)
     let [dataFetched, setDataFetched] = useState(true)
+
+    // let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
 
     const auth = useContext(AuthContext)
 
@@ -77,6 +78,27 @@ function Profile(props) {
     //     populateProfilePage(userData)
     // }, [userData])
 
+    async function followHandler(event) {
+        event.preventDefault()
+
+        const response = await fetch("http://localhost:5000/home/follow", {
+            method: "POST",
+            body: JSON.stringify({
+                "loggedInUserId": auth.userId,
+                "loggedInUsername": auth.username,
+                "followedUserId": userData._id,
+                "followedUsername": userData.username
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        console.log(data)
+    }
+
     return (
         <div className="profilePageContainer">
             <div className="mainProfileBodyContainer">
@@ -102,7 +124,7 @@ function Profile(props) {
                     </div>
                 </div>
                 <div className="mainProfileBodyFollowContainer">
-                    <button className="followButton">Follow</button>
+                    <button className="followButton" onClick={followHandler}>Follow</button>
                     <button className="editButton">Edit Profile</button>
                 </div>
                 <div className="mainProfilePostsFeedContainer">

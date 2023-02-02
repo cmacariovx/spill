@@ -114,7 +114,7 @@ function HomeMainBody(props) {
         })
 
         let searchedUsers = await response.json()
-        return searchedUsers
+        return searchedUsers 
     }
 
     useEffect(() => {

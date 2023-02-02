@@ -30,5 +30,19 @@ async function searchUsers(req, res, next) {
     res.json(mongoSearchUsers)
 }
 
+async function followUser(req, res, next) {
+    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername } = req.body
+
+    let usersData = {
+        loggedInUserId: loggedInUserId,
+        loggedInUsername: loggedInUsername,
+        followedUserId: followedUserId,
+        followedUsername: followedUsername
+    }
+
+    let mongoAddFollower = await mongoConnections.addFollowerMongo(req, res, next, usersData)
+}
+
 exports.createPost = createPost
 exports.searchUsers = searchUsers
+exports.followUser = followUser

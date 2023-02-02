@@ -124,8 +124,45 @@ async function fetchUserProfileMongo(req, res, next, username) {
     res.json(response)
 }
 
+async function addFollowerMongo(req, res, next, usersData) {
+    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername } = usersData
+
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+
+    // update logged in user's following list
+    let response1 = await db.collection("users").updateOne({"username": loggedInUsername},
+        {
+            $push: {
+                following: {
+                    followedUserId: followedUserId,
+                    followedUsername: followedUsername
+                }
+            }
+        }
+    )
+
+    // update followed user's followers list
+    let response2 = await db.collection("users").updateOne({"username": followedUsername},
+        {
+            $push: {
+                followers: {
+                    loggedInUserId: loggedInUserId,
+                    loggedInUsername: loggedInUsername
+                }
+            }
+        }
+    )
+
+    client.close()
+    res.json({response1: response1, response2: response2})
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createPostMongo = createPostMongo
 exports.searchUsersMongo = searchUsersMongo
 exports.fetchUserProfileMongo = fetchUserProfileMongo
+exports.addFollowerMongo = addFollowerMongo
