@@ -75,7 +75,7 @@ function Profile(props) {
     }, [])
 
     async function followHandler(event) {
-        event.preventDefault()            // could allow it to refresh for new data
+        event.preventDefault()
 
         const response = await fetch("http://localhost:5000/home/follow", {
             method: "POST",
@@ -93,6 +93,7 @@ function Profile(props) {
 
         const data = await response.json()
         console.log(data)
+        window.location.reload()
     }
 
     async function unfollowHandler(event) {
@@ -114,6 +115,7 @@ function Profile(props) {
 
         const data = await response.json()
         console.log(data)
+        window.location.reload()
     }
 
     return (

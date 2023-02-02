@@ -151,6 +151,11 @@
                 transition: linear 0.1s;
             }
 
+                .unfollowButton:hover {
+                    background-color: rgb(199, 199, 199);
+                    transition: linear 0.1s;
+                }
+
             .editButton {
                 height: 45px;
                 width: 110px;
