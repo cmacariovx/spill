@@ -218,24 +218,24 @@ async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) 
     await client.connect()
 
     let findAllResponse
+    let findOneResponse
 
     try {
         const db = client.db()
         let collection = db.collection("posts")
         let query = {creatorUser: {$in: [...following]}}
 
-        const cursor = collection.find(query)
+        const cursor = collection.find(query).sort({_id: -1}).limit(20)
 
         findAllResponse = await cursor.toArray()
+
+        const cursor2 = db.collection("posts").find({"creatorUser": loggedInUsername}).sort({_id: -1}).limit(1)
+
+        findOneResponse = await cursor2.toArray()
     }
     finally {
         await client.close()
     }
-
-    await client.connect()
-    const db = client.db()
-    let findOneResponse = await db.collection("posts").findOne({"creatorUser": loggedInUsername})
-    client.close()
 
     res.json({findOneResponse: findOneResponse, findAllResponse: findAllResponse})
 }

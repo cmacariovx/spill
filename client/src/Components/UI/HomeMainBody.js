@@ -123,9 +123,8 @@ function HomeMainBody(props) {
 
     async function getFetchedPosts(cb) {
         const fetchedPosts = await cb()
-        console.log(fetchedPosts)
 
-        setListOfPosts([fetchedPosts.findOneResponse, ...fetchedPosts.findAllResponse])
+        setListOfPosts([...fetchedPosts.findOneResponse, ...fetchedPosts.findAllResponse])
     }
 
     useEffect(() => {
