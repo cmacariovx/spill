@@ -12,8 +12,9 @@ function Profile(props) {
     let [cardClick2, setCardClick2] = useState(false)
     let [detailedCardData2, setDetailedCardData2] = useState({})
     let [userData, setUserData] = useState(null)
-    let [dataFetched, setDataFetched] = useState(true)
+    let [dataFetched, setDataFetched] = useState(false)
     let [isFollowing, setIsFollowing] = useState(false)
+    let [isSelfProfile, setIsSelfProfile] = useState(false)
 
     // let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
 
@@ -63,9 +64,13 @@ function Profile(props) {
 
         let data = await response.json()
         setUserData(data)
+
+        if (auth.username === profileUsername) setIsSelfProfile(true)
+
         data.followers.forEach(follower => {
             if (follower.loggedInUsername === auth.username) setIsFollowing(true)
         })
+
         setDataFetched(true)
         console.log(data)
     }
@@ -144,12 +149,18 @@ function Profile(props) {
                 </div>
                 <div className="mainProfileBodyFollowContainer">
                     {/* if data is fetched not && */}
+                    {/* if !isSelfProfile not && */}
 
-                    {(dataFetched && !isFollowing)
-                    ? <button className="followButton" onClick={followHandler}>Follow</button>
-                    : <button className="unfollowButton" onClick={unfollowHandler}>Unfollow</button>}
+                    {dataFetched
+                        ?
+                            !isSelfProfile &&
+                            (!isFollowing
+                            ? <button className="followButton" onClick={followHandler}>Follow</button>
+                            : <button className="unfollowButton" onClick={unfollowHandler}>Unfollow</button>)
+                        : null
+                    }
 
-                    <button className="editButton">Edit Profile</button>
+                    {dataFetched ? isSelfProfile && <button className="editButton">Edit Profile</button> : null}
                 </div>
                 <div className="mainProfilePostsFeedContainer">
                     {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2} detailedCardData={detailedCardData2}/>}
