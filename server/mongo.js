@@ -140,6 +140,9 @@ async function addFollowerMongo(req, res, next, usersData) {
                     followedUserId: followedUserId,
                     followedUsername: followedUsername
                 }
+            },
+            $inc: {
+                followingNum: 1
             }
         }
     )
@@ -152,6 +155,51 @@ async function addFollowerMongo(req, res, next, usersData) {
                     loggedInUserId: loggedInUserId,
                     loggedInUsername: loggedInUsername
                 }
+            },
+            $inc: {
+                followersNum: 1
+            }
+        }
+    )
+
+    client.close()
+    res.json({response1: response1, response2: response2})
+}
+
+async function removeFollowerMongo(req, res, next, usersData) {
+    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername } = usersData
+
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+
+    // update logged in user's following list
+    let response1 = await db.collection("users").updateOne({"username": loggedInUsername},
+        {
+            $pull: {
+                following: {
+                    followedUserId: followedUserId,
+                    followedUsername: followedUsername
+                }
+            },
+            $inc: {
+                followingNum: -1
+            }
+        }
+    )
+
+    // update followed user's followers list
+    let response2 = await db.collection("users").updateOne({"username": followedUsername},
+        {
+            $pull: {
+                followers: {
+                    loggedInUserId: loggedInUserId,
+                    loggedInUsername: loggedInUsername
+                }
+            },
+            $inc: {
+                followersNum: -1
             }
         }
     )
@@ -166,3 +214,4 @@ exports.createPostMongo = createPostMongo
 exports.searchUsersMongo = searchUsersMongo
 exports.fetchUserProfileMongo = fetchUserProfileMongo
 exports.addFollowerMongo = addFollowerMongo
+exports.removeFollowerMongo = removeFollowerMongo

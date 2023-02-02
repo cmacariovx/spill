@@ -13,6 +13,7 @@ function Profile(props) {
     let [detailedCardData2, setDetailedCardData2] = useState({})
     let [userData, setUserData] = useState(null)
     let [dataFetched, setDataFetched] = useState(true)
+    let [isFollowing, setIsFollowing] = useState(false)
 
     // let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
 
@@ -62,26 +63,42 @@ function Profile(props) {
 
         let data = await response.json()
         setUserData(data)
+        data.followers.forEach(follower => {
+            if (follower.loggedInUsername === auth.username) setIsFollowing(true)
+        })
         setDataFetched(true)
         console.log(data)
     }
-
-    // async function populateProfilePage(userDataObj) {
-
-    // }
 
     useEffect(() => {
         fetchUserProfile(window.location.pathname.slice(9))
     }, [])
 
-    // useEffect(() => {
-    //     populateProfilePage(userData)
-    // }, [userData])
-
     async function followHandler(event) {
-        event.preventDefault()
+        event.preventDefault()            // could allow it to refresh for new data
 
         const response = await fetch("http://localhost:5000/home/follow", {
+            method: "POST",
+            body: JSON.stringify({
+                "loggedInUserId": auth.userId,
+                "loggedInUsername": auth.username,
+                "followedUserId": userData._id,
+                "followedUsername": userData.username
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        console.log(data)
+    }
+
+    async function unfollowHandler(event) {
+        event.preventDefault()
+
+        const response = await fetch("http://localhost:5000/home/unfollow", {
             method: "POST",
             body: JSON.stringify({
                 "loggedInUserId": auth.userId,
@@ -124,7 +141,12 @@ function Profile(props) {
                     </div>
                 </div>
                 <div className="mainProfileBodyFollowContainer">
-                    <button className="followButton" onClick={followHandler}>Follow</button>
+                    {/* if data is fetched not && */}
+
+                    {(dataFetched && !isFollowing)
+                    ? <button className="followButton" onClick={followHandler}>Follow</button>
+                    : <button className="unfollowButton" onClick={unfollowHandler}>Unfollow</button>}
+
                     <button className="editButton">Edit Profile</button>
                 </div>
                 <div className="mainProfilePostsFeedContainer">

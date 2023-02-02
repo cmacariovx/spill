@@ -13,4 +13,6 @@ router.post("/searchUsers", homeControllers.searchUsers)
 
 router.post("/follow", homeControllers.followUser)
 
+router.post("/unfollow", homeControllers.unfollowUser)
+
 module.exports = router

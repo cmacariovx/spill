@@ -135,6 +135,22 @@
                     transition: linear 0.1s;
                 }
 
+            .unfollowButton {
+                height: 45px;
+                width: 110px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(255, 255, 255);
+                color: #212121;
+                border-radius: 5px;
+                padding: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: linear 0.1s;
+            }
+
             .editButton {
                 height: 45px;
                 width: 110px;
