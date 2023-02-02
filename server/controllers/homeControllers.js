@@ -56,7 +56,18 @@ async function unfollowUser(req, res, next) {
     let mongoRemoveFollower = await mongoConnections.removeFollowerMongo(req, res, next, usersData)
 }
 
+async function fetchPosts(req, res, next) {
+    const { followingArr, loggedInUsername } = req.body
+
+    let followingData = {
+        followingArr: followingArr
+    }
+
+    let mongoFetchPosts = await mongoConnections.fetchPostsMongo(req, res, next, followingData, loggedInUsername)
+}
+
 exports.createPost = createPost
 exports.searchUsers = searchUsers
 exports.followUser = followUser
 exports.unfollowUser = unfollowUser
+exports.fetchPosts = fetchPosts

@@ -18,39 +18,34 @@ function App() {
   const [userId, setUserId] = useState(null)
   const [usernameAuth, setUsernameAuth] = useState(null)
   const [loadingLogin, setLoadingLogin] = useState(true)
+  const [followingArr, setFollowingArr] = useState(null)
 
-  // const [profileUsername, setProfileUsername] = useState(null)
-
-  const login = useCallback((uid, token, username) => {
+  const login = useCallback((uid, token, username, following) => {
     setToken(token)
     setUserId(uid)
     setUsernameAuth(username)
+    setFollowingArr(following)
     // updates state on every rerender/refresh if login is called and causes component to render for 2nd time
     // setToken and setUserId fully reruns component and calls AppPrivateRoutes again with actual token
 
-    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token, username: username}))
+    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token, username: username, following: following}))
   }, [])
 
   const logout = useCallback(() => {
     setToken(null)
     setUserId(null)
     setUsernameAuth(null)
+    setFollowingArr(null)
     localStorage.removeItem('userData')
   }, [])
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
     if (storedData && storedData.token) {
-      login(storedData.userId, storedData.token, storedData.username)
+      login(storedData.userId, storedData.token, storedData.username, storedData.following)
     }
     setLoadingLogin(false)
   }, [login]) // will run everytime and call login which will set token and userId state if userData is in localstorage
-
-  // function appUserProfileHandler(username) {
-  //   setProfileUsername(username)
-  // }
-  // usernameProfile={profileUsername}
-  // onAppFindUserProfileHandler={appUserProfileHandler}
 
   // -------------- this renders before useEffect
 
@@ -62,6 +57,7 @@ function App() {
           token: token,
           userId: userId,
           username: usernameAuth,
+          following: followingArr,
           login: login,
           logout: logout
         }}

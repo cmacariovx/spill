@@ -19,6 +19,7 @@ function HomeMainBody(props) {
     let [searchingBool, setSearchingBool] = useState(false)
     let [searchTerm, setSearchTerm] = useState('')
     let [receivedUsers, setReceivedUsers] = useState(null)
+    let [listOfPosts, setListOfPosts] = useState([])
 
     const auth = useContext(AuthContext)
 
@@ -63,39 +64,10 @@ function HomeMainBody(props) {
         const data = await response.json()
         console.log(data)
 
-        setListOfPosts(prevListOfPosts => {  // change to db fetch
+        setListOfPosts(prevListOfPosts => {
             return [newPost, ...prevListOfPosts]
         })
     }
-
-    let mainPostFeedPosts = [ // load an array of 10
-        {
-            'userId': '012',
-            'creatorUsername': 'cmacariovx',
-            'mainText': 'Warzone 2 is looking a bit more polished now!',
-            'timePosted': Date.now(),
-            'likeCount': 543,
-            'comments': []
-        },
-        {
-            'userId': '013',
-            'creatorUsername': 'anon123',
-            'mainText': 'Testing',
-            'timePosted': Date.now(),
-            'likeCount': 2,
-            'comments': []
-        },
-        {
-            'userId': '014',
-            'creatorUsername': 'guest444',
-            'mainText': 'Does Socia have star potential?',
-            'timePosted': Date.now(),
-            'likeCount': 991,
-            'comments': []
-        }
-    ]
-
-    let [listOfPosts, setListOfPosts] = useState(mainPostFeedPosts)
 
     function detailedCardDataHandler(detailedPostData) {
         setDetailedData(detailedPostData)
@@ -114,7 +86,7 @@ function HomeMainBody(props) {
         })
 
         let searchedUsers = await response.json()
-        return searchedUsers 
+        return searchedUsers
     }
 
     useEffect(() => {
@@ -131,10 +103,34 @@ function HomeMainBody(props) {
         setReceivedUsers(fetchedUsers)
     }
 
-    // function homeMainFindUserProfileHandler(username) {
-    //     props.onHomeFindUserProfileHandler(username)
-    // }
-    // onHomeMainFindUserProfile={homeMainFindUserProfileHandler}
+    async function fetchPosts() {
+        // if followers array empty, fetch any recent posts
+        const response = await fetch("http://localhost:5000/home/fetchPosts", {
+            method: "POST",
+            body: JSON.stringify({
+                followingArr: auth.following,
+                loggedInUsername: auth.username
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    async function getFetchedPosts(cb) {
+        const fetchedPosts = await cb()
+        console.log(fetchedPosts)
+
+        setListOfPosts([fetchedPosts.findOneResponse, ...fetchedPosts.findAllResponse])
+    }
+
+    useEffect(() => {
+        getFetchedPosts(fetchPosts)
+    }, [])
 
     return (
         <div className="homeMainBodyContainer">

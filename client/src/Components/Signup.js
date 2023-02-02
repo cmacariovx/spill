@@ -30,7 +30,7 @@ function Signup() {
 
         const data = await response.json()
         console.log(data)
-        auth.login(data.userId, data.token, data.username)
+        auth.login(data.userId, data.token, data.username, data.following)
     }
 
     async function demoLoginUserHandlerSignup(event) {
@@ -49,7 +49,7 @@ function Signup() {
 
         const data = await response.json()
 
-        auth.login(data.userId, data.token, data.username)
+        auth.login(data.userId, data.token, data.username, data.following)
     }
 
     return (

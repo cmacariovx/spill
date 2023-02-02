@@ -26,8 +26,7 @@ function Login() {
         })
 
         const data = await response.json()
-
-        auth.login(data.userId, data.token, data.username)
+        auth.login(data.userId, data.token, data.username, data.following)
     }
     async function demoLoginUserHandler(event) {
         event.preventDefault()
@@ -45,7 +44,7 @@ function Login() {
 
         const data = await response.json()
 
-        auth.login(data.userId, data.token, data.username)
+        auth.login(data.userId, data.token, data.username, data.following)
     }
     return (
         <div className="loginBackdrop">

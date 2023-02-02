@@ -208,6 +208,38 @@ async function removeFollowerMongo(req, res, next, usersData) {
     res.json({response1: response1, response2: response2})
 }
 
+async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) {
+    const { followingArr } = followingData
+
+    let following = []
+    followingArr.forEach((user) => following.push(user.followedUsername))
+
+    const client = new MongoClient(mongoUrl)
+    await client.connect()
+
+    let findAllResponse
+
+    try {
+        const db = client.db()
+        let collection = db.collection("posts")
+        let query = {creatorUser: {$in: [...following]}}
+
+        const cursor = collection.find(query)
+
+        findAllResponse = await cursor.toArray()
+    }
+    finally {
+        await client.close()
+    }
+
+    await client.connect()
+    const db = client.db()
+    let findOneResponse = await db.collection("posts").findOne({"creatorUser": loggedInUsername})
+    client.close()
+
+    res.json({findOneResponse: findOneResponse, findAllResponse: findAllResponse})
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createPostMongo = createPostMongo
@@ -215,3 +247,4 @@ exports.searchUsersMongo = searchUsersMongo
 exports.fetchUserProfileMongo = fetchUserProfileMongo
 exports.addFollowerMongo = addFollowerMongo
 exports.removeFollowerMongo = removeFollowerMongo
+exports.fetchPostsMongo = fetchPostsMongo

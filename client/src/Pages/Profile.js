@@ -151,8 +151,7 @@ function Profile(props) {
                     {/* if data is fetched not && */}
                     {/* if !isSelfProfile not && */}
 
-                    {dataFetched
-                        ?
+                    {dataFetched ?
                             !isSelfProfile &&
                             (!isFollowing
                             ? <button className="followButton" onClick={followHandler}>Follow</button>

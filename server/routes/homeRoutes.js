@@ -15,4 +15,6 @@ router.post("/follow", homeControllers.followUser)
 
 router.post("/unfollow", homeControllers.unfollowUser)
 
+router.post("/fetchPosts", homeControllers.fetchPosts)
+
 module.exports = router
