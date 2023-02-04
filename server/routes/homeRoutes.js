@@ -19,4 +19,8 @@ router.post("/fetchPosts", homeControllers.fetchPosts)
 
 router.post("/createComment", homeControllers.createComment)
 
+router.post("/likePost", homeControllers.likePost)
+
+router.post("/unlikePost", homeControllers.unlikePost)
+
 module.exports = router

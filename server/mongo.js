@@ -57,8 +57,10 @@ async function createPostMongo(req, res, next, postData) {
             'creatorUsername': postData.creatorUsername,
             'mainText': postData.mainText,
             'timePosted': postData.timePosted,
+            'likes': [],
             'likeCount': 0,
-            'comments': []
+            'comments': [],
+            'commentCount': 0
         })
 
         response2 = await db.collection("users").updateOne({"username": postData.creatorUsername},
@@ -272,6 +274,9 @@ async function createCommentMongo(req, res, next, commentData) {
                     commentBodyText: commentData.commentBodyText,
                     commentTimePosted: commentData.commentTimePosted
                 }
+            },
+            $inc: {
+                commentCount: 1
             }
         })
     }
@@ -303,8 +308,68 @@ async function fetchPersonalPostsMongo(req, res, next, personalData) {
     finally {
         await client.close()
     }
-    
+
     res.json(response)
+}
+
+async function likePostMongo(req, res, next, data) {
+    const client = new MongoClient(mongoUrl)
+    client.connect()
+
+    const db = client.db()
+    let response1 = await db.collection("posts").updateOne({_id: new ObjectId(data.postId)}, {
+        $push: {
+            likes: {
+                postId: data.postId,
+                loggedInUserId: data.loggedInUserId,
+                loggedInUsername: data.loggedInUsername,
+            }
+        },
+        $inc: {
+            likeCount: 1
+        }
+    })
+
+    let response2 = await db.collection("users").updateOne({_id: new ObjectId(data.loggedInUserId)}, {
+        $push: {
+            interactedPosts: {
+                postId: data.postId
+            }
+        }
+    })
+
+    client.close()
+    res.json({response1: response1, response2: response2})
+}
+
+async function unlikePostMongo(req, res, next, data) {
+    const client = new MongoClient(mongoUrl)
+    client.connect()
+
+    const db = client.db()
+    let response1 = await db.collection("posts").updateOne({_id: new ObjectId(data.postId)}, {
+        $pull: {
+            likes: {
+                postId: data.postId,
+                loggedInUserId: data.loggedInUserId,
+                loggedInUsername: data.loggedInUsername,
+            }
+        },
+        $inc: {
+            likeCount: -1
+        }
+    })
+
+    let response2 = await db.collection("users").updateOne({_id: new ObjectId(data.loggedInUserId)}, {
+        $pull: {
+            interactedPosts: {
+                postId: data.postId
+            }
+        }
+    })
+
+    client.close()
+    res.json({response1: response1, response2: response2})
 }
 
 exports.userSignup = userSignup
@@ -317,3 +382,5 @@ exports.removeFollowerMongo = removeFollowerMongo
 exports.fetchPostsMongo = fetchPostsMongo
 exports.createCommentMongo = createCommentMongo
 exports.fetchPersonalPostsMongo = fetchPersonalPostsMongo
+exports.likePostMongo = likePostMongo
+exports.unlikePostMongo = unlikePostMongo

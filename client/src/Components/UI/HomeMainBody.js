@@ -50,8 +50,10 @@ function HomeMainBody(props) {
             'creatorUsername': auth.username,
             'mainText': postTextDataMain,
             'timePosted': Date.now(),
+            'likes': [],
             'likeCount': 0,
-            'comments': []
+            'comments': [],
+            'commentCount': 0
         }
 
         const response = await fetch('http://localhost:5000/home/createPost', {
@@ -71,8 +73,7 @@ function HomeMainBody(props) {
         })
 
         setAddingPost(false)
-
-        console.log(newPost)
+        window.location.reload()
     }
 
     function detailedCardDataHandler(detailedPostData) {

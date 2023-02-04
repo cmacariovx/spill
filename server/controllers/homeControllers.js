@@ -11,8 +11,10 @@ async function createPost(req, res, next) {
         creatorUsername: creatorUsername,
         mainText: mainText,
         timePosted: timePosted,
+        likes: [],
         likeCount: 0,
-        comments: []
+        comments: [],
+        commentCount: 0
     }
 
     let mongoCreatePost = await mongoConnections.createPostMongo(req, res, next, postData)
@@ -78,8 +80,20 @@ async function createComment(req, res, next) {
         commentBodyText: commentBodyText,
         commentTimePosted: commentTimePosted
     }
-    
+
     let mongoCreateComment = await mongoConnections.createCommentMongo(req, res, next, commentData)
+}
+
+async function likePost(req, res, next) {
+    const { loggedInUserId, loggedInUsername, postId } = req.body
+
+    let mongoLikePost = await mongoConnections.likePostMongo(req, res, next, req.body)
+}
+
+async function unlikePost(req, res, next) {
+    const { loggedInUserId, loggedInUsername, postId } = req.body
+
+    let mongoUnlikePost = await mongoConnections.unlikePostMongo(req, res, next, req.body)
 }
 
 exports.createPost = createPost
@@ -88,3 +102,5 @@ exports.followUser = followUser
 exports.unfollowUser = unfollowUser
 exports.fetchPosts = fetchPosts
 exports.createComment = createComment
+exports.likePost = likePost
+exports.unlikePost = unlikePost
