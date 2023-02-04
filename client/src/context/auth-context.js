@@ -7,5 +7,7 @@ export const AuthContext = createContext({
     username: null,
     following: [],
     login: () => {},
-    logout: () => {}
+    logout: () => {},
+    followUpdate: () => {},
+    unfollowUpdate: () => {}
 })

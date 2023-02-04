@@ -14,7 +14,7 @@ function HomeDropDown() {
 
     return (
         <div className="homeDropDownContainer">
-            <Link to="/profile/cm" className="optionContainer" id='profileText'>
+            <Link to={"/profile/" + auth.username} className="optionContainer" id='profileText'>
                 <p className="optionText">Profile</p>
             </Link>
             <Link className="optionContainer" id='settingsText'>

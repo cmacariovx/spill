@@ -39,6 +39,31 @@ function App() {
     localStorage.removeItem('userData')
   }, [])
 
+  const followUpdate = useCallback((followedUserData) => {
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+    // const { userId, token, username, following } = storedData
+
+    localStorage.removeItem('userData')
+
+    // push followed user to array
+    storedData.following.push(followedUserData)
+
+    localStorage.setItem('userData', JSON.stringify(storedData))
+  }, [])
+
+  const unfollowUpdate = useCallback((unfollowedUserData) => {
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+    // const { userId, token, username, following } = storedData
+
+    localStorage.removeItem('userData')
+
+    // find user and unfollow
+    const unfollowedIdx = storedData.following.indexOf(unfollowedUserData)
+    storedData.following.splice(unfollowedIdx, 1)
+
+    localStorage.setItem('userData', JSON.stringify(storedData))
+  }, [])
+
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
     if (storedData && storedData.token) {
@@ -59,7 +84,9 @@ function App() {
           username: usernameAuth,
           following: followingArr,
           login: login,
-          logout: logout
+          logout: logout,
+          followUpdate: followUpdate,
+          unfollowUpdate: unfollowUpdate,
         }}
       >
         <Routes>

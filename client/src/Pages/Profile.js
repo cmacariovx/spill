@@ -15,6 +15,8 @@ function Profile(props) {
     let [dataFetched, setDataFetched] = useState(false)
     let [isFollowing, setIsFollowing] = useState(false)
     let [isSelfProfile, setIsSelfProfile] = useState(false)
+    let [listOfPosts2, setListOfPosts2] = useState([])
+    let [isFetchingPosts, setIsFetchingPosts] = useState(false)
 
     // let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
 
@@ -28,25 +30,34 @@ function Profile(props) {
         setCardClick2(false)
     }
 
-    let mainPostFeedPosts2 = [
-        {
-            'username': '@cmacariovx',
-            'mainText': 'Warzone 2 is looking a bit more polished now!',
-            'likeCount': 543,
-        },
-        {
-            'username': '@cmacariovx',
-            'mainText': 'Testing',
-            'likeCount': 2,
-        },
-        {
-            'username': '@cmacariovx',
-            'mainText': 'Does Socia have star potential?',
-            'likeCount': 991,
-        }
-    ]
+    async function fetchPersonalPosts() {
+        setIsFetchingPosts(true)
+        const response = await fetch("http://localhost:5000/profile/fetchPersonalPosts", {
+            method: "POST",
+            body: JSON.stringify({
+                loggedInUserId: auth.userId,
+                loggedInUsername: auth.username
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
 
-    let [listOfPosts2, setListOfPosts2] = useState(mainPostFeedPosts2)
+        const data = await response.json()
+        return data
+    }
+
+    async function getFetchedPersonalPosts(cb) {
+        const fetchedPosts = await cb()
+
+        setListOfPosts2([...fetchedPosts])
+        setIsFetchingPosts(false)
+    }
+
+    useEffect(() => {
+        getFetchedPersonalPosts(fetchPersonalPosts)
+    }, [])
 
     function detailedCardDataHandler2(detailedPostData2) {
         setDetailedCardData2(detailedPostData2)
@@ -72,7 +83,6 @@ function Profile(props) {
         })
 
         setDataFetched(true)
-        console.log(data)
     }
 
     useEffect(() => {
@@ -97,7 +107,8 @@ function Profile(props) {
         })
 
         const data = await response.json()
-        console.log(data)
+
+        auth.followUpdate({followedUserId: userData._id, followedUsername: userData.username})
         window.location.reload()
     }
 
@@ -119,7 +130,8 @@ function Profile(props) {
         })
 
         const data = await response.json()
-        console.log(data)
+
+        auth.unfollowUpdate({followedUserId: userData._id, followedUsername: userData.username})
         window.location.reload()
     }
 
@@ -163,7 +175,7 @@ function Profile(props) {
                 </div>
                 <div className="mainProfilePostsFeedContainer">
                     {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2} detailedCardData={detailedCardData2}/>}
-                    {listOfPosts2.map((post, index) => <HomePostCard onShowCard={detailedCard2} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler2} key={index}/>)}
+                    {!isFetchingPosts ? listOfPosts2.map((post, index) => <HomePostCard onShowCard={detailedCard2} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler2} key={index}/>) : null}
                 </div>
             </div>
         </div>

@@ -158,7 +158,7 @@ function HomeMainBody(props) {
             </div>
             <div className="homeMainBodyRight">
                 <div className="profileContainer" onClick={dropdownHandler} onMouseLeave={dropdownHandlerClose}>
-                    <p className="profileUsername">@cmacariovx</p>
+                    <p className="profileUsername">{"@" + auth.username}</p>
                     <img src={personal} className="profileImg" alt=""/>
                     {dropdownBool && <HomeDropDown />}
                 </div>
