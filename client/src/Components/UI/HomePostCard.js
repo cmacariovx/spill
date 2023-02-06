@@ -4,12 +4,14 @@ import { AuthContext } from "../../context/auth-context";
 import './HomePostCard.css'
 
 import personal from './Images/personal.jpg'
+import HomeOptionsPostDropDown from "./HomeOptionsPostDropDown";
 
 function HomePostCard(props) {
     const auth = useContext(AuthContext)
 
     let [likeCounter, setLikeCounter] = useState(props.homePostCardData.likeCount)
     let [commentCounter, setCommentCounter] = useState(props.homePostCardData.commentCount)
+    let [showPostOptions, setShowPostOptions] = useState(false)
 
     let likeBool
 
@@ -73,7 +75,12 @@ function HomePostCard(props) {
         if (event.target.className === "postCardInteractContainer"
         || event.target.className === "fa-regular fa-thumbs-up"
         || event.target.className === "likeCount"
-        || event.target.className === "postCardInteractContainer2") {
+        || event.target.className === "postCardInteractContainer2"
+        || event.target.className === "fa-solid fa-ellipsis"
+        || event.target.className === "postCardUserContainer1"
+        || event.target.className === "postCardUserContainer2"
+        || event.target.className === "postCardUsername"
+        || event.target.className === "postCardUserPic") {
             return null
         }
         else {
@@ -82,11 +89,21 @@ function HomePostCard(props) {
         }
     }
 
+    function postOptionsHandler() {
+        setShowPostOptions(true)
+    }
+
     return (
         <div className="homePostCardContainer" onClick={likeCardHandler}>
             <div className="postCardUserContainer">
-                <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
-                <img className="postCardUserPic" src={personal} alt=""/>
+                <div className="postCardUserContainer1">
+                    <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
+                    <img className="postCardUserPic" src={personal} alt=""/>
+                </div>
+                <div className="postCardUserContainer2">
+                    {props.homePostCardData.creatorUsername === auth.username && !showPostOptions && <i className="fa-solid fa-ellipsis" onClick={postOptionsHandler}></i>}
+                    {showPostOptions && <HomeOptionsPostDropDown postData={props.homePostCardData}/>}
+                </div>
             </div>
             <div className="postCardBodyContainer">
                 <p className="postMainText">{props.homePostCardData.mainText}</p>

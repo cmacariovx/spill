@@ -23,4 +23,6 @@ router.post("/likePost", homeControllers.likePost)
 
 router.post("/unlikePost", homeControllers.unlikePost)
 
+router.post("/deletePost", homeControllers.deletePost)
+
 module.exports = router

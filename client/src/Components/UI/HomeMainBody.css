@@ -124,11 +124,12 @@
             }
 
         .searchContainer {
+            margin-top: 50px;
             height: 400px;
             width: 70%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
         }
 

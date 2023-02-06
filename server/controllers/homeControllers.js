@@ -96,6 +96,13 @@ async function unlikePost(req, res, next) {
     let mongoUnlikePost = await mongoConnections.unlikePostMongo(req, res, next, req.body)
 }
 
+async function deletePost(req, res, next) {
+    const { userId, postId } = req.body
+
+    let mongoDeletePost = await mongoConnections.deletePostMongo(req, res, next, userId, postId)
+}
+
+
 exports.createPost = createPost
 exports.searchUsers = searchUsers
 exports.followUser = followUser
@@ -104,3 +111,4 @@ exports.fetchPosts = fetchPosts
 exports.createComment = createComment
 exports.likePost = likePost
 exports.unlikePost = unlikePost
+exports.deletePost = deletePost

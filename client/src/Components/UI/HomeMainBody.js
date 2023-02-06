@@ -67,12 +67,6 @@ function HomeMainBody(props) {
 
         const data = await response.json()
         console.log(data)
-
-        setListOfPosts(prevListOfPosts => {
-            return [newPost, ...prevListOfPosts]
-        })
-
-        setAddingPost(false)
         window.location.reload()
     }
 

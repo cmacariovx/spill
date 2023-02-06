@@ -372,6 +372,38 @@ async function unlikePostMongo(req, res, next, data) {
     res.json({response1: response1, response2: response2})
 }
 
+async function deletePostMongo(req, res, next, userId, postId) {
+    const client = new MongoClient(mongoUrl)
+    client.connect()
+
+    let response1
+    let response2
+
+    try {
+        const db = client.db()
+
+        response1 = await db.collection("posts").deleteOne({_id: new ObjectId(postId)})
+        response2 = await db.collection("users").updateOne({_id: new ObjectId(userId)}, {
+            $pull: {
+                posts: {
+                    postId: new ObjectId(postId),
+                }
+            },
+            $inc: {
+                postsNum: -1
+            }
+        })
+
+
+    }
+    finally {
+        client.close()
+    }
+
+    res.json({response1: response1, response2: response2})
+}
+
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createPostMongo = createPostMongo
@@ -384,3 +416,4 @@ exports.createCommentMongo = createCommentMongo
 exports.fetchPersonalPostsMongo = fetchPersonalPostsMongo
 exports.likePostMongo = likePostMongo
 exports.unlikePostMongo = unlikePostMongo
+exports.deletePostMongo = deletePostMongo

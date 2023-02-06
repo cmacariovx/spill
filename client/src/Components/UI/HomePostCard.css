@@ -18,12 +18,40 @@
 
     .postCardUserContainer {
         height: 20%;
-        width: 25%;
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
     }
+
+        .postCardUserContainer1 {
+            height: 100%;
+            width: 40%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .postCardUserContainer2 {
+            height: 100%;
+            width: 60%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+            .fa-ellipsis {
+                font-size: 28px;
+                transition: 0.1s linear;
+            }
+
+            .fa-ellipsis:hover {
+                color:rgba(102, 189, 255, 1);
+                transition: 0.1s linear;
+            }
 
         .postCardUsername {
             font-size: 14px;
