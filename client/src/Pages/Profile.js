@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import './Profile.css'
 
@@ -136,6 +137,9 @@ function Profile(props) {
     return (
         <div className="profilePageContainer">
             <div className="mainProfileBodyContainer">
+                <div className="exitProfileContainer">
+                    <Link to="/home" class="fa-solid fa-arrow-left"></Link>
+                </div>
                 <div className="mainProfileBodyIntroContainer">
                     <img className="mainProfileIntroPic" src={mainProfileBodyPic} alt=""></img>
                     <div className="mainProfileIntroCredentialsContainer">
