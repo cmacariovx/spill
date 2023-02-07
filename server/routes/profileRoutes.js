@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.use(checkAuth)
 
-router.post("/fetchPersonalPosts", profileControllers.fetchPersonalPosts)
+router.post("/fetchProfilePosts", profileControllers.fetchProfilePosts)
 
 router.post("/:username", profileControllers.fetchUserProfile)
 

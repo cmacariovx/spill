@@ -5,12 +5,7 @@ import './HomeSearchDropDownItem.css'
 
 function HomeSearchDropDownItem(props) {
     const [ userData, setUserData ] = useState(props.userData)
-    console.log(userData)
 
-    // function findUserProfileHandler() {
-    //     props.onFindUserProfileHandler(userData.username)
-    // }
-    // onClick={findUserProfileHandler}
     return (
         <Link className="homeSearchDropDownItem" to={"/profile/" + userData.username}>
             <img src="#" className="dropDownImg"/>

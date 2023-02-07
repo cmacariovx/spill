@@ -34,6 +34,23 @@
             align-items: center;
         }
 
+            .postCardUsername {
+                font-size: 15px;
+                font-weight: bold;
+                transition: linear 0.1s;
+            }
+
+                .postCardUsername:hover {
+                    transition: 0.1s linear;
+                    color: rgba(102, 189, 255, 1);
+                }
+
+            .postCardUserPic {
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+            }
+
         .postCardUserContainer2 {
             height: 100%;
             width: 60%;
@@ -52,17 +69,6 @@
                 color:rgba(102, 189, 255, 1);
                 transition: 0.1s linear;
             }
-
-        .postCardUsername {
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .postCardUserPic {
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-        }
 
     .postCardBodyContainer {
         height: 60%;

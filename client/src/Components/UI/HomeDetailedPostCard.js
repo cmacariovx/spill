@@ -65,7 +65,7 @@ function HomeDetailedPostCard(props) {
                 <div className="homeDetailedRightBody">
                     <div className="homeDetailedCloseButtonContainer">
                         <p className="homeDetailedCommentsTitle">Comments</p>
-                        <i className="fa-solid fa-xmark" onClick={props.onCloseCard}></i>
+                        <i className="fa-solid fa-xmark medium-x" onClick={props.onCloseCard}></i>
                     </div>
                     <div className="homeDetailedCommentsFeedContainer">
                         {listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} key={index}/>)}

@@ -8,16 +8,11 @@ async function fetchUserProfile(req, res, next) {
     let mongoFetchUserProfile = await mongoConnections.fetchUserProfileMongo(req, res, next, profileUsername)
 }
 
-async function fetchPersonalPosts(req, res, next) {
-    const { loggedInUserId, loggedInUsername } = req.body
+async function fetchProfilePosts(req, res, next) {
+    const { profileUsername } = req.body
 
-    let personalData = {
-        loggedInUserId: loggedInUserId,
-        loggedInUsername: loggedInUsername
-    }
-
-    let mongoPersonalFetchPosts = await mongoConnections.fetchPersonalPostsMongo(req, res, next, personalData)
+    let mongoProfileFetchPosts = await mongoConnections.fetchProfilePostsMongo(req, res, next, profileUsername)
 }
 
 exports.fetchUserProfile = fetchUserProfile
-exports.fetchPersonalPosts = fetchPersonalPosts
+exports.fetchProfilePosts = fetchProfilePosts

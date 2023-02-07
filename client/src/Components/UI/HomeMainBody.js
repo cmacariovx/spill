@@ -31,7 +31,7 @@ function HomeMainBody(props) {
     }
 
     function closeCard(event) {
-        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark") setCardClick(false)
+        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark medium-x") setCardClick(false)
     }
 
     function dropdownHandler(event) {

@@ -17,8 +17,7 @@ function Profile(props) {
     let [isSelfProfile, setIsSelfProfile] = useState(false)
     let [listOfPosts2, setListOfPosts2] = useState([])
     let [isFetchingPosts, setIsFetchingPosts] = useState(false)
-
-    // let [profileUsername, setProfileUsername] = useState(props.usernameProfile)
+    let [profileUsername, setProfileUsername] = useState(window.location.pathname.slice(9))
 
     const auth = useContext(AuthContext)
 
@@ -30,13 +29,12 @@ function Profile(props) {
         setCardClick2(false)
     }
 
-    async function fetchPersonalPosts() {
+    async function fetchProfilePosts() {
         setIsFetchingPosts(true)
-        const response = await fetch("http://localhost:5000/profile/fetchPersonalPosts", {
+        const response = await fetch("http://localhost:5000/profile/fetchProfilePosts", {
             method: "POST",
             body: JSON.stringify({
-                loggedInUserId: auth.userId,
-                loggedInUsername: auth.username
+                profileUsername: profileUsername
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -48,7 +46,7 @@ function Profile(props) {
         return data
     }
 
-    async function getFetchedPersonalPosts(cb) {
+    async function getFetchedProfilePosts(cb) {
         const fetchedPosts = await cb()
 
         setListOfPosts2([...fetchedPosts])
@@ -56,7 +54,7 @@ function Profile(props) {
     }
 
     useEffect(() => {
-        getFetchedPersonalPosts(fetchPersonalPosts)
+        getFetchedProfilePosts(fetchProfilePosts)
     }, [])
 
     function detailedCardDataHandler2(detailedPostData2) {
@@ -86,7 +84,7 @@ function Profile(props) {
     }
 
     useEffect(() => {
-        fetchUserProfile(window.location.pathname.slice(9))
+        fetchUserProfile(profileUsername)
     }, [])
 
     async function followHandler(event) {

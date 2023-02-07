@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth-context";
+import { Link } from "react-router-dom";
 
 import './HomePostCard.css'
 
@@ -71,16 +72,10 @@ function HomePostCard(props) {
         return data
     }
 
+    let falseOpen = ["postCardInteractContainer", "fa-regular fa-thumbs-up", "likeCount", "postCardInteractContainer2", "fa-solid fa-ellipsis", "postCardUserContainer1", "postCardUserContainer2", "postCardUsername", "postCardUserPic", "homeOptionsPostDropDownContainer", "deletePostContainer", "deletePostText", "exitPostOptionsContainer", "fa-solid fa-xmark small-x"]
+
     function likeCardHandler(event) {
-        if (event.target.className === "postCardInteractContainer"
-        || event.target.className === "fa-regular fa-thumbs-up"
-        || event.target.className === "likeCount"
-        || event.target.className === "postCardInteractContainer2"
-        || event.target.className === "fa-solid fa-ellipsis"
-        || event.target.className === "postCardUserContainer1"
-        || event.target.className === "postCardUserContainer2"
-        || event.target.className === "postCardUsername"
-        || event.target.className === "postCardUserPic") {
+        if (falseOpen.includes(event.target.className)) {
             return null
         }
         else {
@@ -96,13 +91,13 @@ function HomePostCard(props) {
     return (
         <div className="homePostCardContainer" onClick={likeCardHandler}>
             <div className="postCardUserContainer">
-                <div className="postCardUserContainer1">
+                <Link to={"/profile/" + props.homePostCardData.creatorUsername} className="postCardUserContainer1">
                     <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
                     <img className="postCardUserPic" src={personal} alt=""/>
-                </div>
+                </Link>
                 <div className="postCardUserContainer2">
                     {props.homePostCardData.creatorUsername === auth.username && !showPostOptions && <i className="fa-solid fa-ellipsis" onClick={postOptionsHandler}></i>}
-                    {showPostOptions && <HomeOptionsPostDropDown postData={props.homePostCardData}/>}
+                    {showPostOptions && <HomeOptionsPostDropDown postData={props.homePostCardData} setShowPostOptionsHandler={setShowPostOptions}/>}
                 </div>
             </div>
             <div className="postCardBodyContainer">

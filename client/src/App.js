@@ -41,7 +41,6 @@ function App() {
 
   const followUpdate = useCallback((followedUserData) => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
-    // const { userId, token, username, following } = storedData
 
     localStorage.removeItem('userData')
 
@@ -53,7 +52,6 @@ function App() {
 
   const unfollowUpdate = useCallback((unfollowedUserData) => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
-    // const { userId, token, username, following } = storedData
 
     localStorage.removeItem('userData')
 
@@ -72,7 +70,9 @@ function App() {
     setLoadingLogin(false)
   }, [login]) // will run everytime and call login which will set token and userId state if userData is in localstorage
 
-  // -------------- this renders before useEffect
+
+  // -------------- everything below renders before useEffect
+
 
   return ( // everything rerenders with actual token on second render
     <div className="app">

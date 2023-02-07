@@ -6,7 +6,7 @@ function AppPrivateRoutes(props) {
     const auth = useContext(AuthContext)
 
     // prevents loading of auth token (false null read) from redirecting too early
-    // if login is loading wait
+    // -- if login is loading wait
     if (!props.isLoadingLogin) {
         return (
             auth.token ? <Outlet /> : <Navigate to="/"/>

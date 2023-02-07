@@ -121,9 +121,12 @@
             }
 
             .fa-xmark {
-                font-size: 26px;
                 cursor: pointer;
                 transition: linear 0.1s
+            }
+
+            .medium-x {
+                font-size: 26px;
             }
 
             .fa-xmark:hover {

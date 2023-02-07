@@ -12,6 +12,20 @@
     padding: 10px;
 }
 
+    .exitPostOptionsContainer {
+        height: 40%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-start;
+        transition: 0.1s linear;
+    }
+
+        .small-x {
+            font-size: 22px;
+        }
+
     .deletePostContainer {
         height: 40%;
         width: 100%;

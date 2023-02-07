@@ -288,9 +288,7 @@ async function createCommentMongo(req, res, next, commentData) {
     res.json(response)
 }
 
-async function fetchPersonalPostsMongo(req, res, next, personalData) {
-    const { loggedInUserId, loggedInUsername } = personalData
-
+async function fetchProfilePostsMongo(req, res, next, profileUsername) {
     const client = new MongoClient(mongoUrl)
     await client.connect()
 
@@ -299,7 +297,7 @@ async function fetchPersonalPostsMongo(req, res, next, personalData) {
     try {
         const db = client.db()
         let collection = db.collection("posts")
-        let query = {creatorUsername: loggedInUsername}
+        let query = {creatorUsername: profileUsername}
 
         const cursor = collection.find(query).sort({_id: -1}).limit(20)
 
@@ -413,7 +411,7 @@ exports.addFollowerMongo = addFollowerMongo
 exports.removeFollowerMongo = removeFollowerMongo
 exports.fetchPostsMongo = fetchPostsMongo
 exports.createCommentMongo = createCommentMongo
-exports.fetchPersonalPostsMongo = fetchPersonalPostsMongo
+exports.fetchProfilePostsMongo = fetchProfilePostsMongo
 exports.likePostMongo = likePostMongo
 exports.unlikePostMongo = unlikePostMongo
 exports.deletePostMongo = deletePostMongo
