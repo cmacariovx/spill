@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth-context";
 import { Link } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import HomeOptionsPostDropDown from "./HomeOptionsPostDropDown";
 function HomePostCard(props) {
     const auth = useContext(AuthContext)
 
+    let [currentPostCardData, setCurrentPostCardData] = useState(props.homePostCardData)
     let [likeCounter, setLikeCounter] = useState(props.homePostCardData.likeCount)
     let [commentCounter, setCommentCounter] = useState(props.homePostCardData.commentCount)
     let [showPostOptions, setShowPostOptions] = useState(false)
@@ -23,12 +24,14 @@ function HomePostCard(props) {
     let [likedStatus, setLikedStatus] = useState(likeBool ? true : false)
 
     function sendCardData() {
-        props.onDetailedCardDataHandler(props.homePostCardData)
+        props.onDetailedCardDataHandler(currentPostCardData)
+        console.log(currentPostCardData)
     }
 
     async function onLikeHandler(event) {
         event.preventDefault()
-        setLikeCounter(likeCounter + 1)
+        currentPostCardData.likeCount += 1
+        setCurrentPostCardData(currentPostCardData)
         setLikedStatus(true)
 
         const response = await fetch("http://localhost:5000/home/likePost", {
@@ -51,7 +54,8 @@ function HomePostCard(props) {
 
     async function onUnlikeHandler(event) {
         event.preventDefault()
-        setLikeCounter(likeCounter - 1)
+        currentPostCardData.likeCount -= 1
+        setCurrentPostCardData(currentPostCardData)
         setLikedStatus(false)
 
         const response = await fetch("http://localhost:5000/home/unlikePost", {
@@ -105,7 +109,7 @@ function HomePostCard(props) {
             </div>
             <div className={!likedStatus ? "postCardInteractContainer" : "postCardInteractContainer2"} onClick={!likedStatus ? onLikeHandler : onUnlikeHandler}>
                 <i className="fa-regular fa-thumbs-up"></i>
-                <p className="likeCount">{likeCounter}</p>
+                <p className="likeCount">{currentPostCardData.likeCount}</p>
             </div>
         </div>
     )
