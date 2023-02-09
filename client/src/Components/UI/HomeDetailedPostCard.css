@@ -68,7 +68,7 @@
                 font-size: 24px;
             }
 
-        .homeDetailedInteractContainer {
+        .homeDetailedInteractContainer1 {
             height: 50px;
             width: 90px;
             display: flex;
@@ -81,8 +81,27 @@
             cursor: pointer;
         }
 
-        .homeDetailedInteractContainer:hover {
+        .homeDetailedInteractContainer1:hover {
             background-color: rgba(102, 189, 255, 1);
+            transition: 0.1s linear;
+        }
+
+        .homeDetailedInteractContainer2 {
+            height: 50px;
+            width: 90px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            padding: 10px;
+            transition: 0.1s linear;
+            cursor: pointer;
+            background-color: rgba(102, 189, 255, 1);
+        }
+
+        .homeDetailedInteractContainer2:hover {
+            background-color: rgb(204, 204, 204);
             transition: 0.1s linear;
         }
 

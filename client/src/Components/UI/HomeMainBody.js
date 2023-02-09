@@ -21,6 +21,7 @@ function HomeMainBody(props) {
     let [receivedUsers, setReceivedUsers] = useState(null)
     let [listOfPosts, setListOfPosts] = useState([])
     let [addingPost, setAddingPost] = useState(false)
+    let [likedData, setLikedData] = useState({})
 
     const auth = useContext(AuthContext)
 
@@ -70,8 +71,13 @@ function HomeMainBody(props) {
         window.location.reload()
     }
 
-    function detailedCardDataHandler(detailedPostData) {
+    function detailedCardDataHandler(detailedPostData, likedStatus, onLikeHandler, onUnlikeHandler) {
         setDetailedData(detailedPostData)
+        setLikedData({
+            likedStatus,
+            onLikeHandler,
+            onUnlikeHandler
+        })
     }
 
     async function fetchSearchedUsers() {
@@ -146,8 +152,7 @@ function HomeMainBody(props) {
                 </div>
 
                 <div className="homeFeedContainer">
-                    {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData}/>}
-
+                    {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData} likedCardData={likedData}/>}
                     {!addingPost ? (listOfPosts.map((post, index) => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler} key={index}/>)) : null}
                 </div>
             </div>

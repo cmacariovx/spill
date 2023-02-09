@@ -138,7 +138,7 @@ function Profile(props) {
         <div className="profilePageContainer">
             <div className="mainProfileBodyContainer">
                 <div className="exitProfileContainer">
-                    <Link to="/home" class="fa-solid fa-arrow-left"></Link>
+                    <Link to="/home" className="fa-solid fa-arrow-left"></Link>
                 </div>
                 <div className="mainProfileBodyIntroContainer">
                     <img className="mainProfileIntroPic" src={mainProfileBodyPic} alt=""></img>

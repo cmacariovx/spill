@@ -9,6 +9,8 @@ import { AuthContext } from "../../context/auth-context";
 
 function HomeDetailedPostCard(props) {
     let [detailedCardData, setDetailedCardData] = useState(props.detailedCardData)
+    let [likedData, setLikedData] = useState(props.likedCardData)
+    let [likedStatus, setLikedStatus] = useState(props.likedCardData.likedStatus)
     let [listOfComments, setListOfComments] = useState([])
 
     let currentCommentData = useRef()
@@ -73,6 +75,23 @@ function HomeDetailedPostCard(props) {
         return data
     }
 
+    function updateListOfComments() {
+        setListOfComments(prevListOfComments => {
+            prevListOfComments.shift()
+            return [...prevListOfComments]
+        })
+    }
+
+    function likeHandler(event) {
+        likedData.onLikeHandler(event)
+        setLikedStatus(true)
+    }
+
+    function unlikeHandler(event) {
+        likedData.onUnlikeHandler(event)
+        setLikedStatus(false)
+    }
+
     return (
         <div className="backdrop" onClick={props.onCloseCard}>
             <div className="homeDetailedPostCard">
@@ -84,7 +103,7 @@ function HomeDetailedPostCard(props) {
                     <div className="homeDetailedPostContainer">
                         <p className="homeDetailedPostText">{detailedCardData.mainText}</p>
                     </div>
-                    <div className="homeDetailedInteractContainer">
+                    <div className={!likedStatus ? "homeDetailedInteractContainer1" : "homeDetailedInteractContainer2"} onClick={!likedStatus ? likeHandler : unlikeHandler}>
                         <i className="fa-regular fa-thumbs-up fa-222"></i>
                         <p className="homeLikeCount">{detailedCardData.likeCount}</p>
                     </div>
@@ -95,7 +114,7 @@ function HomeDetailedPostCard(props) {
                         <i className="fa-solid fa-xmark medium-x" onClick={props.onCloseCard}></i>
                     </div>
                     <div className="homeDetailedCommentsFeedContainer">
-                        {listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} homePostData={detailedCardData} key={index}/>)}
+                        {listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} homePostData={detailedCardData} onUpdateListOfComments={updateListOfComments} key={index}/>)}
                     </div>
                     <div className="homeDetailedCommentsInputContainer">
                         <input className="homeDetailedCommentsInput" maxLength="64" placeholder="Add a Comment" ref={currentCommentData}></input>

@@ -11,6 +11,8 @@ function HomeCommentCard(props) {
     const auth = useContext(AuthContext)
 
     async function deleteCommentHandler() {
+        props.onUpdateListOfComments()
+        
         const response = await fetch("http://localhost:5000/home/deleteComment", {
             method: "POST",
             body: JSON.stringify({
@@ -25,7 +27,6 @@ function HomeCommentCard(props) {
         })
 
         const data = await response.json()
-        // window.location.reload()
         return data
     }
 
