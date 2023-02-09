@@ -9,6 +9,14 @@ router.use(checkAuth)
 
 router.post("/fetchProfilePosts", profileControllers.fetchProfilePosts)
 
+router.post("/fetchLikedPosts", profileControllers.fetchLikedPosts)
+
+router.post("/likedPostsPrivate", profileControllers.likedPostsPrivate)
+
+router.post("/likedPostsPublic", profileControllers.likedPostsPublic)
+
+router.post("/fetchSettings", profileControllers.fetchSettings)
+
 router.post("/:username", profileControllers.fetchUserProfile)
 
 module.exports = router

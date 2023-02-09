@@ -23,10 +23,13 @@ async function userSignup (req, res, next) {
         'posts': [],
         'postsNum': 0,
         'verified': false,
-        'likedPosts': []
+        'likedPosts': [],
+        'privateLikedPosts': false,
     }
 
     let mongoConnect = await mongoConnections.userSignup(req, res, next, createdUser)
+
+    // ----------- possibly allowing login even with failed signup, as long as credentials exist
 
     let loginUserData = {
         username: createdUser.username,

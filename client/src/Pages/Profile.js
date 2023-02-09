@@ -8,6 +8,7 @@ import mainProfileBodyPic from '../Components/UI/Images/personal.jpg'
 import HomePostCard from "../Components/UI/HomePostCard"
 import HomeDetailedPostCard from "../Components/UI/HomeDetailedPostCard"
 import { AuthContext } from "../context/auth-context";
+import SettingsModal from "../Components/UI/SettingsModal";
 
 function Profile(props) {
     let [cardClick2, setCardClick2] = useState(false)
@@ -19,6 +20,11 @@ function Profile(props) {
     let [listOfPosts2, setListOfPosts2] = useState([])
     let [isFetchingPosts, setIsFetchingPosts] = useState(false)
     let [profileUsername, setProfileUsername] = useState(window.location.pathname.slice(9))
+    let [isShowingFeed, setIsShowingFeed] = useState(true)
+    let [listOfLikedPosts, setListOfLikedPosts] = useState([])
+    let [isFetchingLikedPosts, setIsFetchingLikedPosts] = useState(false)
+    let [likedData2, setLikedData2] = useState({})
+    let [showSettings, setShowSettings] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -58,8 +64,13 @@ function Profile(props) {
         getFetchedProfilePosts(fetchProfilePosts)
     }, [])
 
-    function detailedCardDataHandler2(detailedPostData2) {
+    function detailedCardDataHandler2(detailedPostData2, likedStatus, onLikeHandler, onUnlikeHandler) {
         setDetailedCardData2(detailedPostData2)
+        setLikedData2({
+            likedStatus,
+            onLikeHandler,
+            onUnlikeHandler
+        })
     }
 
     async function fetchUserProfile(profileUsername) {
@@ -82,6 +93,7 @@ function Profile(props) {
         })
 
         setDataFetched(true)
+
     }
 
     useEffect(() => {
@@ -134,6 +146,48 @@ function Profile(props) {
         window.location.reload()
     }
 
+    async function fetchLikedPosts() {
+        setIsFetchingLikedPosts(true)
+        const response = await fetch("http://localhost:5000/profile/fetchLikedPosts", {
+            method: "POST",
+            body: JSON.stringify({
+                profileUsername: profileUsername,
+                likedPosts: userData.likedPosts
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    function showFeedPostsHandler() {
+        setIsShowingFeed(true)
+    }
+
+    async function showLikedPostsHandler() {
+        setIsShowingFeed(false)
+        setIsFetchingLikedPosts(true)
+
+        if (!listOfLikedPosts.length) {
+            const fetchedLikedPosts = await fetchLikedPosts()
+            setListOfLikedPosts(fetchedLikedPosts)
+        }
+
+        setIsFetchingLikedPosts(false)
+    }
+
+    function settingsHandler() {
+        setShowSettings(true)
+    }
+
+    function closeCardHandler(event) {
+        if (event.target.className === "settingsModalBackdrop" || event.target.className === "fa-solid fa-xmark xmark") setShowSettings(false)
+    }
+
     return (
         <div className="profilePageContainer">
             <div className="mainProfileBodyContainer">
@@ -162,9 +216,6 @@ function Profile(props) {
                     </div>
                 </div>
                 <div className="mainProfileBodyFollowContainer">
-                    {/* if data is fetched not && */}
-                    {/* if !isSelfProfile not && */}
-
                     {dataFetched ?
                             !isSelfProfile &&
                             (!isFollowing
@@ -172,13 +223,24 @@ function Profile(props) {
                             : <button className="unfollowButton" onClick={unfollowHandler}>Unfollow</button>)
                         : null
                     }
+                    {dataFetched ? isSelfProfile && <button className="settingsButton" onClick={settingsHandler}>Settings</button> : null}
 
-                    {dataFetched ? isSelfProfile && <button className="editButton">Edit Profile</button> : null}
+                    {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
+
+                    {dataFetched ? (!isShowingFeed ? <button className="showFeedPostsButton" onClick={showFeedPostsHandler}>Show Posts Feed</button> : <button className="showLikedPostsButton" onClick={showLikedPostsHandler}>Show Liked Posts</button>) : null}
                 </div>
-                <div className="mainProfilePostsFeedContainer">
-                    {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2} detailedCardData={detailedCardData2}/>}
-                    {!isFetchingPosts ? listOfPosts2.map((post, index) => <HomePostCard onShowCard={detailedCard2} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler2} key={index}/>) : null}
-                </div>
+                {dataFetched ?
+                    isShowingFeed ?
+                        <div className="mainProfilePostsFeedContainer">
+                            {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2} likedCardData={likedData2} detailedCardData={detailedCardData2}/>}
+                            {!isFetchingPosts ? listOfPosts2.map((post, index) => <HomePostCard onShowCard={detailedCard2} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler2} key={index}/>) : null}
+                        </div> :
+                        <div className="mainProfileLikedPostsContainer">
+                            {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2} likedCardData={likedData2} detailedCardData={detailedCardData2}/>}
+                            {!isFetchingLikedPosts ? listOfLikedPosts.map((post, index) => <HomePostCard onShowCard={detailedCard2} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler2} key={index}/>) : null}
+                        </div>
+                : null
+                }
             </div>
         </div>
     )

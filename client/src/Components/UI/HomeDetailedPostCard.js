@@ -10,7 +10,7 @@ import { AuthContext } from "../../context/auth-context";
 function HomeDetailedPostCard(props) {
     let [detailedCardData, setDetailedCardData] = useState(props.detailedCardData)
     let [likedData, setLikedData] = useState(props.likedCardData)
-    let [likedStatus, setLikedStatus] = useState(props.likedCardData.likedStatus)
+    let [likedStatus, setLikedStatus] = useState(props.likedCardData.likedStatus) // not receiving liked card data
     let [listOfComments, setListOfComments] = useState([])
 
     let currentCommentData = useRef()

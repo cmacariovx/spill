@@ -37,7 +37,7 @@ function Signup() {
         event.preventDefault()
 
         const response = await fetch('http://localhost:5000/auth/login', {  // a null return in a authController ends fetch early
-            method: 'POST',                                      // options request doesnt make it to POST when credentials are wrong
+            method: 'POST',                                    // options request doesnt make it to POST when credentials are wrong
             body: JSON.stringify({
                 'username': 'demo',
                 'password': 'demologin'

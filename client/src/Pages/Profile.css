@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(12, 12, 12);
+    background-color: rgb(14, 14, 14);
 }
 
     .mainProfileBodyContainer {
@@ -16,7 +16,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        background-color: rgb(24, 24, 24);
+        background-color: rgb(14, 14, 14);
         padding: 40px 100px;
     }
 
@@ -155,6 +155,46 @@
                     transition: linear 0.1s;
                 }
 
+            .showFeedPostsButton {
+                height: 45px;
+                width: 110px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(42, 42, 42, 1);
+                border-radius: 5px;
+                padding: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: linear 0.1s;
+            }
+
+                .showFeedPostsButton:hover {
+                    background-color: rgb(32, 32, 32);
+                    transition: linear 0.1s;
+                }
+
+            .showLikedPostsButton {
+                height: 45px;
+                width: 110px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(42, 42, 42, 1);
+                border-radius: 5px;
+                padding: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: linear 0.1s;
+            }
+
+                .showLikedPostsButton:hover {
+                    background-color: rgb(32, 32, 32);
+                    transition: linear 0.1s;
+                }
+
             .unfollowButton {
                 height: 45px;
                 width: 110px;
@@ -176,7 +216,7 @@
                     transition: linear 0.1s;
                 }
 
-            .editButton {
+            .settingsButton {
                 height: 45px;
                 width: 110px;
                 display: flex;
@@ -191,13 +231,22 @@
                 transition: linear 0.1s;
             }
 
-                .editButton:hover {
+                .settingsButton:hover {
                     background-color: rgb(32, 32, 32);
                     transition: linear 0.1s;
                 }
 
-
         .mainProfilePostsFeedContainer {
+            height: 70%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .mainProfileLikedPostsContainer {
             height: 70%;
             width: 100%;
             display: flex;

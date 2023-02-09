@@ -1,3 +1,5 @@
+const { ObjectID } = require("bson")
+
 const MongoClient = require("mongodb").MongoClient
 const ObjectId = require("mongodb").ObjectId
 require("dotenv").config()
@@ -459,6 +461,65 @@ async function deleteCommentMongo(req, res, next, userId, postId, commentId) {
     res.json({response1, response2})
 }
 
+async function fetchLikedPostsMongo(req, res, next, profileUsername, likedPosts) {
+    const client = new MongoClient(mongoUrl)
+    await client.connect()
+
+    let likedPostsArr = []
+    likedPosts.forEach(obj => {
+        likedPostsArr.push(new ObjectId(obj.postId))
+    })
+
+    let response
+
+    try {
+        const db = client.db()
+        let collection = db.collection("posts")
+
+        const cursor = collection.find({_id: { $in: likedPostsArr }}).sort({_id: -1}).limit(20)
+
+        response = await cursor.toArray()
+    }
+    finally {
+        await client.close()
+    }
+
+    res.json(response)
+}
+
+async function likedPostsPrivateMongo(req, res, next, userId) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("users").updateOne({_id: new ObjectId(userId)}, { $set: {privateLikedPosts: true} })
+
+    client.close()
+    res.json(response)
+}
+
+async function likedPostsPublicMongo(req, res, next, userId) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("users").updateOne({_id: new ObjectId(userId)}, { $set: {privateLikedPosts: false} })
+
+    client.close()
+    res.json(response)
+}
+
+async function fetchSettingsMongo(req, res, next, userId) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("users").findOne({_id: new ObjectId(userId)})
+
+    client.close()
+    res.json(response)
+}
+
 
 exports.userSignup = userSignup
 exports.userLogin = userLogin
@@ -475,3 +536,7 @@ exports.likePostMongo = likePostMongo
 exports.unlikePostMongo = unlikePostMongo
 exports.deletePostMongo = deletePostMongo
 exports.deleteCommentMongo = deleteCommentMongo
+exports.fetchLikedPostsMongo = fetchLikedPostsMongo
+exports.likedPostsPrivateMongo = likedPostsPrivateMongo
+exports.likedPostsPublicMongo = likedPostsPublicMongo
+exports.fetchSettingsMongo = fetchSettingsMongo

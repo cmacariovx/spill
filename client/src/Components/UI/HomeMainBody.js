@@ -5,6 +5,7 @@ import TopCreatorContainer from "./TopCreatorContainer";
 import HomeDetailedPostCard from "./HomeDetailedPostCard";
 import HomeDropDown from "./HomeDropDown";
 import HomeSearchDropDown from "./HomeSearchDropDown";
+import SettingsModal from "./SettingsModal";
 
 import { AuthContext } from "../../context/auth-context";
 
@@ -22,6 +23,7 @@ function HomeMainBody(props) {
     let [listOfPosts, setListOfPosts] = useState([])
     let [addingPost, setAddingPost] = useState(false)
     let [likedData, setLikedData] = useState({})
+    let [showSettings, setShowSettings] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -98,7 +100,8 @@ function HomeMainBody(props) {
 
     useEffect(() => {
         const typingTimeout = setTimeout(() => {
-            getUsersData(fetchSearchedUsers)     // while fetching load spinner
+            if (searchTerm) getUsersData(fetchSearchedUsers)     // while fetching load spinner
+            else setSearchingBool(false)
         }, 500)
 
         return () => clearTimeout(typingTimeout)
@@ -138,6 +141,14 @@ function HomeMainBody(props) {
         getFetchedPosts(fetchPosts)
     }, [])
 
+    function closeCardHandler(event) {
+        if (event.target.className === "settingsModalBackdrop" || event.target.className === "fa-solid fa-xmark xmark") setShowSettings(false)
+    }
+
+    function captureSettingsClick() {
+        setShowSettings(true)
+    }
+
     return (
         <div className="homeMainBodyContainer">
             <div className="homeMainBodyLeft">
@@ -160,9 +171,10 @@ function HomeMainBody(props) {
                 <div className="profileContainer" onClick={dropdownHandler} onMouseLeave={dropdownHandlerClose}>
                     <p className="profileUsername">{"@" + auth.username}</p>
                     <img src={personal} className="profileImg" alt=""/>
-                    {dropdownBool && <HomeDropDown />}
+                    {dropdownBool && <HomeDropDown onCaptureSettingsClick={captureSettingsClick}/>}
+                    {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
                 </div>
-                <div className="searchContainer">
+                <div className={!searchingBool ? "searchContainer1" : "searchContainer2"}>
                     <input className="searchInput" placeholder="Find a User" onChange={(e) => setSearchTerm(e.target.value)}></input>
                     {searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} />}
                 </div>

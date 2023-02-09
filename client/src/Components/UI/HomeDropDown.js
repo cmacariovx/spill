@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/auth-context";
 
 import './HomeDropDown.css'
 
-function HomeDropDown() {
+function HomeDropDown(props) {
     const auth = useContext(AuthContext)
 
     async function logoutHandler(event) {
@@ -12,14 +12,18 @@ function HomeDropDown() {
         auth.logout()
     }
 
+    function clickSend() {
+        props.onCaptureSettingsClick()
+    }
+
     return (
         <div className="homeDropDownContainer">
             <Link to={"/profile/" + auth.username} className="optionContainer" id='profileText'>
                 <p className="optionText">Profile</p>
             </Link>
-            <Link className="optionContainer" id='settingsText'>
+            <div className="optionContainer" onClick={clickSend} id='settingsText'>
                 <p className="optionText">Settings</p>
-            </Link>
+            </div>
             <Link to="/" className="optionContainer" id='logoutText' onClick={logoutHandler}>
                 <p className="optionText">Logout</p>
             </Link>

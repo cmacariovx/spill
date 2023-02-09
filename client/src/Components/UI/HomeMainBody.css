@@ -6,7 +6,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: rgb(24, 24, 24);
+    background-color: rgb(14, 14, 14);
     padding: 50px 80px;
 }
 
@@ -123,7 +123,17 @@
                 border-radius: 50%;
             }
 
-        .searchContainer {
+        .searchContainer1 {
+            margin-top: 50px;
+            height: 100px;
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .searchContainer2 {
             margin-top: 50px;
             height: 400px;
             width: 70%;
@@ -153,8 +163,8 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            background-color: #212121;
-            border-radius: 20px;
+            background-color: rgb(20, 20, 20);
+            border-radius: 10px;
             margin-top: 20px;
             padding: 30px;
         }

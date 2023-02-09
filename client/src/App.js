@@ -86,7 +86,7 @@ function App() {
           login: login,
           logout: logout,
           followUpdate: followUpdate,
-          unfollowUpdate: unfollowUpdate,
+          unfollowUpdate: unfollowUpdate
         }}
       >
         <Routes>
