@@ -17,6 +17,8 @@ router.post("/unfollow", homeControllers.unfollowUser)
 
 router.post("/fetchPosts", homeControllers.fetchPosts)
 
+router.post("/fetchComments", homeControllers.fetchComments)
+
 router.post("/createComment", homeControllers.createComment)
 
 router.post("/likePost", homeControllers.likePost)
@@ -24,5 +26,7 @@ router.post("/likePost", homeControllers.likePost)
 router.post("/unlikePost", homeControllers.unlikePost)
 
 router.post("/deletePost", homeControllers.deletePost)
+
+router.post("/deleteComment", homeControllers.deleteComment)
 
 module.exports = router

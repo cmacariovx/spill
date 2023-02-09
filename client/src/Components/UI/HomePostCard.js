@@ -25,7 +25,6 @@ function HomePostCard(props) {
 
     function sendCardData() {
         props.onDetailedCardDataHandler(currentPostCardData)
-        console.log(currentPostCardData)
     }
 
     async function onLikeHandler(event) {
@@ -48,7 +47,6 @@ function HomePostCard(props) {
         })
 
         const data = await response.json()
-        console.log(data)
         return data
     }
 
@@ -63,7 +61,7 @@ function HomePostCard(props) {
             body: JSON.stringify({
                 loggedInUserId: auth.userId,
                 loggedInUsername: auth.username,
-                postId: props.homePostCardData._id,
+                postId: props.homePostCardData._id, //////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -72,11 +70,10 @@ function HomePostCard(props) {
         })
 
         const data = await response.json()
-        console.log(data)
         return data
     }
 
-    let falseOpen = ["postCardInteractContainer", "fa-regular fa-thumbs-up", "likeCount", "postCardInteractContainer2", "fa-solid fa-ellipsis", "postCardUserContainer1", "postCardUserContainer2", "postCardUsername", "postCardUserPic", "homeOptionsPostDropDownContainer", "deletePostContainer", "deletePostText", "exitPostOptionsContainer", "fa-solid fa-xmark small-x"]
+    let falseOpen = ["postCardLikeContainer", "fa-regular fa-thumbs-up", "likeCount", "postCardLikeContainer2", "fa-solid fa-ellipsis", "postCardUserContainer1", "postCardUserContainer2", "postCardUsername", "postCardUserPic", "homeOptionsPostDropDownContainer", "deletePostContainer", "deletePostText", "exitPostOptionsContainer", "fa-solid fa-xmark small-x"]
 
     function likeCardHandler(event) {
         if (falseOpen.includes(event.target.className)) {
@@ -107,9 +104,15 @@ function HomePostCard(props) {
             <div className="postCardBodyContainer">
                 <p className="postMainText">{props.homePostCardData.mainText}</p>
             </div>
-            <div className={!likedStatus ? "postCardInteractContainer" : "postCardInteractContainer2"} onClick={!likedStatus ? onLikeHandler : onUnlikeHandler}>
-                <i className="fa-regular fa-thumbs-up"></i>
-                <p className="likeCount">{currentPostCardData.likeCount}</p>
+            <div className="postCardInteractContainer">
+                <div className={!likedStatus ? "postCardLikeContainer" : "postCardLikeContainer2"} onClick={!likedStatus ? onLikeHandler : onUnlikeHandler}>
+                    <i className="fa-regular fa-thumbs-up"></i>
+                    <p className="likeCount">{currentPostCardData.likeCount}</p>
+                </div>
+                <div className="postCardCommentCountContainer">
+                    <i className="fa-regular fa-comment"></i>
+                    <p className="likeCount">{currentPostCardData.commentCount}</p>
+                </div>
             </div>
         </div>
     )

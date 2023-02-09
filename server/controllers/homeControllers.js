@@ -68,6 +68,12 @@ async function fetchPosts(req, res, next) {
     let mongoFetchPosts = await mongoConnections.fetchPostsMongo(req, res, next, followingData, loggedInUsername)
 }
 
+async function fetchComments(req, res, next) {
+    const { postId } = req.body
+
+    let mongoFetchComments = await mongoConnections.fetchCommentsMongo(req, res, next, postId)
+}
+
 async function createComment(req, res, next) {
     const { postId, postCreatorId, postCreatorUsername, commentUserId, commentUsername, commentBodyText, commentTimePosted } = req.body
 
@@ -102,13 +108,21 @@ async function deletePost(req, res, next) {
     let mongoDeletePost = await mongoConnections.deletePostMongo(req, res, next, userId, postId)
 }
 
+async function deleteComment(req, res, next) {
+    const { userId, postId, commentId } = req.body
+
+    let mongoDeleteComment = await mongoConnections.deleteCommentMongo(req, res, next, userId, postId, commentId)
+}
+
 
 exports.createPost = createPost
 exports.searchUsers = searchUsers
 exports.followUser = followUser
 exports.unfollowUser = unfollowUser
 exports.fetchPosts = fetchPosts
+exports.fetchComments = fetchComments
 exports.createComment = createComment
 exports.likePost = likePost
 exports.unlikePost = unlikePost
 exports.deletePost = deletePost
+exports.deleteComment = deleteComment

@@ -137,7 +137,9 @@
         .homeDetailedCommentsFeedContainer {
             height: 70%;
             width: 100%;
+            overflow-x: hidden;
             overflow-y: scroll;
+            overflow-wrap: break-word;
             padding-right: 15px;
         }
 

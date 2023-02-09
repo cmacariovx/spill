@@ -15,15 +15,40 @@ function HomeDetailedPostCard(props) {
 
     const auth = useContext(AuthContext)
 
+    async function fetchComments() {
+        const response = await fetch("http://localhost:5000/home/fetchComments", {
+            method: "POST",
+            body: JSON.stringify({
+                postId: detailedCardData._id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    async function getFetchedComments(cb) {
+        const fetchedComments = await cb()
+
+        setListOfComments([...fetchedComments])
+    }
+
     useEffect(() => {
-        setListOfComments(detailedCardData.comments)
+        getFetchedComments(fetchComments)
     }, [])
 
     async function addCommentHandler() {
+        detailedCardData.commentCount += 1
+        setDetailedCardData(detailedCardData)
+
         let newComment = {
             'postId': detailedCardData._id,
             'postCreatorId': detailedCardData.userId,
-            'postCreatorUsername': detailedCardData.creatorUser,
+            'postCreatorUsername': detailedCardData.creatorUsername,
             'commentUserId': auth.userId,
             'commentUsername': auth.username,
             'commentBodyText': currentCommentData.current.value,
@@ -44,6 +69,8 @@ function HomeDetailedPostCard(props) {
         setListOfComments(prevListOfComments => {
             return [newComment, ...prevListOfComments]
         })
+
+        return data
     }
 
     return (
@@ -68,10 +95,10 @@ function HomeDetailedPostCard(props) {
                         <i className="fa-solid fa-xmark medium-x" onClick={props.onCloseCard}></i>
                     </div>
                     <div className="homeDetailedCommentsFeedContainer">
-                        {listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} key={index}/>)}
+                        {listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} homePostData={detailedCardData} key={index}/>)}
                     </div>
                     <div className="homeDetailedCommentsInputContainer">
-                        <input className="homeDetailedCommentsInput" placeholder="Add a Comment" ref={currentCommentData}></input>
+                        <input className="homeDetailedCommentsInput" maxLength="64" placeholder="Add a Comment" ref={currentCommentData}></input>
                         <i className="fa-regular fa-paper-plane homeDetailedPostCommentButton" onClick={addCommentHandler}></i>
                     </div>
                 </div>

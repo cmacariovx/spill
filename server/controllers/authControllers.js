@@ -23,7 +23,7 @@ async function userSignup (req, res, next) {
         'posts': [],
         'postsNum': 0,
         'verified': false,
-        'interactedPosts': []
+        'likedPosts': []
     }
 
     let mongoConnect = await mongoConnections.userSignup(req, res, next, createdUser)

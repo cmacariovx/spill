@@ -41,8 +41,6 @@ function HomeOptionsPostDropDown(props) {
              * Alert if clicked on outside of element
              */
             function handleClickOutside(event) {
-                console.log(event.target)
-
                 // if div exists and the click isnt any of the div elements or the div itself (outside click), close div
                 if (ref.current && !ref.current.contains(event.target)) {
                     closePostOptionsHandler()

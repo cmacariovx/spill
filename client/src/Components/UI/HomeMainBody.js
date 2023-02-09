@@ -140,7 +140,7 @@ function HomeMainBody(props) {
                 </div>
                 <div className="statusUpdateContainer">
                     <div className="statusUpdateInputContainer">
-                        <textarea className="statusUpdateInput" rows='4' cols='40' placeholder="How's your day been?" ref={postTextData}></textarea>
+                        <textarea className="statusUpdateInput" rows='4' cols='40' maxLength="204" placeholder="How's your day been?" ref={postTextData}></textarea>
                     </div>
                     <button className="postStatusButton" onClick={addPostHandler}>Post</button>
                 </div>

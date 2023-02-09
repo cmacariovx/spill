@@ -119,7 +119,7 @@ async function searchUsersMongo(req, res, next, searchData) {
                 followers: 1,
                 following: 1,
                 verified: 1,
-                interactedPosts: 1,
+                likedPosts: 1,
                 score: { $meta: "searchScore" }
             }
         }
@@ -256,23 +256,51 @@ async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) 
     res.json({findOneResponse: findOneResponse, findAllResponse: findAllResponse})
 }
 
+async function fetchCommentsMongo(req, res, next, postId) {
+    const client = new MongoClient(mongoUrl)
+    await client.connect()
+
+    let response
+
+    try {
+        const db = client.db()
+        let collection = db.collection("comments")
+        let query = {postId: postId}
+
+        const cursor = collection.find(query).sort({_id: -1}).limit(20)
+
+        response = await cursor.toArray()
+    }
+    finally {
+        await client.close()
+    }
+
+    res.json(response)
+}
+
 async function createCommentMongo(req, res, next, commentData) {
     const client = new MongoClient(mongoUrl)
 
-    let response
+    let response1
+    let response2
+    let response3 = null
+
     try {
         await client.connect()
         const db = client.db()
-        response = await db.collection("posts").updateOne({_id: new ObjectId(commentData.postId)}, {
+        response1 = await db.collection("comments").insertOne({
+            postId: commentData.postId,
+            postCreatorId: commentData.postCreatorId,
+            postCreatorUsername: commentData.postCreatorUsername,
+            commentUserId: commentData.commentUserId,
+            commentUsername: commentData.commentUsername,
+            commentBodyText: commentData.commentBodyText,
+            commentTimePosted: commentData.commentTimePosted
+        })
+        response2 = await db.collection("posts").updateOne({_id: new ObjectId(commentData.postId)}, {
             $push: {
                 comments: {
-                    postId: commentData.postId,
-                    postCreatorId: commentData.postCreatorId,
-                    postCreatorUsername: commentData.postCreatorUsername,
-                    commentUserId: commentData.commentUserId,
-                    commentUsername: commentData.commentUsername,
-                    commentBodyText: commentData.commentBodyText,
-                    commentTimePosted: commentData.commentTimePosted
+                    commentId: response1.insertedId
                 }
             },
             $inc: {
@@ -285,7 +313,7 @@ async function createCommentMongo(req, res, next, commentData) {
     }
 
     client.close()
-    res.json(response)
+    res.json({response1, response2})
 }
 
 async function fetchProfilePostsMongo(req, res, next, profileUsername) {
@@ -330,7 +358,7 @@ async function likePostMongo(req, res, next, data) {
 
     let response2 = await db.collection("users").updateOne({_id: new ObjectId(data.loggedInUserId)}, {
         $push: {
-            interactedPosts: {
+            likedPosts: {
                 postId: data.postId
             }
         }
@@ -360,7 +388,7 @@ async function unlikePostMongo(req, res, next, data) {
 
     let response2 = await db.collection("users").updateOne({_id: new ObjectId(data.loggedInUserId)}, {
         $pull: {
-            interactedPosts: {
+            likedPosts: {
                 postId: data.postId
             }
         }
@@ -401,6 +429,36 @@ async function deletePostMongo(req, res, next, userId, postId) {
     res.json({response1: response1, response2: response2})
 }
 
+async function deleteCommentMongo(req, res, next, userId, postId, commentId) {
+    const client = new MongoClient(mongoUrl)
+    client.connect()
+
+    let response1
+    let response2
+
+    try {
+        const db = client.db()
+
+        response1 = await db.collection("posts").updateOne({_id: new ObjectId(postId)},
+        {
+            $pull: {
+                comments: {
+                    commentId: new ObjectId(commentId),
+                }
+            },
+            $inc: {
+                commentCount: -1
+            }
+        })
+        response2 = await db.collection("comments").deleteOne({_id: new ObjectId(commentId)})
+    }
+    finally {
+        client.close()
+    }
+
+    res.json({response1, response2})
+}
+
 
 exports.userSignup = userSignup
 exports.userLogin = userLogin
@@ -410,8 +468,10 @@ exports.fetchUserProfileMongo = fetchUserProfileMongo
 exports.addFollowerMongo = addFollowerMongo
 exports.removeFollowerMongo = removeFollowerMongo
 exports.fetchPostsMongo = fetchPostsMongo
+exports.fetchCommentsMongo = fetchCommentsMongo
 exports.createCommentMongo = createCommentMongo
 exports.fetchProfilePostsMongo = fetchProfilePostsMongo
 exports.likePostMongo = likePostMongo
 exports.unlikePostMongo = unlikePostMongo
 exports.deletePostMongo = deletePostMongo
+exports.deleteCommentMongo = deleteCommentMongo
