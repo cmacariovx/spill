@@ -1,0 +1,60 @@
+.errorAuthModalContainer {
+    height: 300px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #212121;
+    border-radius: 10px;
+    position: absolute;
+    padding: 40px;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, 0);
+    z-index: 3;
+    border: 2px solid rgb(255, 90, 90);
+}
+
+    .errorBackdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    .errorTitleContainer {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .errorTitle {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .closex {
+            font-size: 32px;
+        }
+
+    .errorMainContainer {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 20px;
+    }
+
+        .errorText {
+            font-size: 16px;
+            font-weight: bold;
+        }

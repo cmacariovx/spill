@@ -1,13 +1,17 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/auth-context";
+import ErrorAuthModal from "./UI/ErrorAuthModal";
 
 import './Login.css'
 
 function Login() {
     let usernameInputRef2 = useRef()
     let passwordInputRef2 = useRef()
+
+    let [showError, setShowError] = useState(false)
+    let [errorsArr, setErrorsArr] = useState([])
 
     const auth = useContext(AuthContext)
 
@@ -26,7 +30,14 @@ function Login() {
         })
 
         const data = await response.json()
-        auth.login(data.userId, data.token, data.username, data.following)
+
+        if (data.message) {
+            setErrorsArr([data.message])
+            setShowError(true)
+        }
+        else {
+            auth.login(data.userId, data.token, data.username, data.following)
+        }
     }
     async function demoLoginUserHandler(event) {
         event.preventDefault()
@@ -45,9 +56,17 @@ function Login() {
         const data = await response.json()
 
         auth.login(data.userId, data.token, data.username, data.following)
+
     }
+
+    function closeError() {
+        setShowError(false)
+        setErrorsArr([])
+    }
+
     return (
         <div className="loginBackdrop">
+            {showError && <ErrorAuthModal errors={errorsArr} onCloseError={closeError}/>}
             <div className="loginContainer">
                 <div className="loginHeaderContainer">
                     <p className="loginHeaderText">Login</p>

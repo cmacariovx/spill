@@ -1,8 +1,10 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 
 import './Signup.css'
+
+import ErrorAuthModal from "./UI/ErrorAuthModal";
 
 function Signup() {
     let usernameInputRef = useRef()
@@ -10,27 +12,99 @@ function Signup() {
     let emailInputRef = useRef()
     let passwordInputRef = useRef()
 
+    let [showError, setShowError] = useState(false)
+    let [errorsArr, setErrorsArr] = useState([])
+
     const auth = useContext(AuthContext)
+
+    function closeError() {
+        setShowError(false)
+        setErrorsArr([])
+    }
 
     async function signupUserHandler(event) {
         event.preventDefault()
 
-        const response = await fetch('http://localhost:5000/auth/signup', {
-            method: 'POST',
-            body: JSON.stringify({
-                'username': usernameInputRef.current.value,
-                'fullName': fullNameInputRef.current.value,
-                'email': emailInputRef.current.value,
-                'password': passwordInputRef.current.value
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        let signupInput1 = document.getElementById("signupInput1") // Username
+        let signupInput2 = document.getElementById("signupInput2") // Email
+        let signupInput3 = document.getElementById("signupInput3") // Password
+        let signupInput4 = document.getElementById("signupInput4") // Full Name
 
-        const data = await response.json()
-        console.log(data)
-        auth.login(data.userId, data.token, data.username, data.following)
+        if (usernameInputRef.current.value === "" ||
+            fullNameInputRef.current.value === "" ||
+            emailInputRef.current.value === "" ||
+            passwordInputRef.current.value === "") {
+                setErrorsArr(["Fields cannot be empty."])
+                setShowError(true)
+        }
+
+        // have modal that displays all corresponding messages
+
+        async function validateInputs() {
+            if (!signupInput1.checkValidity()) {
+                setErrorsArr(prevListOfErrors => {
+                    prevListOfErrors.push("Username must be all lowercase & at least 3 characters long.")
+                    return [...prevListOfErrors]
+                })
+            }
+
+            if (!signupInput4.checkValidity()) {
+                setErrorsArr(prevListOfErrors => {
+                    prevListOfErrors.push("Please enter your full name.")
+                    return [...prevListOfErrors]
+                })
+            }
+
+            if (!signupInput2.checkValidity()) {
+                setErrorsArr(prevListOfErrors => {
+                    prevListOfErrors.push("Please enter a valid email.")
+                    return [...prevListOfErrors]
+                })
+            }
+            if (!signupInput3.checkValidity()) {
+                setErrorsArr(prevListOfErrors => {
+                    prevListOfErrors.push("Password must be at least 8 characters, with at least 1 letter and 1 number.")
+                    return [...prevListOfErrors]
+                })
+            }
+        }
+
+        async function callValidateInputs() {
+            await validateInputs()
+            if (errorsArr.length) {
+                setShowError(true)
+                return false
+            }
+
+            return true
+        }
+
+        let validated = await callValidateInputs()
+
+        if (validated) {
+            const response = await fetch('http://localhost:5000/auth/signup', {
+                method: 'POST',
+                body: JSON.stringify({
+                    'username': usernameInputRef.current.value,
+                    'fullName': fullNameInputRef.current.value,
+                    'email': emailInputRef.current.value,
+                    'password': passwordInputRef.current.value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const data = await response.json()
+
+            if (data.message) {
+                setErrorsArr([data.message])
+                setShowError(true)
+            }
+            else {
+                auth.login(data.userId, data.token, data.username, data.following)
+            }
+        }
     }
 
     async function demoLoginUserHandlerSignup(event) {
@@ -48,12 +122,12 @@ function Signup() {
         })
 
         const data = await response.json()
-
         auth.login(data.userId, data.token, data.username, data.following)
     }
 
     return (
         <div className="signupBackdrop">
+            {showError && <ErrorAuthModal errors={errorsArr} onCloseError={closeError}/>}
             <div className="signupContainer">
                 <div className="signupHeaderContainer">
                     <p className="signupHeaderText">Sign Up</p>
@@ -61,19 +135,19 @@ function Signup() {
                 <div className="signupBodyContainer">
                     <div className="signupInputContainer">
                         <p className="signupUsernameText">Username</p>
-                        <input className="signupInput" id="signupInput1" ref={usernameInputRef}></input>
+                        <input className="signupInput" maxLength="32" placeholder="johndoe" id="signupInput1" pattern="[a-z]{3,}" ref={usernameInputRef}></input>
                     </div>
                     <div className="signupInputContainer">
                         <p className="signupUsernameText">Full Name</p>
-                        <input className="signupInput" id="signupInput4" ref={fullNameInputRef}></input>
+                        <input className="signupInput" maxLength="32" placeholder="John Doe" id="signupInput4" pattern="^(\w\w+)\s(\w+)$" ref={fullNameInputRef}></input>
                     </div>
                     <div className="signupInputContainer">
                         <p className="signupPasswordText">Email</p>
-                        <input type="email" className="signupInput" id="signupInput2" maxLength="40" pattern=".+@.+\.com" ref={emailInputRef}></input>
+                        <input type="email" placeholder="john@doe.com" className="signupInput" id="signupInput2" maxLength="40" pattern=".+@.+\.com" ref={emailInputRef}></input>
                     </div>
                     <div className="signupInputContainer">
                         <p className="signupPasswordText">Password</p>
-                        <input type="password" className="signupInput" id="signupInput3" ref={passwordInputRef}></input>
+                        <input type="password" maxLength="32" className="signupInput" id="signupInput3" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" ref={passwordInputRef}></input>
                     </div>
                     <div className="signupButtonsContainer">
                         <Link to="/home">
