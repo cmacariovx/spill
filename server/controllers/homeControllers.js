@@ -21,15 +21,7 @@ async function createPost(req, res, next) {
 }
 
 async function searchUsers(req, res, next) {
-    const { searchTerm } = req.body
-
-    const searchData = {
-        searchTerm: searchTerm
-    }
-
-    if (!searchTerm) return null
-    let mongoSearchUsers = await mongoConnections.searchUsersMongo(req, res, next, searchData)
-    res.json(mongoSearchUsers)
+    let mongoSearchUsers = await mongoConnections.searchUsersMongo(req, res, next)
 }
 
 async function followUser(req, res, next) {

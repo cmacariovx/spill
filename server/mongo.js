@@ -84,49 +84,25 @@ async function createPostMongo(req, res, next, postData) {
     res.json({response1: response1, response2: response2})
 }
 
-async function searchUsersMongo(req, res, next, searchData) {
+async function searchUsersMongo(req, res, next) {
     const client = new MongoClient(mongoUrl)
-    let response = await client.db("test").collection("users").aggregate([
-        {
-            $search: {
-                index: "default",
-                compound: {
-                    must: [
-                        {
-                            text: {
-                                query: searchData.searchTerm,
-                                path: "usernameSpread",
-                                fuzzy: {
-                                    maxEdits: 1,
-                                }
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            $limit: 10
-        },
-        {
-            $project: {
-                _id: 1,
-                username: 1,
-                usernameSpread: 1,
-                fullName: 1,
-                email: 1,
-                password: 1,
-                followers: 1,
-                following: 1,
-                verified: 1,
-                likedPosts: 1,
-                score: { $meta: "searchScore" }
-            }
-        }
+    await client.connect()
 
-    ]).toArray()
+    let response
 
-    return response
+    try {
+        const db = client.db()
+        let collection = db.collection("users")
+
+        const cursor = collection.find()
+
+        response = await cursor.toArray()
+    }
+    finally {
+        await client.close()
+    }
+
+    res.json(response)
 }
 
 async function fetchUserProfileMongo(req, res, next, username) {

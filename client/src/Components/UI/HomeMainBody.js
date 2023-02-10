@@ -19,11 +19,14 @@ function HomeMainBody(props) {
     let [dropdownBool, setDropdownBool] = useState(false)
     let [searchingBool, setSearchingBool] = useState(false)
     let [searchTerm, setSearchTerm] = useState('')
-    let [receivedUsers, setReceivedUsers] = useState(null)
+    let [receivedUsers, setReceivedUsers] = useState([])
     let [listOfPosts, setListOfPosts] = useState([])
     let [addingPost, setAddingPost] = useState(false)
     let [likedData, setLikedData] = useState({})
     let [showSettings, setShowSettings] = useState(false)
+    let [allUsersArr, setAllUsersArr] = useState([])
+    let [fetchingUsers, setFetchingUsers] = useState(false)
+    let [topCreatorsArr, setTopCreatorsArr] = useState([])
 
     const auth = useContext(AuthContext)
 
@@ -82,7 +85,8 @@ function HomeMainBody(props) {
         })
     }
 
-    async function fetchSearchedUsers() {
+    async function fetchAllUsers() {
+        setFetchingUsers(true)
         let response = await fetch('http://localhost:5000/home/searchUsers', {
             method: 'POST',
             body: JSON.stringify({
@@ -94,24 +98,29 @@ function HomeMainBody(props) {
             }
         })
 
-        let searchedUsers = await response.json()
-        return searchedUsers
+        let allUsers = await response.json()
+        setAllUsersArr(allUsers)
+        setFetchingUsers(false)
+
+        setTopCreatorsArr(allUsers.sort((a, b) => b.followersNum - a.followersNum).slice(0, 5))
+        return allUsers
     }
 
     useEffect(() => {
-        const typingTimeout = setTimeout(() => {
-            if (searchTerm) getUsersData(fetchSearchedUsers)     // while fetching load spinner
-            else setSearchingBool(false)
-        }, 500)
-
-        return () => clearTimeout(typingTimeout)
-    }, [searchTerm])
-
-    async function getUsersData(cb) {
-        const fetchedUsers = await cb()
         setSearchingBool(true)
-        setReceivedUsers(fetchedUsers)
-    }
+
+        let returnArr = []
+
+        allUsersArr.filter(user => {
+            if (user.username.includes(searchTerm)) {
+                returnArr.push(user)
+            }
+        })
+
+        setReceivedUsers(returnArr)
+
+        if (!searchTerm) setSearchingBool(false)
+    }, [searchTerm])
 
     async function fetchPosts() {
         // if followers array empty, fetch any recent posts
@@ -139,6 +148,7 @@ function HomeMainBody(props) {
 
     useEffect(() => {
         getFetchedPosts(fetchPosts)
+        if (!allUsersArr.length) fetchAllUsers()
     }, [])
 
     function closeCardHandler(event) {
@@ -176,14 +186,14 @@ function HomeMainBody(props) {
                 </div>
                 <div className={!searchingBool ? "searchContainer1" : "searchContainer2"}>
                     <input className="searchInput" placeholder="Find a user" onChange={(e) => setSearchTerm(e.target.value)}></input>
-                    {searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} />}
+                    {!fetchingUsers ? searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} /> : null}
                 </div>
                 <div className="topCreatorsContainer">
                     <div className="topCreatorsTitleContainer">
                         <p className="topCreatorsTitleText">Top Creators</p>
                     </div>
                     <div className="topCreatorsListContainer">
-                        <TopCreatorContainer />
+                        {!fetchingUsers ? topCreatorsArr.map((user, i) => <TopCreatorContainer currentUser={user} currentIndex={i + 1} key={user._id}/>) : null}
                     </div>
                 </div>
             </div>

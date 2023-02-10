@@ -205,8 +205,13 @@ function Profile(props) {
                 <div className="mainProfileBodyIntroContainer">
                     <img className="mainProfileIntroPic" src={mainProfileBodyPic} alt=""></img>
                     <div className="mainProfileIntroCredentialsContainer">
-                        <p className="mainProfileNameText">{dataFetched && userData && userData.fullName}</p>
-                        <p className="mainProfileUsernameText">{dataFetched && userData && "@" + userData.username}</p>
+                        <div className="userCredentialsBox">
+                            <p className="mainProfileNameText">{dataFetched && userData && userData.fullName}</p>
+                        </div>
+                        <div className="userCredentialsBox">
+                            <p className="mainProfileUsernameText">{dataFetched && userData && "@" + userData.username}</p>
+                            {dataFetched ? userData ? userData.verified ? <i className="fa-solid fa-square-check"></i> : null : null : null}
+                        </div>
                     </div>
                     <div className="mainProfileIntroStatsContainer">
                         <div className="mainProfileFollowersContainer">
