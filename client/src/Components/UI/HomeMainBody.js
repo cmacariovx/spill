@@ -175,7 +175,7 @@ function HomeMainBody(props) {
                     {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
                 </div>
                 <div className={!searchingBool ? "searchContainer1" : "searchContainer2"}>
-                    <input className="searchInput" placeholder="Find a User" onChange={(e) => setSearchTerm(e.target.value)}></input>
+                    <input className="searchInput" placeholder="Find a user" onChange={(e) => setSearchTerm(e.target.value)}></input>
                     {searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} />}
                 </div>
                 <div className="topCreatorsContainer">

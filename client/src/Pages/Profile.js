@@ -26,6 +26,7 @@ function Profile(props) {
     let [likedData2, setLikedData2] = useState({})
     let [showSettings, setShowSettings] = useState(false)
     let [isLikedPostsEmpty, setIsLikedPostsEmpty] = useState(false)
+    let [isLikedPostsPrivate, setIsLikedPostsPrivate] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -87,6 +88,7 @@ function Profile(props) {
         let data = await response.json()
         setUserData(data)
 
+        if (data.username !== auth.username) setIsLikedPostsPrivate(data.privateLikedPosts)
         if (auth.username === profileUsername) setIsSelfProfile(true)
 
         data.followers.forEach(follower => {
@@ -94,7 +96,6 @@ function Profile(props) {
         })
 
         setDataFetched(true)
-
     }
 
     useEffect(() => {
@@ -234,7 +235,7 @@ function Profile(props) {
 
                     {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
 
-                    {dataFetched ? (!isShowingFeed ? <button className="showFeedPostsButton" onClick={showFeedPostsHandler}>Show Posts Feed</button> : <button className="showLikedPostsButton" onClick={showLikedPostsHandler}>Show Liked Posts</button>) : null}
+                    {dataFetched ? !isLikedPostsPrivate ? (!isShowingFeed ? <button className="showFeedPostsButton" onClick={showFeedPostsHandler}>Show Posts Feed</button> : <button className="showLikedPostsButton" onClick={showLikedPostsHandler}>Show Liked Posts</button>) : null : null}
                 </div>
                 {dataFetched ?
                     isShowingFeed ?

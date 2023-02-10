@@ -30,7 +30,6 @@ async function userSignup (req, res, next) {
 
     const createdUser = {
         'username': username.toLowerCase(),
-        'usernameSpread': username.toLowerCase().split("").join(" "),
         'fullName': fullName,
         'email': email,
         'password': hashedPassword, // add profile pic link

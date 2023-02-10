@@ -131,7 +131,7 @@
             width: 30%;
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
 
@@ -148,6 +148,7 @@
                 font-weight: bold;
                 cursor: pointer;
                 transition: linear 0.1s;
+                margin-right: 10px;
             }
 
                 .followButton:hover {
@@ -209,6 +210,7 @@
                 font-weight: bold;
                 cursor: pointer;
                 transition: linear 0.1s;
+                margin-right: 10px;
             }
 
                 .unfollowButton:hover {
@@ -229,6 +231,7 @@
                 font-weight: bold;
                 cursor: pointer;
                 transition: linear 0.1s;
+                margin-right: 10px;
             }
 
                 .settingsButton:hover {
