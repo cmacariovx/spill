@@ -25,6 +25,7 @@ function Profile(props) {
     let [isFetchingLikedPosts, setIsFetchingLikedPosts] = useState(false)
     let [likedData2, setLikedData2] = useState({})
     let [showSettings, setShowSettings] = useState(false)
+    let [isLikedPostsEmpty, setIsLikedPostsEmpty] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -172,8 +173,14 @@ function Profile(props) {
         setIsShowingFeed(false)
         setIsFetchingLikedPosts(true)
 
-        if (!listOfLikedPosts.length) {
+        // if isLikedPostsEmpty is true, then just return the <p> tag, no need to fetch
+        // if listOfLikedPosts is not empty, just return the already fetched list in state
+
+        // if both are false that means this is the first time we've entered this block
+        // if one or the other is true, don't enter because we've entered this block and decided on the state, just use the state it's already in
+        if (!isLikedPostsEmpty && !listOfLikedPosts.length) {
             const fetchedLikedPosts = await fetchLikedPosts()
+            if (!fetchedLikedPosts.length) setIsLikedPostsEmpty(true)
             setListOfLikedPosts(fetchedLikedPosts)
         }
 
@@ -237,7 +244,7 @@ function Profile(props) {
                         </div> :
                         <div className="mainProfileLikedPostsContainer">
                             {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2} likedCardData={likedData2} detailedCardData={detailedCardData2}/>}
-                            {!isFetchingLikedPosts ? listOfLikedPosts.map((post, index) => <HomePostCard onShowCard={detailedCard2} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler2} key={index}/>) : null}
+                            {!isFetchingLikedPosts ? (isLikedPostsEmpty ? <p className="likedPostsEmptyText">So empty in here...</p> : listOfLikedPosts.map((post, index) => <HomePostCard onShowCard={detailedCard2} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler2} key={index}/>)) : null}
                         </div>
                 : null
                 }
