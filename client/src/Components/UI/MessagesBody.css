@@ -1,0 +1,277 @@
+.messagesBodyContainer {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(14, 14, 14);
+}
+
+    .messagesBody {
+        height: 1000px;
+        width: 1000px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(28, 28, 28);
+        border-radius: 10px;
+        padding: 40px 60px;
+    }
+
+        .messagesBodyTitleContainer {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+            .messagesBodyTitle {
+                font-size: 26px;
+                font-weight: bold;
+            }
+
+        .mainMessagesContainer {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .mainMessagesContainerLeft {
+                height: 100%;
+                width: 40%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                border-right: 2px solid rgba(255, 255, 255, 0.3);
+            }
+
+                .mainMessagesContainerLeftTitleContainer {
+                    padding-top: 20px;
+                    height: 10%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                    .mainMessagesContainerLeftTitle {
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+
+                .addMessageContainer {
+                    height: 10%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                .searchUsersContainer {
+                    height: 40%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                }
+
+                    .searchUsersInput {
+                        height: 50px;
+                        width: 90%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                        font-size: 16px;
+                        border: 2px solid rgba(255, 255, 255, 0.2);
+                        border-radius: 5px;
+                        padding: 10px;
+                    }
+
+                    .addMessageContainer2 {
+                        height: 70%;
+                        width: 70%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: rgb(81, 164, 228);
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+
+                        .addMessageText {
+                            font-size: 16px;
+                            font-weight: bold;
+                            margin-right: 10px;
+                        }
+
+                        .fa-envelope {
+                            font-size: 20px;
+                        }
+
+                .conversationsListContainer {
+                    height: 70%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    overflow-y: scroll;
+                    padding-top: 20px;
+                }
+
+                .conversationsListContainer2 {
+                    height: 40%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    overflow-y: scroll;
+                    padding-top: 20px;
+                }
+
+            .mainMessagesContainerRight {
+                padding-top: 20px;
+                height: 100%;
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: center;
+                padding: 0px 20px;
+            }
+
+                .messageFeedContainer {
+                    height: 90%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    overflow-y: scroll;
+                }
+
+                    .messageFeedCard {
+                        height: 100px;
+                        width: 90%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+                        padding: 10px 30px;
+                    }
+
+                        .messageFeedPicContainer {
+                            height: 100%;
+                            width: 10%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            margin-right: 30px;
+                        }
+
+                            .messageFeedPic {
+                                height: 45px;
+                                width: 45px;
+                                border-radius: 50%;
+                            }
+
+                        .messageFeedBodyContainer {
+                            height: 100%;
+                            width: 90%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                            .messageFeedUsernameContainer {
+                                height: 30%;
+                                width: 100%;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                                align-items: center;
+                            }
+
+                                .messageFeedUsername {
+                                    font-size: 14px;
+                                }
+
+                                .messageFeedTimePosted {
+                                    font-size: 12px;
+                                    opacity: 0.6;
+                                }
+
+                            .messageFeedTextContainer {
+                                height: 70%;
+                                width: 100%;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: flex-start;
+                                align-items: center;
+                            }
+
+                                .messageFeedText {
+                                    font-size: 16px;
+                                }
+
+                .mainInputContainer {
+                    height: 10%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .messageInput {
+                        height: 50px;
+                        width: 80%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        border: 2px solid rgba(255, 255, 255, 0.2);
+                        border-radius: 5px;
+                        font-size: 16px;
+                        padding: 0 20px;
+                    }
+
+                    .sendMessageButton {
+                        height: 40px;
+                        width: 60px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        transition: 0.1s linear;
+                        background-color: rgb(81, 164, 228);
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+
+                        .sendMessageButton:hover {
+                            transition: 0.1s linear;
+                            background-color: rgb(50, 127, 185);
+                        }
+
+                        .fa-paper-plane {
+                            font-size: 18px;
+                        }

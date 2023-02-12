@@ -8,6 +8,7 @@ import Home from './Pages/Home'
 import Profile from './Pages/Profile'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
+import MessagesBody from './Components/UI/MessagesBody'
 import AppPrivateRoutes from './AppRoutes/AppPrivateRoutes'
 import AppPublicRoutes from'./AppRoutes/AppPublicRoutes'
 
@@ -100,6 +101,7 @@ function App() {
           <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
             <Route path='/home' exact element={<Home/>} />
             <Route path='/profile/:username' element={<Profile/>} />
+            <Route path='/messages' exact element={<MessagesBody />} />
             <Route path="*" element={<Navigate to="/home" replace />}/>
           </Route>
         </Routes>

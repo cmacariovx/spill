@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
@@ -171,7 +172,6 @@ function HomeMainBody(props) {
                     </div>
                     <button className="postStatusButton" onClick={addPostHandler}>Post</button>
                 </div>
-
                 <div className="homeFeedContainer">
                     {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData} likedCardData={likedData}/>}
                     {!addingPost ? (listOfPosts.map((post, index) => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler} key={index}/>)) : null}
@@ -184,9 +184,13 @@ function HomeMainBody(props) {
                     {dropdownBool && <HomeDropDown onCaptureSettingsClick={captureSettingsClick}/>}
                     {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
                 </div>
+                <Link className="messagesContainer" to="/messages">
+                    <p className="messagesContainerText">DM's</p>
+                    <i className="fa-solid fa-message"></i>
+                </Link>
                 <div className={!searchingBool ? "searchContainer1" : "searchContainer2"}>
                     <input className="searchInput" placeholder="Find a user" onChange={(e) => setSearchTerm(e.target.value)}></input>
-                    {!fetchingUsers ? searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} /> : null}
+                    {!fetchingUsers ? searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} dmClass={false}/> : null}
                 </div>
                 <div className="topCreatorsContainer">
                     <div className="topCreatorsTitleContainer">

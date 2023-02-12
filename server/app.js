@@ -1,12 +1,17 @@
 const express = require("express")
 const bodyParser = require("body-parser")
-const mongoPractice = require("./mongo")
+const http = require("http") // socketio only supports http servers for now
+const { Server } = require('socket.io')
+const cors = require('cors')
 
 const authRouter = require('./routes/authRoutes')
 const homeRouter = require('./routes/homeRoutes')
 const profileRouter = require('./routes/profileRoutes')
+const messageRouter = require('./routes/messageRoutes')
 
 const app = express()
+
+app.listen(5000)
 
 app.use(bodyParser.json())
 
@@ -24,6 +29,8 @@ app.use("/home", homeRouter)
 
 app.use("/profile", profileRouter)
 
+app.use("/message", messageRouter)
+
 app.use((req, res, next) => {
     const error = new Error("Could not find this route.")
     throw error
@@ -35,4 +42,29 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500)
     res.json({"message": error.message || "Unknown error occured."})
 })
-app.listen(5000)
+
+// socket io -------------------------------------------------------------------------------------
+
+app.use(cors())
+
+const server = http.createServer(app)
+
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        headers: ["Content-Type", "Authorization", "Origin", "X-Requested-With", "Accept"],
+        methods: ["GET", "POST"]
+    }
+})
+
+io.on("connection", (socket) => {
+    socket.on("joinConversation", (data) => {
+        socket.join(data)
+    })
+    socket.on("sendMessage", (data) => {
+        // socket.broadcast.emit("broadcastMessage", data) sends to everyone but you
+        socket.to(data.conversationId).emit("showMessage", data)
+    })
+})
+
+server.listen(5001)

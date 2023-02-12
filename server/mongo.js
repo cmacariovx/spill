@@ -494,6 +494,75 @@ async function fetchSettingsMongo(req, res, next, userId) {
     res.json(response)
 }
 
+async function createConversationMongo(req, res, next, data) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("conversations").insertOne({
+        createdUserId: data.userId,
+        createdUsername: data.createdUsername,
+        receivingUserId: data.receivingUserId,
+        receivingUsername: data.receivingUsername,
+        messages: [], // {userId, messageText, timeSent}
+        timeCreated: Date.now(),
+        timeLastMessageSent: 0.0,
+        latestMessageSent: {}
+    })
+
+    client.close()
+    res.json(response)
+}
+
+async function fetchAllConversationsMongo(req, res, next, userId) {
+    const client = new MongoClient(mongoUrl)
+    await client.connect()
+
+    let response
+
+    try {
+        const db = client.db()
+        let collection = db.collection("conversations")
+
+        // or receiving end
+        const cursor = collection.find({ $or: [{createdUserId: userId}, {receivingUserId: userId}] }).sort({timeLastMessageSent: -1})
+
+        response = await cursor.toArray()
+    }
+    finally {
+        await client.close()
+    }
+
+    res.json(response)
+}
+
+async function createMessageMongo(req, res, next, data) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("conversations").updateOne({_id: new ObjectId(data.conversationId)}, {
+        $push: {
+            messages: {
+                createdUserId: data.createdUserId,
+                createdUsername: data.createdUsername,
+                messageText: data.messageText,
+                timeCreated: data.timeCreated
+            }
+        },
+        $set: {
+            latestMessageSent: {
+                createdUserId: data.createdUserId,
+                createdUsername: data.createdUsername,
+                messageText: data.messageText,
+                timeCreated: data.timeCreated
+            }
+        }
+    })
+
+    client.close()
+    res.json(response)
+}
 
 exports.userSignup = userSignup
 exports.userLogin = userLogin
@@ -514,3 +583,6 @@ exports.fetchLikedPostsMongo = fetchLikedPostsMongo
 exports.likedPostsPrivateMongo = likedPostsPrivateMongo
 exports.likedPostsPublicMongo = likedPostsPublicMongo
 exports.fetchSettingsMongo = fetchSettingsMongo
+exports.createConversationMongo = createConversationMongo
+exports.fetchAllConversationsMongo = fetchAllConversationsMongo
+exports.createMessageMongo = createMessageMongo
