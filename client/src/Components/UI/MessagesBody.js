@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { useNavigate } from "react-router";
 import io from 'socket.io-client'
 import { AuthContext } from "../../context/auth-context";
 import ConversationCard from "./ConversationCard";
@@ -11,6 +12,8 @@ import personal from './Images/personal.jpg'
 
 function MessagesBody() {
     const auth = useContext(AuthContext)
+    const navigate = useNavigate()
+
     let socket = io.connect("http://localhost:5001") // set to mainbody so we can get messages outside of just messagebody and just pass down all the way through props
 
     const messageInput = useRef()
@@ -209,11 +212,27 @@ function MessagesBody() {
         getFetchedConversations(fetchAllConversations)
     }, [])
 
+    function closeConversationHandler() {
+        socket.emit("leaveConversation", conversationId)
+        setConversationId("")
+        setConversationData({})
+        setConversationMessages([])
+        setShowUserBanner(false)
+        // reset url
+        navigate("/messages")
+
+    }
+
+    function homeHandler() {
+        navigate("/home")
+    }
+
     return (
         <div className="messagesBodyContainer">
             <div className="messagesBody">
                 <div className="messagesBodyTitleContainer">
                     <p className="messagesBodyTitle">Messages</p>
+                    <i className="fa-solid fa-xmark messageX2" onClick={homeHandler}></i>
                 </div>
                 <div className="mainMessagesContainer">
                     <div className="mainMessagesContainerLeft">
@@ -239,8 +258,11 @@ function MessagesBody() {
                     </div>
                     <div className={!showUserBanner ? "mainMessagesContainerRight" : "mainMessagesContainerRight2"}>
                         {showUserBanner ? conversationData ? <div className="messageUserBanner">
-                            <img src={personal} className="messageUserBannerPic" />
-                            <p className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
+                            <div className="messageUserBannerUser">
+                                <img src={personal} className="messageUserBannerPic" />
+                                <p className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
+                            </div>
+                            <i className="fa-solid fa-xmark messageX" onClick={closeConversationHandler}></i>
                         </div> : null : null}
                         <div className="messageFeedContainer">
                             {conversationMessages.length ? conversationMessages.map((message, i) => <MessageCard message={message} key={i}/>) : null}

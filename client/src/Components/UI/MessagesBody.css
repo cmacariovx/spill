@@ -25,7 +25,7 @@
             width: 100%;
             display: flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid rgba(255, 255, 255, 0.3);
         }
@@ -33,6 +33,10 @@
             .messagesBodyTitle {
                 font-size: 26px;
                 font-weight: bold;
+            }
+
+            .messageX2 {
+                font-size: 38px;
             }
 
         .mainMessagesContainer {
@@ -149,7 +153,7 @@
                 width: 60%;
                 display: flex;
                 flex-direction: column;
-                justify-content: flex-end;
+                justify-content: flex-start;
                 align-items: center;
             }
 
@@ -168,28 +172,41 @@
                     width: 100%;
                     display: flex;
                     flex-direction: row;
-                    justify-content: flex-start;
+                    justify-content: space-between;
                     align-items: center;
                     padding: 10px 20px;
                     background-color: rgb(34, 34, 34);
                     box-shadow: 0 0 5px rgb(20, 20, 20);
                 }
 
-                    .messageUserBannerPic {
-                        height: 50px;
-                        width: 50px;
-                        border-radius: 50%;
+                    .messageUserBannerUser {
+                        height: 100%;
+                        width: 50%;
                         display: flex;
                         flex-direction: row;
-                        justify-content: center;
+                        justify-content: flex-start;
                         align-items: center;
-                        margin-right: 15px;
                     }
 
-                    .messageUserBannerUsername {
-                        font-size: 18px;
-                        font-weight: bold;
-                    }
+                        .messageUserBannerPic {
+                            height: 50px;
+                            width: 50px;
+                            border-radius: 50%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            margin-right: 15px;
+                        }
+
+                        .messageUserBannerUsername {
+                            font-size: 18px;
+                            font-weight: bold;
+                        }
+
+                        .messageX {
+                            font-size: 30px;
+                        }
 
                 .messageFeedContainer {
                     height: 80%;
