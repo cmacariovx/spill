@@ -102,6 +102,7 @@ function App() {
             <Route path='/home' exact element={<Home/>} />
             <Route path='/profile/:username' element={<Profile/>} />
             <Route path='/messages' exact element={<MessagesBody />} />
+            <Route path='/messages/:conversationId' element={<MessagesBody />}/>
             <Route path="*" element={<Navigate to="/home" replace />}/>
           </Route>
         </Routes>

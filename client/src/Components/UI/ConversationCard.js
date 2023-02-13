@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 
 import './ConversationCard.css'
@@ -19,7 +20,7 @@ function ConversationCard(props) {
     }
 
     return (
-        <div className="conversationCard" onClick={openConversationHandler}>
+        <Link className="conversationCard" to={"/messages/" + conversationId} onClick={openConversationHandler}>
             <div className="conversationPicContainer">
                 <img src={personal} className="conversationPreviewImg"/>
             </div>
@@ -35,7 +36,7 @@ function ConversationCard(props) {
                     </p>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

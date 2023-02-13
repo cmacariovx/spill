@@ -565,6 +565,17 @@ async function createMessageMongo(req, res, next, data) {
     res.json(response)
 }
 
+async function fetchConvoMongo(req, res, next, conversationId) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("conversations").findOne({_id: new ObjectId(conversationId)})
+
+    client.close()
+    res.json(response)
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createPostMongo = createPostMongo
@@ -587,3 +598,4 @@ exports.fetchSettingsMongo = fetchSettingsMongo
 exports.createConversationMongo = createConversationMongo
 exports.fetchAllConversationsMongo = fetchAllConversationsMongo
 exports.createMessageMongo = createMessageMongo
+exports.fetchConvoMongo = fetchConvoMongo

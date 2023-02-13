@@ -34,6 +34,13 @@ function createMessage(req, res, next) {
     const mongoCreateMessage = mongoConnections.createMessageMongo(req, res, next, data)
 }
 
+function fetchConvo(req, res, next) {
+    const { conversationId } = req.body
+
+    const mongoFetchConvo = mongoConnections.fetchConvoMongo(req, res, next, conversationId)
+}
+
 exports.createConversation = createConversation
 exports.fetchAllConversations = fetchAllConversations
 exports.createMessage = createMessage
+exports.fetchConvo = fetchConvo

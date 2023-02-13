@@ -13,4 +13,6 @@ router.post('/fetchAllConversations', messageControllers.fetchAllConversations)
 
 router.post('/createMessage', messageControllers.createMessage)
 
+router.post('/fetchConvo', messageControllers.fetchConvo)
+
 module.exports = router

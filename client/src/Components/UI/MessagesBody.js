@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
 import io from 'socket.io-client'
 import { AuthContext } from "../../context/auth-context";
 import ConversationCard from "./ConversationCard";
@@ -14,8 +14,9 @@ function MessagesBody() {
     let socket = io.connect("http://localhost:5001") // set to mainbody so we can get messages outside of just messagebody and just pass down all the way through props
 
     const messageInput = useRef()
+    const convoId = window.location.pathname.slice(10)
 
-    const [conversationId, setConversationId] = useState("")
+    const [conversationId, setConversationId] = useState(convoId !== "" ? convoId : "")
     const [showSearchContainer, setShowSearchContainer] = useState(false)
     const [allConversationUsersArr, setAllConversationUsersArr] = useState([])
     const [fetchingConversationUsers, setFetchingConversationUsers] = useState(false)
@@ -28,6 +29,52 @@ function MessagesBody() {
     const [conversationMessages, setConversationMessages] = useState([])
     const [showUserBanner, setShowUserBanner] = useState(false)
     const [conversationUsersList, setConversationUsersList] = useState([])
+    const [cachedConversations, setCachedConversations] = useState([])
+
+    // if conversationId is already set (fetched from url not link click)
+    useEffect(() => {
+        if (conversationId !== "") {
+            // find it in cached array, else fetch it
+            let convoBool = false
+            cachedConversations.forEach((conversation, i) => {
+                if (conversation._id === conversationId) {
+                    joinRoom(conversationId, cachedConversations[i])
+                    convoBool = true
+                }
+            })
+
+            if (!convoBool) {
+                // fetch convo data
+                async function loadConvo() {
+                    async function fetchConvo() {
+                        let response = await fetch('http://localhost:5000/message/fetchConvo', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                conversationId: conversationId
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + auth.token
+                            }
+                        })
+
+                        let data = await response.json()
+                        return data
+                    }
+
+                    let conversation = await fetchConvo()
+                    // just join room function and itll handle everything else
+                    joinRoom(conversationId, conversation)
+                    setCachedConversations((prevList) => {
+                        return [...prevList, conversation]
+                    })
+                }
+
+                loadConvo() // this calls joinRoom which resets joinRoom
+            }
+
+        }
+    }, [conversationId])
 
     function joinRoom(conversationId, conversationData) {
     // on click of conversation card (through props) this is ran with conversationId passed up from card
@@ -149,7 +196,6 @@ function MessagesBody() {
 
         setConversationUsersList(arr)
 
-        console.log(data)
         return data
     }
 
