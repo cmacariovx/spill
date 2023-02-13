@@ -129,7 +129,7 @@
                     flex-direction: column;
                     justify-content: flex-start;
                     align-items: flex-start;
-                    overflow-y: scroll;
+                    overflow-y: auto;
                     padding-top: 20px;
                 }
 
@@ -140,34 +140,72 @@
                     flex-direction: column;
                     justify-content: flex-start;
                     align-items: flex-start;
-                    overflow-y: scroll;
+                    overflow-y: auto;
                     padding-top: 20px;
                 }
 
             .mainMessagesContainerRight {
-                padding-top: 20px;
                 height: 100%;
                 width: 60%;
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-end;
                 align-items: center;
-                padding: 0px 20px;
             }
 
+            .mainMessagesContainerRight2 {
+                height: 100%;
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: center;
+                background-color: rgb(20, 20, 20);
+            }
+
+                .messageUserBanner {
+                    height: 10%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding: 10px 20px;
+                    background-color: rgb(34, 34, 34);
+                    box-shadow: 0 0 5px rgb(20, 20, 20);
+                }
+
+                    .messageUserBannerPic {
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        margin-right: 15px;
+                    }
+
+                    .messageUserBannerUsername {
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+
                 .messageFeedContainer {
-                    height: 90%;
+                    height: 80%;
                     width: 100%;
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
+                    justify-content: flex-start;
                     align-items: center;
-                    overflow-y: scroll;
+                    overflow-y: auto;
+                    padding-top: 10px;
                 }
+
 
                     .messageFeedCard {
                         height: 100px;
-                        width: 90%;
+                        width: 100%;
                         display: flex;
                         flex-direction: row;
                         justify-content: center;
@@ -239,6 +277,7 @@
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
+                    padding: 0 20px
                 }
 
                     .messageInput {

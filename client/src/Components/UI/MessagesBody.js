@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/auth-context";
 import ConversationCard from "./ConversationCard";
 
 import HomeSearchDropDown from "./HomeSearchDropDown";
+import MessageCard from "./MessageCard";
 
 import './MessagesBody.css'
 import personal from './Images/personal.jpg'
@@ -25,6 +26,8 @@ function MessagesBody() {
     const [fetchingConversations, setFetchingConversations] = useState(false)
     const [conversationData, setConversationData] = useState({})
     const [conversationMessages, setConversationMessages] = useState([])
+    const [showUserBanner, setShowUserBanner] = useState(false)
+    const [conversationUsersList, setConversationUsersList] = useState([])
 
     function joinRoom(conversationId, conversationData) {
     // on click of conversation card (through props) this is ran with conversationId passed up from card
@@ -35,6 +38,7 @@ function MessagesBody() {
             setConversationId(conversationId)
             setConversationData(conversationData)
             setConversationMessages(conversationData.messages)
+            setShowUserBanner(true)
         }
     }
 
@@ -70,11 +74,11 @@ function MessagesBody() {
         })
 
         const data = await response.json()
-        console.log(data)
     }
 
     useEffect(() => {
         socket.on("showMessage", (data) => {
+            console.log(data)
             setConversationMessages((prevList) => {
                 return [...prevList, data]
             })
@@ -111,7 +115,7 @@ function MessagesBody() {
         let returnArr = []
 
         allConversationUsersArr.filter(user => {
-            if (user.username.includes(searchInput)) {
+            if (user.username.includes(searchInput) && user.username !== auth.username && !conversationUsersList.includes(user.username)) {
                 returnArr.push(user)
             }
         })
@@ -136,6 +140,16 @@ function MessagesBody() {
 
         const data = await response.json()
         setFetchingConversations(false)
+
+        let arr = []
+
+        data.forEach((conversation) => {
+            auth.username === conversation.createdUsername ? arr.push(conversation.receivingUsername) : arr.push(conversation.createdUsername)
+        })
+
+        setConversationUsersList(arr)
+
+        console.log(data)
         return data
     }
 
@@ -177,30 +191,20 @@ function MessagesBody() {
                                     <ConversationCard conversationData={conversation} onJoinRoom={joinRoom} key={i}/>) : null : null}
                         </div>
                     </div>
-                    <div className="mainMessagesContainerRight">
+                    <div className={!showUserBanner ? "mainMessagesContainerRight" : "mainMessagesContainerRight2"}>
+                        {showUserBanner ? conversationData ? <div className="messageUserBanner">
+                            <img src={personal} className="messageUserBannerPic" />
+                            <p className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
+                        </div> : null : null}
                         <div className="messageFeedContainer">
-                            {conversationMessages.length ? conversationMessages.map((message, i) =>
-                                <div className="messageFeedCard" key={i}>
-                                    <div className="messageFeedPicContainer">
-                                        <img src={personal} className="messageFeedPic"/>
-                                    </div>
-                                    <div className="messageFeedBodyContainer">
-                                        <div className="messageFeedUsernameContainer">
-                                            <p className="messageFeedUsername">{"@" + message.createdUsername}</p>
-                                            <p className="messageFeedTimePosted">{message.timeCreated}</p>
-                                        </div>
-                                        <div className="messageFeedTextContainer">
-                                            <p className="messageFeedText">{message.messageText}</p>
-                                        </div>
-                                    </div>
-                                </div>) : null}
+                            {conversationMessages.length ? conversationMessages.map((message, i) => <MessageCard message={message} key={i}/>) : null}
                         </div>
-                        <div className="mainInputContainer">
+                        {showUserBanner ? conversationData ? <div className="mainInputContainer">
                             <input className="messageInput" ref={messageInput}></input>
                             <button className="sendMessageButton" onClick={sendMessageHandler}>
                                 <i className="fa-solid fa-paper-plane"></i>
                             </button>
-                        </div>
+                        </div> : null : null}
                     </div>
                 </div>
             </div>

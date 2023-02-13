@@ -551,6 +551,7 @@ async function createMessageMongo(req, res, next, data) {
             }
         },
         $set: {
+            timeLastMessageSent: data.timeCreated,
             latestMessageSent: {
                 createdUserId: data.createdUserId,
                 createdUsername: data.createdUsername,

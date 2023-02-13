@@ -7,7 +7,7 @@
     justify-content: flex-start;
     align-items: center;
     border-radius: 5px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .homeSearchDropDown2 {
@@ -19,5 +19,5 @@
     justify-content: flex-start;
     align-items: center;
     border-radius: 5px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
