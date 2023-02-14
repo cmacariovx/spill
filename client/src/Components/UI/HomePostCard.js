@@ -8,6 +8,7 @@ import personal from './Images/personal.jpg'
 import HomeOptionsPostDropDown from "./HomeOptionsPostDropDown";
 
 function HomePostCard(props) {
+    console.log(props.homePostCardData)
     const auth = useContext(AuthContext)
 
     let [currentPostCardData, setCurrentPostCardData] = useState(props.homePostCardData)
@@ -91,8 +92,9 @@ function HomePostCard(props) {
         <div className="homePostCardContainer" onClick={openCardHandler}>
             <div className="postCardUserContainer">
                 <Link to={"/profile/" + props.homePostCardData.creatorUsername} className="postCardUserContainer1">
-                    <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
                     <img className="postCardUserPic" src={personal} alt=""/>
+                    <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
+                    {currentPostCardData.creatorVerified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}
                 </Link>
                 {props.homePostCardData.creatorUsername === auth.username && <div className="postCardUserContainer2">
                     {!showPostOptions && <i className="fa-solid fa-ellipsis" onClick={postOptionsHandler}></i>}

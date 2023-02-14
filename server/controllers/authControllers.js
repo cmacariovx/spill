@@ -83,7 +83,7 @@ async function userLoginMain (req, res, next, signup = null) {
 
     let token = jwt.sign({userId: mongoFindUser._id.toString(), username: mongoFindUser.username}, jwtSecret)
 
-    res.status(201).json({userId: mongoFindUser._id.toString(), username: mongoFindUser.username, token: token, following: mongoFindUser.following})
+    res.status(201).json({userId: mongoFindUser._id.toString(), username: mongoFindUser.username, token: token, following: mongoFindUser.following, verified: mongoFindUser.verified})
 }
 
 exports.userSignup = userSignup

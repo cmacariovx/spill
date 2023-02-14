@@ -34,7 +34,7 @@ function HomeMainBody(props) {
     const auth = useContext(AuthContext)
 
     const navigate = useNavigate()
-    
+
     let postTextData = useRef()
 
     function detailedCard() {
@@ -64,8 +64,11 @@ function HomeMainBody(props) {
             'likes': [],
             'likeCount': 0,
             'comments': [],
-            'commentCount': 0
+            'commentCount': 0,
+            'creatorVerified': auth.verified
         }
+
+        postTextData.current.value = ""
 
         const response = await fetch('http://localhost:5000/home/createPost', {
             method: 'POST',

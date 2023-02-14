@@ -60,7 +60,8 @@ async function createPostMongo(req, res, next, postData) {
             'likes': [],
             'likeCount': 0,
             'comments': [],
-            'commentCount': 0
+            'commentCount': 0,
+            'creatorVerified': postData.creatorVerified
         })
 
         response2 = await db.collection("users").updateOne({"username": postData.creatorUsername},
@@ -259,7 +260,6 @@ async function createCommentMongo(req, res, next, commentData) {
 
     let response1
     let response2
-    let response3 = null
 
     try {
         await client.connect()
@@ -271,7 +271,8 @@ async function createCommentMongo(req, res, next, commentData) {
             commentUserId: commentData.commentUserId,
             commentUsername: commentData.commentUsername,
             commentBodyText: commentData.commentBodyText,
-            commentTimePosted: commentData.commentTimePosted
+            commentTimePosted: commentData.commentTimePosted,
+            creatorVerified: commentData.creatorVerified
         })
         response2 = await db.collection("posts").updateOne({_id: new ObjectId(commentData.postId)}, {
             $push: {

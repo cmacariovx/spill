@@ -36,7 +36,7 @@ function Login() {
             setShowError(true)
         }
         else {
-            auth.login(data.userId, data.token, data.username, data.following)
+            auth.login(data.userId, data.token, data.username, data.following, data.verified)
         }
     }
     async function demoLoginUserHandler(event) {
@@ -55,7 +55,7 @@ function Login() {
 
         const data = await response.json()
 
-        auth.login(data.userId, data.token, data.username, data.following)
+        auth.login(data.userId, data.token, data.username, data.following, data.verified)
 
     }
 

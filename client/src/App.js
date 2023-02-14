@@ -20,16 +20,18 @@ function App() {
   const [usernameAuth, setUsernameAuth] = useState(null)
   const [loadingLogin, setLoadingLogin] = useState(true)
   const [followingArr, setFollowingArr] = useState(null)
+  const [userVerified, setUserVerified] = useState(null)
 
-  const login = useCallback((uid, token, username, following) => {
+  const login = useCallback((uid, token, username, following, verified) => {
     setToken(token)
     setUserId(uid)
     setUsernameAuth(username)
     setFollowingArr(following)
+    setUserVerified(verified)
     // updates state on every rerender/refresh if login is called and causes component to render for 2nd time
     // setToken and setUserId fully reruns component and calls AppPrivateRoutes again with actual token
 
-    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token, username: username, following: following}))
+    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token, username: username, following: following, verified: verified}))
   }, [])
 
   const logout = useCallback(() => {
@@ -37,6 +39,7 @@ function App() {
     setUserId(null)
     setUsernameAuth(null)
     setFollowingArr(null)
+    setUserVerified(null)
     localStorage.removeItem('userData')
   }, [])
 
@@ -66,7 +69,7 @@ function App() {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
     if (storedData && storedData.token) {
-      login(storedData.userId, storedData.token, storedData.username, storedData.following)
+      login(storedData.userId, storedData.token, storedData.username, storedData.following, storedData.verified)
     }
     setLoadingLogin(false)
   }, [login]) // will run everytime and call login which will set token and userId state if userData is in localstorage
@@ -84,6 +87,7 @@ function App() {
           userId: userId,
           username: usernameAuth,
           following: followingArr,
+          verified: userVerified,
           login: login,
           logout: logout,
           followUpdate: followUpdate,

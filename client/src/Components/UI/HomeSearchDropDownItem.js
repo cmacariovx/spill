@@ -34,10 +34,11 @@ function HomeSearchDropDownItem(props) {
     }
 
     return (
-        <Link className="homeSearchDropDownItem" to={!dmClass ? "/profile/" + userData.username : ""} onClick={createNewConversationHandler}>
+        <Link className="homeSearchDropDownItem" to={!dmClass ? "/profile/" + userData.username : ""} onClick={dmClass ?createNewConversationHandler : null}>
             <img src="#" className="dropDownImg"/>
             <div className="dropDownUsernameContainer">
                 <p className="dropDownUsername">{"@" + userData.username}</p>
+                {userData.verified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}
             </div>
         </Link>
     )

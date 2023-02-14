@@ -107,6 +107,8 @@ function MessagesBody() {
             timeCreated: timeCreated
         })
 
+        messageInput.current.value = ""
+
         const response = await fetch('http://localhost:5000/message/createMessage', {
             method: 'POST',
             body: JSON.stringify({

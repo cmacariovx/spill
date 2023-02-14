@@ -16,6 +16,7 @@ function TopCreatorContainer(props) {
             <div className="topCreatorUserContainer">
                 <img className="topCreatorPic" src={personalPic} alt=""/>
                 <p className="topCreatorUserText">{"@" + currentUser.username}</p>
+                {currentUser.verified ? <i className="fa-solid fa-square-check topCreatorCheck"></i> : null}
             </div>
         </Link>
     )

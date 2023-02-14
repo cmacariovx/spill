@@ -102,7 +102,7 @@ function Signup() {
                 setShowError(true)
             }
             else {
-                auth.login(data.userId, data.token, data.username, data.following)
+                auth.login(data.userId, data.token, data.username, data.following, data.verified)
             }
         }
     }
@@ -122,7 +122,7 @@ function Signup() {
         })
 
         const data = await response.json()
-        auth.login(data.userId, data.token, data.username, data.following)
+        auth.login(data.userId, data.token, data.username, data.following, data.verified)
     }
 
     return (

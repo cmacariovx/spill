@@ -35,4 +35,9 @@
             font-size: 14px;
             font-weight: bold;
             color: white;
+            margin-right: 10px;
+        }
+
+        .searchMenuCheck {
+            font-size: 16px;
         }

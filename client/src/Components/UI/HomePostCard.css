@@ -30,7 +30,7 @@
             width: 30%;
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
         }
 
@@ -38,6 +38,7 @@
                 font-size: 15px;
                 font-weight: bold;
                 transition: linear 0.1s;
+                margin-right: 15px;
             }
 
                 .postCardUsername:hover {
@@ -49,6 +50,7 @@
                 height: 30px;
                 width: 30px;
                 border-radius: 50%;
+                margin-right: 15px;
             }
 
         .postCardUserContainer2 {

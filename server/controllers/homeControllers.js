@@ -4,7 +4,7 @@ require("dotenv").config()
 const jwtSecret = process.env.JWT_SECRET
 
 async function createPost(req, res, next) {
-    const { userId, creatorUsername, mainText, timePosted, likeCount, comments } = req.body
+    const { userId, creatorUsername, mainText, timePosted, likeCount, comments, creatorVerified } = req.body
 
     const postData = {
         userId: userId,
@@ -14,7 +14,8 @@ async function createPost(req, res, next) {
         likes: [],
         likeCount: 0,
         comments: [],
-        commentCount: 0
+        commentCount: 0,
+        creatorVerified: creatorVerified
     }
 
     let mongoCreatePost = await mongoConnections.createPostMongo(req, res, next, postData)
@@ -67,7 +68,7 @@ async function fetchComments(req, res, next) {
 }
 
 async function createComment(req, res, next) {
-    const { postId, postCreatorId, postCreatorUsername, commentUserId, commentUsername, commentBodyText, commentTimePosted } = req.body
+    const { postId, postCreatorId, postCreatorUsername, commentUserId, commentUsername, commentBodyText, commentTimePosted, creatorVerified } = req.body
 
     const commentData = {
         postId: postId,
@@ -76,7 +77,8 @@ async function createComment(req, res, next) {
         commentUserId: commentUserId,
         commentUsername: commentUsername,
         commentBodyText: commentBodyText,
-        commentTimePosted: commentTimePosted
+        commentTimePosted: commentTimePosted,
+        creatorVerified: creatorVerified
     }
 
     let mongoCreateComment = await mongoConnections.createCommentMongo(req, res, next, commentData)

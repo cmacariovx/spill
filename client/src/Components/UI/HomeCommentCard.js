@@ -12,7 +12,7 @@ function HomeCommentCard(props) {
 
     async function deleteCommentHandler() {
         props.onUpdateListOfComments()
-        
+
         const response = await fetch("http://localhost:5000/home/deleteComment", {
             method: "POST",
             body: JSON.stringify({
@@ -35,6 +35,7 @@ function HomeCommentCard(props) {
             <div className="homeCommentProfileContainer">
                 <img className="homeCommentProfilePic" src={userProfilePic} alt=""></img>
                 <p className="homeCommentUsername">{props.commentData.commentUsername}</p>
+                {currentCommentData.creatorVerified ? <i className="fa-solid fa-square-check commentCheck"></i> : null}
             </div>
             <div className="homeCommentBodyContainer">
                 <p className="homeCommentBodyText">{props.commentData.commentBodyText}</p>

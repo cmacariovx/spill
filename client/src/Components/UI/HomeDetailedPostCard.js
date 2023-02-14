@@ -54,9 +54,12 @@ function HomeDetailedPostCard(props) {
             'commentUserId': auth.userId,
             'commentUsername': auth.username,
             'commentBodyText': currentCommentData.current.value,
-            'commentTimePosted': Date.now()
+            'commentTimePosted': Date.now(),
+            'creatorVerified': auth.verified
         }
 
+        currentCommentData.current.value = ""
+        
         const response = await fetch("http://localhost:5000/home/createComment", {
             method: "POST",
             body: JSON.stringify(newComment),
