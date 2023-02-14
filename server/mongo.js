@@ -527,7 +527,12 @@ async function fetchAllConversationsMongo(req, res, next, userId) {
         // or receiving end
         const cursor = collection.find({ $or: [{createdUserId: userId}, {receivingUserId: userId}] }).sort({timeLastMessageSent: -1})
 
-        response = await cursor.toArray()
+        let arr = []
+        await cursor.forEach((conversation) => {
+            conversation.messages.reverse()
+            arr.push(conversation)
+        })
+        response = arr
     }
     finally {
         await client.close()
@@ -556,7 +561,8 @@ async function createMessageMongo(req, res, next, data) {
                 createdUserId: data.createdUserId,
                 createdUsername: data.createdUsername,
                 messageText: data.messageText,
-                timeCreated: data.timeCreated
+                timeCreated: data.timeCreated,
+                messageOpened: false
             }
         }
     })
@@ -571,6 +577,18 @@ async function fetchConvoMongo(req, res, next, conversationId) {
     await client.connect()
     const db = client.db()
     let response = await db.collection("conversations").findOne({_id: new ObjectId(conversationId)})
+    // response.messages.reverse()
+
+    client.close()
+    res.json(response)
+}
+
+async function readMessageMongo(req, res, next, conversationId) {
+    const client = new MongoClient(mongoUrl)
+
+    await client.connect()
+    const db = client.db()
+    let response = await db.collection("conversations").updateOne({_id: new ObjectId(conversationId)}, { $set: {"latestMessageSent.messageOpened": true} })
 
     client.close()
     res.json(response)
@@ -599,3 +617,4 @@ exports.createConversationMongo = createConversationMongo
 exports.fetchAllConversationsMongo = fetchAllConversationsMongo
 exports.createMessageMongo = createMessageMongo
 exports.fetchConvoMongo = fetchConvoMongo
+exports.readMessageMongo = readMessageMongo

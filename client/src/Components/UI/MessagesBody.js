@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import io from 'socket.io-client'
 import { AuthContext } from "../../context/auth-context";
 import ConversationCard from "./ConversationCard";
+import ScrollToBottom, { useAnimatingToEnd, useAnimating } from 'react-scroll-to-bottom'
 
 import HomeSearchDropDown from "./HomeSearchDropDown";
 import MessageCard from "./MessageCard";
@@ -17,9 +18,9 @@ function MessagesBody() {
     let socket = io.connect("http://localhost:5001") // set to mainbody so we can get messages outside of just messagebody and just pass down all the way through props
 
     const messageInput = useRef()
-    const convoId = window.location.pathname.slice(10)
 
-    const [conversationId, setConversationId] = useState(convoId !== "" ? convoId : "")
+    const convoId = window.location.pathname.slice(10)
+    const [conversationId, setConversationId] = useState(convoId)
     const [showSearchContainer, setShowSearchContainer] = useState(false)
     const [allConversationUsersArr, setAllConversationUsersArr] = useState([])
     const [fetchingConversationUsers, setFetchingConversationUsers] = useState(false)
@@ -32,28 +33,17 @@ function MessagesBody() {
     const [conversationMessages, setConversationMessages] = useState([])
     const [showUserBanner, setShowUserBanner] = useState(false)
     const [conversationUsersList, setConversationUsersList] = useState([])
-    const [cachedConversations, setCachedConversations] = useState([])
 
-    // if conversationId is already set (fetched from url not link click)
     useEffect(() => {
-        if (conversationId !== "") {
-            // find it in cached array, else fetch it
-            let convoBool = false
-            cachedConversations.forEach((conversation, i) => {
-                if (conversation._id === conversationId) {
-                    joinRoom(conversationId, cachedConversations[i])
-                    convoBool = true
-                }
-            })
-
-            if (!convoBool) {
+        if (convoId) {
+            setConversationId(convoId)
                 // fetch convo data
                 async function loadConvo() {
                     async function fetchConvo() {
                         let response = await fetch('http://localhost:5000/message/fetchConvo', {
                             method: 'POST',
                             body: JSON.stringify({
-                                conversationId: conversationId
+                                conversationId: convoId
                             }),
                             headers: {
                                 'Content-Type': 'application/json',
@@ -66,29 +56,38 @@ function MessagesBody() {
                     }
 
                     let conversation = await fetchConvo()
-                    // just join room function and itll handle everything else
-                    joinRoom(conversationId, conversation)
-                    setCachedConversations((prevList) => {
-                        return [...prevList, conversation]
-                    })
+                    joinRoom(convoId, conversation)
                 }
 
-                loadConvo() // this calls joinRoom which resets joinRoom
+                loadConvo()
+        }
+    }, [convoId])
+
+    function joinRoom(conversationId, conversationData1) {
+        if (conversationId !== "") {
+            setConversationId(conversationId)
+            socket.emit("joinConversation", conversationId) // this creates the multiple message error because its changing switch
+            setConversationData(conversationData1)
+            setConversationMessages(conversationData1.messages)
+            setShowUserBanner(true)
+
+            async function readMessage() {
+                let response = await fetch('http://localhost:5000/message/readMessage', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        conversationId: conversationId
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + auth.token
+                    }
+                })
+
+                let data = await response.json()
+                return data
             }
 
-        }
-    }, [conversationId])
-
-    function joinRoom(conversationId, conversationData) {
-    // on click of conversation card (through props) this is ran with conversationId passed up from card
-
-    // conversation data is now available here from convo card to display on message body
-        if (conversationId !== "") {
-            socket.emit("joinConversation", conversationId)
-            setConversationId(conversationId)
-            setConversationData(conversationData)
-            setConversationMessages(conversationData.messages)
-            setShowUserBanner(true)
+            if (conversationData1.latestMessageSent.createdUsername !== auth.username && !conversationData1.latestMessageSent.openedMessage) readMessage()
         }
     }
 
@@ -124,6 +123,7 @@ function MessagesBody() {
         })
 
         const data = await response.json()
+        return data
     }
 
     useEffect(() => {
@@ -133,6 +133,7 @@ function MessagesBody() {
                 return [...prevList, data]
             })
         })
+
     }, [socket])
 
     function showContainerHandler() {
@@ -220,11 +221,17 @@ function MessagesBody() {
         setShowUserBanner(false)
         // reset url
         navigate("/messages")
-
+        window.location.reload()
     }
 
     function homeHandler() {
         navigate("/home")
+    }
+
+    function fetchProfileHandler() {
+        let nav = conversationData.createdUsername !== auth.username ? "/profile/" + conversationData.createdUsername : "/profile/" + conversationData.receivingUsername
+
+        navigate(nav)
     }
 
     return (
@@ -250,23 +257,23 @@ function MessagesBody() {
                             {!fetchingConversationUsers ? currentlySearchingBool && <HomeSearchDropDown fetchedUsersArr={receivedConversationUsers} dmClass={true}/> : null}
                         </div>}
                         <div className={!showSearchContainer ? "conversationsListContainer" : "conversationsListContainer2"}>
-                            {!fetchingConversations ?
+                            {!showUserBanner ? !fetchingConversations ?
                                 listOfConversations.length ?
                                     listOfConversations.map((conversation, i) =>
-                                    <ConversationCard conversationData={conversation} onJoinRoom={joinRoom} key={i}/>) : null : null}
+                                    <ConversationCard conversationData={conversation} onJoinRoom={joinRoom} key={i}/>) : null : null : null}
                         </div>
                     </div>
                     <div className={!showUserBanner ? "mainMessagesContainerRight" : "mainMessagesContainerRight2"}>
                         {showUserBanner ? conversationData ? <div className="messageUserBanner">
                             <div className="messageUserBannerUser">
                                 <img src={personal} className="messageUserBannerPic" />
-                                <p className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
+                                <p onClick={fetchProfileHandler} className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
                             </div>
                             <i className="fa-solid fa-xmark messageX" onClick={closeConversationHandler}></i>
                         </div> : null : null}
-                        <div className="messageFeedContainer">
+                        <ScrollToBottom className="messageFeedContainer">
                             {conversationMessages.length ? conversationMessages.map((message, i) => <MessageCard message={message} key={i}/>) : null}
-                        </div>
+                        </ScrollToBottom>
                         {showUserBanner ? conversationData ? <div className="mainInputContainer">
                             <input className="messageInput" ref={messageInput}></input>
                             <button className="sendMessageButton" onClick={sendMessageHandler}>

@@ -15,4 +15,6 @@ router.post('/createMessage', messageControllers.createMessage)
 
 router.post('/fetchConvo', messageControllers.fetchConvo)
 
+router.post('/readMessage', messageControllers.readMessage)
+
 module.exports = router

@@ -1,5 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import io from 'socket.io-client'
 
 import HomePostCard from './HomePostCard'
 import TopCreatorContainer from "./TopCreatorContainer";
@@ -31,6 +33,8 @@ function HomeMainBody(props) {
 
     const auth = useContext(AuthContext)
 
+    const navigate = useNavigate()
+    
     let postTextData = useRef()
 
     function detailedCard() {
@@ -160,6 +164,10 @@ function HomeMainBody(props) {
         setShowSettings(true)
     }
 
+    function toMessagesHandler() {
+        navigate("/messages")
+    }
+
     return (
         <div className="homeMainBodyContainer">
             <div className="homeMainBodyLeft">
@@ -184,10 +192,10 @@ function HomeMainBody(props) {
                     {dropdownBool && <HomeDropDown onCaptureSettingsClick={captureSettingsClick}/>}
                     {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
                 </div>
-                <Link className="messagesContainer" to="/messages">
+                <div className="messagesContainer" onClick={toMessagesHandler}>
                     <p className="messagesContainerText">DM's</p>
                     <i className="fa-solid fa-message"></i>
-                </Link>
+                </div>
                 <div className={!searchingBool ? "searchContainer1" : "searchContainer2"}>
                     <input className="searchInput" placeholder="Find a user" onChange={(e) => setSearchTerm(e.target.value)}></input>
                     {!fetchingUsers ? searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} dmClass={false}/> : null}

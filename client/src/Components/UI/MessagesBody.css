@@ -202,6 +202,13 @@
                         .messageUserBannerUsername {
                             font-size: 18px;
                             font-weight: bold;
+                            transition: 0.1s linear;
+                            cursor: pointer;
+                        }
+
+                        .messageUserBannerUsername:hover {
+                            transition: 0.1s linear;
+                            color: rgb(112, 193, 255);
                         }
 
                         .messageX {

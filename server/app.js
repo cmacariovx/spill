@@ -58,14 +58,15 @@ const io = new Server(server, {
 })
 
 io.on("connection", (socket) => {
+    socket.removeAllListeners()
     socket.on("joinConversation", (data) => {
         socket.join(data)
     })
     socket.on("leaveConversation", (data) => {
         socket.leave(data)
+        socket.removeAllListeners()
     })
     socket.on("sendMessage", (data) => {
-        // socket.broadcast.emit("broadcastMessage", data) sends to everyone but you
         socket.to(data.conversationId).emit("showMessage", data)
     })
 })

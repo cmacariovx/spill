@@ -5,7 +5,6 @@ import './MessageCard.css'
 import personal from './Images/personal.jpg'
 
 function MessageCard(props) {
-    const [timestamp, setTimestamp] = useState(props.message.timeCreated)
     const time = new Date(props.message.timeCreated)
     return (
         <div className="messageFeedCard">

@@ -32,7 +32,7 @@
 
     .conversationPreviewContainer {
         height: 100%;
-        width: 80%;
+        width: 70%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -50,6 +50,10 @@
 
             .conversationPreviewUsername {
                 font-size: 15px;
+            }
+
+            .conversationPreviewUsername2 {
+                font-size: 15px;
                 font-weight: bold;
             }
 
@@ -65,3 +69,23 @@
             .messagePreviewText {
                 font-size: 14px;
             }
+
+            .messagePreviewText2 {
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+
+    .unreadMessageContainer {
+        height: 100%;
+        width: 10%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .fa-circle {
+            color: rgba(102, 189, 255, 1);
+            font-size: 15px;
+        }
