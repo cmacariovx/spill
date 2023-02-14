@@ -191,7 +191,7 @@ function HomeMainBody(props) {
             <div className="homeMainBodyRight">
                 <div className="profileContainer" onClick={dropdownHandler} onMouseLeave={dropdownHandlerClose}>
                     <p className="profileUsername">{"@" + auth.username}</p>
-                    <img src={personal} className="profileImg" alt=""/>
+                    <img src={"http://localhost:5000/" + auth.profilePicture} className="profileImg" alt=""/>
                     {dropdownBool && <HomeDropDown onCaptureSettingsClick={captureSettingsClick}/>}
                     {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
                 </div>

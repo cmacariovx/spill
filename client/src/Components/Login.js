@@ -36,7 +36,7 @@ function Login() {
             setShowError(true)
         }
         else {
-            auth.login(data.userId, data.token, data.username, data.following, data.verified)
+            auth.login(data.userId, data.token, data.username, data.following, data.verified, data.profilePicture)
         }
     }
     async function demoLoginUserHandler(event) {
@@ -46,7 +46,7 @@ function Login() {
             method: 'POST',                                      // options request doesnt make it to POST when credentials are wrong
             body: JSON.stringify({
                 'username': 'demo',
-                'password': 'demologin'
+                'password': 'demologin1'
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ function Login() {
 
         const data = await response.json()
 
-        auth.login(data.userId, data.token, data.username, data.following, data.verified)
+        auth.login(data.userId, data.token, data.username, data.following, data.verified, data.profilePicture)
 
     }
 

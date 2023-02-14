@@ -1,0 +1,54 @@
+.imageUploadContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid white;
+}
+
+    .imageUploadInput {
+        display: none;
+    }
+
+    .imageUploadMainContainer {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .imageUploadPreview {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .imagePreview {
+                height: 70px;
+                width: auto;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+        .imageUploadButton {
+            height: 45px;
+            width: 100px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            background-color: rgb(255, 255, 255);
+            cursor: pointer;
+            color: #121212;
+        }

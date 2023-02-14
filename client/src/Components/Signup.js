@@ -5,6 +5,7 @@ import { AuthContext } from "../context/auth-context";
 import './Signup.css'
 
 import ErrorAuthModal from "./UI/ErrorAuthModal";
+import ImageUpload from "./UI/ImageUpload";
 
 function Signup() {
     let usernameInputRef = useRef()
@@ -14,6 +15,8 @@ function Signup() {
 
     let [showError, setShowError] = useState(false)
     let [errorsArr, setErrorsArr] = useState([])
+    let [isValid, setIsValid] = useState(false)
+    let [image, setImage] = useState(null)
 
     const auth = useContext(AuthContext)
 
@@ -67,6 +70,12 @@ function Signup() {
                     return [...prevListOfErrors]
                 })
             }
+            if (!isValid) {
+                setErrorsArr(prevListOfErrors => {
+                    prevListOfErrors.push("Please choose a profile picture.")
+                    return [...prevListOfErrors]
+                })
+            }
         }
 
         async function callValidateInputs() {
@@ -82,17 +91,16 @@ function Signup() {
         let validated = await callValidateInputs()
 
         if (validated) {
+            const formData = new FormData()
+            formData.append('username', usernameInputRef.current.value)
+            formData.append('fullName', fullNameInputRef.current.value)
+            formData.append('email', emailInputRef.current.value)
+            formData.append('password', passwordInputRef.current.value)
+            formData.append('image', image)
+
             const response = await fetch('http://localhost:5000/auth/signup', {
                 method: 'POST',
-                body: JSON.stringify({
-                    'username': usernameInputRef.current.value,
-                    'fullName': fullNameInputRef.current.value,
-                    'email': emailInputRef.current.value,
-                    'password': passwordInputRef.current.value
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: formData
             })
 
             const data = await response.json()
@@ -102,7 +110,7 @@ function Signup() {
                 setShowError(true)
             }
             else {
-                auth.login(data.userId, data.token, data.username, data.following, data.verified)
+                auth.login(data.userId, data.token, data.username, data.following, data.verified, data.profilePicture)
             }
         }
     }
@@ -114,7 +122,7 @@ function Signup() {
             method: 'POST',                                    // options request doesnt make it to POST when credentials are wrong
             body: JSON.stringify({
                 'username': 'demo',
-                'password': 'demologin'
+                'password': 'demologin1'
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -122,8 +130,14 @@ function Signup() {
         })
 
         const data = await response.json()
-        auth.login(data.userId, data.token, data.username, data.following, data.verified)
+        auth.login(data.userId, data.token, data.username, data.following, data.verified, data.profilePicture)
     }
+
+    function getImageData(isValid, image) {
+        setIsValid(isValid)
+        setImage(image)
+    }
+
 
     return (
         <div className="signupBackdrop">
@@ -148,6 +162,10 @@ function Signup() {
                     <div className="signupInputContainer">
                         <p className="signupPasswordText">Password</p>
                         <input type="password" maxLength="32" className="signupInput" id="signupInput3" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" ref={passwordInputRef}></input>
+                    </div>
+                    <div className="signupInputContainer">
+                    <p className="signupPasswordText">Profile Picture</p>
+                        <ImageUpload onValid={getImageData}/>
                     </div>
                     <div className="signupButtonsContainer">
                         <Link to="/home">

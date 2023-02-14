@@ -22,7 +22,7 @@ async function userSignup (req, res, next) {
     }
 
     for (let i = 0; i < fullName.length; i++) {
-        if (allowedChars[fullName[i]] !== true) return res.json({message: 'Invalid input data.'})
+        if (allowedChars[fullName[i].toLowerCase()] !== true) return res.json({message: 'Invalid input data.'})
     }
     // -----------------------
 
@@ -42,6 +42,7 @@ async function userSignup (req, res, next) {
         'verified': false,
         'likedPosts': [],
         'privateLikedPosts': false,
+        'profilePicture': req.file.path
     }
 
     let mongoConnect = await mongoConnections.userSignup(req, res, next, createdUser)
@@ -83,7 +84,7 @@ async function userLoginMain (req, res, next, signup = null) {
 
     let token = jwt.sign({userId: mongoFindUser._id.toString(), username: mongoFindUser.username}, jwtSecret)
 
-    res.status(201).json({userId: mongoFindUser._id.toString(), username: mongoFindUser.username, token: token, following: mongoFindUser.following, verified: mongoFindUser.verified})
+    res.status(201).json({userId: mongoFindUser._id.toString(), username: mongoFindUser.username, token: token, following: mongoFindUser.following, verified: mongoFindUser.verified, profilePicture: mongoFindUser.profilePicture})
 }
 
 exports.userSignup = userSignup

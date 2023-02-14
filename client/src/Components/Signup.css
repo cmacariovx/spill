@@ -9,8 +9,8 @@
 }
 
     .signupContainer {
-        height: 600px;
-        width: 500px;
+        height: 800px;
+        width: 600px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -36,7 +36,7 @@
             }
 
         .signupBodyContainer {
-            height: 80%;
+            height: 85%;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -45,7 +45,7 @@
         }
 
             .signupInputContainer {
-                height: 40%;
+                height: 20%;
                 width: 80%;
                 display: flex;
                 flex-direction: column;
@@ -106,7 +106,7 @@
                 }
 
         .signupFooterContainer {
-            height: 10%;
+            height: 5%;
             width: 100%;
             display: flex;
             flex-direction: row;

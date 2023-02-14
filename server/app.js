@@ -3,6 +3,7 @@ const bodyParser = require("body-parser")
 const http = require("http") // socketio only supports http servers for now
 const { Server } = require('socket.io')
 const cors = require('cors')
+const path = require('path')
 
 const authRouter = require('./routes/authRoutes')
 const homeRouter = require('./routes/homeRoutes')
@@ -14,6 +15,8 @@ const app = express()
 app.listen(5000)
 
 app.use(bodyParser.json())
+
+app.use('/uploads/images', express.static(path.join('uploads', 'images')))
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
