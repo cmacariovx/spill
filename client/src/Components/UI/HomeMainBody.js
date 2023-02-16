@@ -65,7 +65,8 @@ function HomeMainBody(props) {
             'likeCount': 0,
             'comments': [],
             'commentCount': 0,
-            'creatorVerified': auth.verified
+            'creatorVerified': auth.verified,
+            'creatorProfilePicture': auth.profilePicture
         }
 
         postTextData.current.value = ""
@@ -120,7 +121,7 @@ function HomeMainBody(props) {
         let returnArr = []
 
         allUsersArr.filter(user => {
-            if (user.username.includes(searchTerm)) {
+            if (user.username.includes(searchTerm.toLowerCase())) {
                 returnArr.push(user)
             }
         })

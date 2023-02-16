@@ -19,7 +19,9 @@ function HomeSearchDropDownItem(props) {
                 userId: auth.userId,
                 createdUsername: auth.username,
                 receivingUserId: userData._id,
-                receivingUsername: userData.username
+                receivingUsername: userData.username,
+                createdCreatorProfilePicture: auth.profilePicture,
+                receivingCreatorProfilePicture: userData.profilePicture
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -35,7 +37,7 @@ function HomeSearchDropDownItem(props) {
 
     return (
         <Link className="homeSearchDropDownItem" to={!dmClass ? "/profile/" + userData.username : ""} onClick={dmClass ?createNewConversationHandler : null}>
-            <img src="#" className="dropDownImg"/>
+            <img src={"http://localhost:5000/" + userData.profilePicture} className="dropDownImg"/>
             <div className="dropDownUsernameContainer">
                 <p className="dropDownUsername">{"@" + userData.username}</p>
                 {userData.verified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}

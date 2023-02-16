@@ -19,8 +19,9 @@
     }
 
         .homeCommentProfilePic {
-            height: 20px;
-            width: auto;
+            aspect-ratio: 1 / 1;
+            max-height: 20px;
+            max-width: 20px;
             border-radius: 50%;
             display: flex;
             flex-direction: row;

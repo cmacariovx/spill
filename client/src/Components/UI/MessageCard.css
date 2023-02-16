@@ -20,8 +20,9 @@
     }
 
         .messageFeedPic {
-            height: 45px;
-            width: 45px;
+            aspect-ratio: 1 / 1;
+            max-height: 40px;
+            max-width: 40px;
             border-radius: 50%;
         }
 

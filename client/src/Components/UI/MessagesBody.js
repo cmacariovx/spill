@@ -104,7 +104,8 @@ function MessagesBody() {
             createdUserId: auth.userId,
             createdUsername: auth.username,
             messageText: message,
-            timeCreated: timeCreated
+            timeCreated: timeCreated,
+            creatorProfilePicture: auth.profilePicture
         })
 
         messageInput.current.value = ""
@@ -116,7 +117,8 @@ function MessagesBody() {
                 createdUserId: auth.userId,
                 createdUsername: auth.username,
                 messageText: message,
-                timeCreated: timeCreated
+                timeCreated: timeCreated,
+                creatorProfilePicture: auth.profilePicture
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -168,7 +170,7 @@ function MessagesBody() {
         let returnArr = []
 
         allConversationUsersArr.filter(user => {
-            if (user.username.includes(searchInput) && user.username !== auth.username && !conversationUsersList.includes(user.username)) {
+            if (user.username.includes(searchInput.toLowerCase()) && user.username !== auth.username && !conversationUsersList.includes(user.username)) {
                 returnArr.push(user)
             }
         })
@@ -268,7 +270,7 @@ function MessagesBody() {
                     <div className={!showUserBanner ? "mainMessagesContainerRight" : "mainMessagesContainerRight2"}>
                         {showUserBanner ? conversationData ? <div className="messageUserBanner">
                             <div className="messageUserBannerUser">
-                                <img src={personal} className="messageUserBannerPic" />
+                                <img src={conversationData.createdUsername !== auth.username ? "http://localhost:5000/" + conversationData.createdCreatorProfilePicture : "http://localhost:5000/" + conversationData.receivingCreatorProfilePicture} className="messageUserBannerPic" />
                                 <p onClick={fetchProfileHandler} className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
                             </div>
                             <i className="fa-solid fa-xmark messageX" onClick={closeConversationHandler}></i>

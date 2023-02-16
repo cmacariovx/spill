@@ -61,7 +61,8 @@ async function createPostMongo(req, res, next, postData) {
             'likeCount': 0,
             'comments': [],
             'commentCount': 0,
-            'creatorVerified': postData.creatorVerified
+            'creatorVerified': postData.creatorVerified,
+            'creatorProfilePicture': postData.creatorProfilePicture
         })
 
         response2 = await db.collection("users").updateOne({"username": postData.creatorUsername},
@@ -118,7 +119,7 @@ async function fetchUserProfileMongo(req, res, next, username) {
 }
 
 async function addFollowerMongo(req, res, next, usersData) {
-    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername } = usersData
+    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername, loggedInUserProfilePicture, loggedInUserVerified, followedUserProfilePicture, followedUserVerified } = usersData
 
     const client = new MongoClient(mongoUrl)
 
@@ -131,7 +132,9 @@ async function addFollowerMongo(req, res, next, usersData) {
             $push: {
                 following: {
                     followedUserId: followedUserId,
-                    followedUsername: followedUsername
+                    followedUsername: followedUsername,
+                    followedUserProfilePicture: followedUserProfilePicture,
+                    followedUserVerified: followedUserVerified
                 }
             },
             $inc: {
@@ -146,7 +149,9 @@ async function addFollowerMongo(req, res, next, usersData) {
             $push: {
                 followers: {
                     loggedInUserId: loggedInUserId,
-                    loggedInUsername: loggedInUsername
+                    loggedInUsername: loggedInUsername,
+                    loggedInUserProfilePicture: loggedInUserProfilePicture,
+                    loggedInUserVerified: loggedInUserVerified
                 }
             },
             $inc: {
@@ -160,7 +165,7 @@ async function addFollowerMongo(req, res, next, usersData) {
 }
 
 async function removeFollowerMongo(req, res, next, usersData) {
-    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername } = usersData
+    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername, loggedInUserProfilePicture, loggedInUserVerified, followedUserProfilePicture, followedUserVerified } = usersData
 
     const client = new MongoClient(mongoUrl)
 
@@ -173,7 +178,9 @@ async function removeFollowerMongo(req, res, next, usersData) {
             $pull: {
                 following: {
                     followedUserId: followedUserId,
-                    followedUsername: followedUsername
+                    followedUsername: followedUsername,
+                    followedUserProfilePicture: followedUserProfilePicture,
+                    followedUserVerified: followedUserVerified
                 }
             },
             $inc: {
@@ -188,7 +195,9 @@ async function removeFollowerMongo(req, res, next, usersData) {
             $pull: {
                 followers: {
                     loggedInUserId: loggedInUserId,
-                    loggedInUsername: loggedInUsername
+                    loggedInUsername: loggedInUsername,
+                    loggedInUserProfilePicture: loggedInUserProfilePicture,
+                    loggedInUserVerified: loggedInUserVerified
                 }
             },
             $inc: {
@@ -272,7 +281,8 @@ async function createCommentMongo(req, res, next, commentData) {
             commentUsername: commentData.commentUsername,
             commentBodyText: commentData.commentBodyText,
             commentTimePosted: commentData.commentTimePosted,
-            creatorVerified: commentData.creatorVerified
+            creatorVerified: commentData.creatorVerified,
+            creatorProfilePicture: commentData.creatorProfilePicture
         })
         response2 = await db.collection("posts").updateOne({_id: new ObjectId(commentData.postId)}, {
             $push: {
@@ -381,6 +391,7 @@ async function deletePostMongo(req, res, next, userId, postId) {
 
     let response1
     let response2
+    let response3
 
     try {
         const db = client.db()
@@ -396,6 +407,7 @@ async function deletePostMongo(req, res, next, userId, postId) {
                 postsNum: -1
             }
         })
+        response3 = await db.collection("comments").deleteMany({postId: postId})
 
 
     }
@@ -403,7 +415,7 @@ async function deletePostMongo(req, res, next, userId, postId) {
         client.close()
     }
 
-    res.json({response1: response1, response2: response2})
+    res.json({response1: response1, response2: response2, response3: response3})
 }
 
 async function deleteCommentMongo(req, res, next, userId, postId, commentId) {
@@ -505,10 +517,12 @@ async function createConversationMongo(req, res, next, data) {
         createdUsername: data.createdUsername,
         receivingUserId: data.receivingUserId,
         receivingUsername: data.receivingUsername,
-        messages: [], // {userId, messageText, timeSent}
+        createdCreatorProfilePicture: data.createdCreatorProfilePicture,
+        receivingCreatorProfilePicture: data.receivingCreatorProfilePicture,
+        messages: [],
         timeCreated: Date.now(),
         timeLastMessageSent: 0.0,
-        latestMessageSent: {}
+        latestMessageSent: {},
     })
 
     client.close()
@@ -553,7 +567,8 @@ async function createMessageMongo(req, res, next, data) {
                 createdUserId: data.createdUserId,
                 createdUsername: data.createdUsername,
                 messageText: data.messageText,
-                timeCreated: data.timeCreated
+                timeCreated: data.timeCreated,
+                creatorProfilePicture: data.creatorProfilePicture
             }
         },
         $set: {
@@ -563,6 +578,7 @@ async function createMessageMongo(req, res, next, data) {
                 createdUsername: data.createdUsername,
                 messageText: data.messageText,
                 timeCreated: data.timeCreated,
+                creatorProfilePicture: data.creatorProfilePicture,
                 messageOpened: false
             }
         }

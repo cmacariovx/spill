@@ -44,8 +44,9 @@
         }
 
             .homeDetailedProfilePic {
-                height: 40px;
-                width: 40px;
+                aspect-ratio: 1 / 1;
+                max-height: 40px;
+                max-width: 40px;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;

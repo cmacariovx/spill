@@ -92,7 +92,7 @@ function HomePostCard(props) {
         <div className="homePostCardContainer" onClick={openCardHandler}>
             <div className="postCardUserContainer">
                 <Link to={"/profile/" + props.homePostCardData.creatorUsername} className="postCardUserContainer1">
-                    <img className="postCardUserPic" src={personal} alt=""/>
+                    <img className="postCardUserPic" src={"http://localhost:5000/" + props.homePostCardData.creatorProfilePicture} alt=""/>
                     <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
                     {currentPostCardData.creatorVerified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}
                 </Link>

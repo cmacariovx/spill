@@ -97,7 +97,7 @@ function LandingBody() {
             <div className="rightLandingBodyContainer">
                 <div className="rightLandingBodyIntroContainer">
                     <p className="rightLandingBodyIntroText">The Leading Social Platform.</p>
-                    <Link to="signup">
+                    <Link to="/auth/signup">
                         <button className="rightLandingBodyIntroButton">Join Now</button>
                     </Link>
                 </div>

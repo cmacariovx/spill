@@ -4,7 +4,7 @@ require("dotenv").config()
 const jwtSecret = process.env.JWT_SECRET
 
 async function createPost(req, res, next) {
-    const { userId, creatorUsername, mainText, timePosted, likeCount, comments, creatorVerified } = req.body
+    const { userId, creatorUsername, mainText, timePosted, likeCount, comments, creatorVerified, creatorProfilePicture } = req.body
 
     const postData = {
         userId: userId,
@@ -15,7 +15,8 @@ async function createPost(req, res, next) {
         likeCount: 0,
         comments: [],
         commentCount: 0,
-        creatorVerified: creatorVerified
+        creatorVerified: creatorVerified,
+        creatorProfilePicture: creatorProfilePicture
     }
 
     let mongoCreatePost = await mongoConnections.createPostMongo(req, res, next, postData)
@@ -26,26 +27,34 @@ async function searchUsers(req, res, next) {
 }
 
 async function followUser(req, res, next) {
-    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername } = req.body
+    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername, loggedInUserProfilePicture, loggedInUserVerified, followedUserProfilePicture, followedUserVerified } = req.body
 
     let usersData = {
         loggedInUserId: loggedInUserId,
         loggedInUsername: loggedInUsername,
         followedUserId: followedUserId,
-        followedUsername: followedUsername
+        followedUsername: followedUsername,
+        loggedInUserProfilePicture: loggedInUserProfilePicture,
+        loggedInUserVerified: loggedInUserVerified,
+        followedUserProfilePicture: followedUserProfilePicture,
+        followedUserVerified: followedUserVerified
     }
 
     let mongoAddFollower = await mongoConnections.addFollowerMongo(req, res, next, usersData)
 }
 
 async function unfollowUser(req, res, next) {
-    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername } = req.body
+    const { loggedInUserId, loggedInUsername, followedUserId, followedUsername, loggedInUserProfilePicture, loggedInUserVerified, followedUserProfilePicture, followedUserVerified } = req.body
 
     let usersData = {
         loggedInUserId: loggedInUserId,
         loggedInUsername: loggedInUsername,
         followedUserId: followedUserId,
-        followedUsername: followedUsername
+        followedUsername: followedUsername,
+        loggedInUserProfilePicture: loggedInUserProfilePicture,
+        loggedInUserVerified: loggedInUserVerified,
+        followedUserProfilePicture: followedUserProfilePicture,
+        followedUserVerified: followedUserVerified
     }
 
     let mongoRemoveFollower = await mongoConnections.removeFollowerMongo(req, res, next, usersData)
@@ -68,7 +77,7 @@ async function fetchComments(req, res, next) {
 }
 
 async function createComment(req, res, next) {
-    const { postId, postCreatorId, postCreatorUsername, commentUserId, commentUsername, commentBodyText, commentTimePosted, creatorVerified } = req.body
+    const { postId, postCreatorId, postCreatorUsername, commentUserId, commentUsername, commentBodyText, commentTimePosted, creatorVerified, creatorProfilePicture } = req.body
 
     const commentData = {
         postId: postId,
@@ -78,7 +87,8 @@ async function createComment(req, res, next) {
         commentUsername: commentUsername,
         commentBodyText: commentBodyText,
         commentTimePosted: commentTimePosted,
-        creatorVerified: creatorVerified
+        creatorVerified: creatorVerified,
+        creatorProfilePicture: creatorProfilePicture
     }
 
     let mongoCreateComment = await mongoConnections.createCommentMongo(req, res, next, commentData)

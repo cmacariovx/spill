@@ -16,6 +16,7 @@ function HomeDetailedPostCard(props) {
     let currentCommentData = useRef()
 
     const auth = useContext(AuthContext)
+    console.log(auth)
 
     async function fetchComments() {
         const response = await fetch("http://localhost:5000/home/fetchComments", {
@@ -55,11 +56,12 @@ function HomeDetailedPostCard(props) {
             'commentUsername': auth.username,
             'commentBodyText': currentCommentData.current.value,
             'commentTimePosted': Date.now(),
-            'creatorVerified': auth.verified
+            'creatorVerified': auth.verified,
+            'creatorProfilePicture': auth.profilePicture
         }
 
         currentCommentData.current.value = ""
-        
+
         const response = await fetch("http://localhost:5000/home/createComment", {
             method: "POST",
             body: JSON.stringify(newComment),
@@ -100,7 +102,7 @@ function HomeDetailedPostCard(props) {
             <div className="homeDetailedPostCard">
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer">
-                        <img src={profilePicDetailed} className="homeDetailedProfilePic" alt=""></img>
+                        <img src={"http://localhost:5000/" + detailedCardData.creatorProfilePicture} className="homeDetailedProfilePic" alt=""></img>
                         <p className="homeDetailedProfileUsername">{"@" + detailedCardData.creatorUsername}</p>
                     </div>
                     <div className="homeDetailedPostContainer">

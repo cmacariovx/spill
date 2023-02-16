@@ -2,13 +2,15 @@ const mongoConnections = require('../mongo')
 require("dotenv").config()
 
 function createConversation(req, res, next) {
-    const { userId, createdUsername, receivingUserId, receivingUsername } = req.body
+    const { userId, createdUsername, receivingUserId, receivingUsername, createdCreatorProfilePicture, receivingCreatorProfilePicture } = req.body
 
     let data = {
         userId,
         createdUsername,
         receivingUserId,
-        receivingUsername
+        receivingUsername,
+        createdCreatorProfilePicture,
+        receivingCreatorProfilePicture
     }
 
     const mongoCreateConversation = mongoConnections.createConversationMongo(req, res, next, data)
@@ -21,14 +23,15 @@ function fetchAllConversations(req, res, next) {
 }
 
 function createMessage(req, res, next) {
-    const { conversationId, createdUserId, createdUsername, messageText, timeCreated } = req.body
+    const { conversationId, createdUserId, createdUsername, messageText, timeCreated, creatorProfilePicture } = req.body
 
     const data = {
         conversationId,
         createdUserId,
         createdUsername,
         messageText,
-        timeCreated
+        timeCreated,
+        creatorProfilePicture
     }
 
     const mongoCreateMessage = mongoConnections.createMessageMongo(req, res, next, data)

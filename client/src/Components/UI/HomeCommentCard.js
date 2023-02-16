@@ -17,8 +17,8 @@ function HomeCommentCard(props) {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,
-                postId: props.homePostData._id, // remove from post comments array
-                commentId: currentCommentData._id // remove from comments collection
+                postId: props.homePostData._id,
+                commentId: currentCommentData._id
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -33,7 +33,7 @@ function HomeCommentCard(props) {
     return (
         <div className="homeCommentCardContainer">
             <div className="homeCommentProfileContainer">
-                <img className="homeCommentProfilePic" src={userProfilePic} alt=""></img>
+                <img className="homeCommentProfilePic" src={"http://localhost:5000/" + props.commentData.creatorProfilePicture} alt=""></img>
                 <p className="homeCommentUsername">{props.commentData.commentUsername}</p>
                 {currentCommentData.creatorVerified ? <i className="fa-solid fa-square-check commentCheck"></i> : null}
             </div>
@@ -41,7 +41,7 @@ function HomeCommentCard(props) {
                 <p className="homeCommentBodyText">{props.commentData.commentBodyText}</p>
             </div>
             <div className="homeCommentDeleteContainer">
-                <i className="fa-solid fa-trash" onClick={deleteCommentHandler}></i>
+                {props.commentData.commentUsername === auth.username ? <i className="fa-solid fa-trash" onClick={deleteCommentHandler}></i> : null}
             </div>
         </div>
     )

@@ -9,6 +9,7 @@ import HomePostCard from "../Components/UI/HomePostCard"
 import HomeDetailedPostCard from "../Components/UI/HomeDetailedPostCard"
 import { AuthContext } from "../context/auth-context";
 import SettingsModal from "../Components/UI/SettingsModal";
+import FollowersModal from "../Components/UI/FollowersModal";
 
 function Profile(props) {
     let [cardClick2, setCardClick2] = useState(false)
@@ -27,6 +28,8 @@ function Profile(props) {
     let [showSettings, setShowSettings] = useState(false)
     let [isLikedPostsEmpty, setIsLikedPostsEmpty] = useState(false)
     let [isLikedPostsPrivate, setIsLikedPostsPrivate] = useState(false)
+    let [showFollowersModal, setShowFollowersModal] = useState(false)
+    let [followersMode, setFollowersMode] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -34,8 +37,8 @@ function Profile(props) {
         setCardClick2(true)
     }
 
-    function closeCard2() {
-        setCardClick2(false)
+    function closeCard2(event) {
+        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark medium-x") setCardClick2(false)
     }
 
     async function fetchProfilePosts() {
@@ -111,7 +114,11 @@ function Profile(props) {
                 "loggedInUserId": auth.userId,
                 "loggedInUsername": auth.username,
                 "followedUserId": userData._id,
-                "followedUsername": userData.username
+                "followedUsername": userData.username,
+                "loggedInUserProfilePicture": auth.profilePicture,
+                "loggedInUserVerified": auth.verified,
+                "followedUserProfilePicture": userData.profilePicture,
+                "followedUserVerified": userData.verified
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -134,7 +141,11 @@ function Profile(props) {
                 "loggedInUserId": auth.userId,
                 "loggedInUsername": auth.username,
                 "followedUserId": userData._id,
-                "followedUsername": userData.username
+                "followedUsername": userData.username,
+                "loggedInUserProfilePicture": auth.profilePicture,
+                "loggedInUserVerified": auth.verified,
+                "followedUserProfilePicture": userData.profilePicture,
+                "followedUserVerified": userData.verified
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -196,6 +207,21 @@ function Profile(props) {
         if (event.target.className === "settingsModalBackdrop" || event.target.className === "fa-solid fa-xmark xmark") setShowSettings(false)
     }
 
+    function showFollowersModalHandler1() {
+        setShowFollowersModal(true)
+        setFollowersMode(true)
+    }
+
+    function showFollowersModalHandler2() {
+        setShowFollowersModal(true)
+        setFollowersMode(false)
+    }
+
+    function closeFollowersModalHandler(event) {
+        if (event.target.className === "followersModalBackdrop" || event.target.className === "fa-solid fa-xmark followersxmark")
+        setShowFollowersModal(false)
+    }
+
     return (
         <div className="profilePageContainer">
             <div className="mainProfileBodyContainer">
@@ -203,7 +229,7 @@ function Profile(props) {
                     <Link to="/home" className="fa-solid fa-arrow-left"></Link>
                 </div>
                 <div className="mainProfileBodyIntroContainer">
-                    <img className="mainProfileIntroPic" src={mainProfileBodyPic} alt=""></img>
+                    <img className="mainProfileIntroPic" src={dataFetched ? userData ? "http://localhost:5000/" + userData.profilePicture : null : null} alt=""></img>
                     <div className="mainProfileIntroCredentialsContainer">
                         <div className="userCredentialsBox">
                             <p className="mainProfileNameText">{dataFetched && userData && userData.fullName}</p>
@@ -214,11 +240,12 @@ function Profile(props) {
                         </div>
                     </div>
                     <div className="mainProfileIntroStatsContainer">
-                        <div className="mainProfileFollowersContainer">
+                        {showFollowersModal && <FollowersModal profileData={userData} onCloseCard={closeFollowersModalHandler} followersMode={followersMode}/>}
+                        <div className="mainProfileFollowersContainer" onClick={showFollowersModalHandler1}>
                             <p className="mainProfileStatTitle">Followers</p>
                             <p className="mainProfileStatNumber">{dataFetched && userData && userData.followersNum}</p>
                         </div>
-                        <div className="mainProfileFollowingContainer">
+                        <div className="mainProfileFollowingContainer" onClick={showFollowersModalHandler2}>
                             <p className="mainProfileStatTitle">Following</p>
                             <p className="mainProfileStatNumber">{dataFetched && userData && userData.followingNum}</p>
                         </div>

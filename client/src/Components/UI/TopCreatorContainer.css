@@ -35,8 +35,9 @@
     }
 
         .topCreatorPic {
-            height: 30px;
-            width: auto;
+            aspect-ratio: 1 / 1;
+            max-height: 30px;
+            max-width: 30px;
             display: flex;
             justify-content: center;
             align-items: center;

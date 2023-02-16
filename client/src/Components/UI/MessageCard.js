@@ -9,7 +9,7 @@ function MessageCard(props) {
     return (
         <div className="messageFeedCard">
             <div className="messageFeedPicContainer">
-                <img src={personal} className="messageFeedPic"/>
+                <img src={"http://localhost:5000/" + props.message.creatorProfilePicture} className="messageFeedPic"/>
             </div>
             <div className="messageFeedBodyContainer">
                 <div className="messageFeedUsernameContainer">

@@ -26,7 +26,7 @@ function ConversationCard(props) {
     return (
         <div className="conversationCard" onClick={openConversationHandler}>
             <div className="conversationPicContainer">
-                <img src={personal} className="conversationPreviewImg"/>
+                <img src={conversationData.createdUsername !== auth.username ? "http://localhost:5000/" + conversationData.createdCreatorProfilePicture : "http://localhost:5000/" + conversationData.receivingCreatorProfilePicture} className="conversationPreviewImg"/>
             </div>
             <div className="conversationPreviewContainer">
                 <div className="conversationPreviewUsernameContainer">
