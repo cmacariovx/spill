@@ -6,6 +6,7 @@ import './Signup.css'
 
 import ErrorAuthModal from "./UI/ErrorAuthModal";
 import ImageUpload from "./UI/ImageUpload";
+import LoadingSpinner from "./UI/LoadingSpinner";
 
 function Signup() {
     let usernameInputRef = useRef()
@@ -17,6 +18,7 @@ function Signup() {
     let [errorsArr, setErrorsArr] = useState([])
     let [isValid, setIsValid] = useState(false)
     let [image, setImage] = useState(null)
+    let [isSigningUp, setIsSigningUp] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -98,6 +100,8 @@ function Signup() {
             formData.append('password', passwordInputRef.current.value)
             formData.append('image', image)
 
+            setIsSigningUp(true)
+
             const response = await fetch('http://localhost:5000/auth/signup', {
                 method: 'POST',
                 body: formData
@@ -117,6 +121,7 @@ function Signup() {
 
     async function demoLoginUserHandlerSignup(event) {
         event.preventDefault()
+        setIsSigningUp(true)
 
         const response = await fetch('http://localhost:5000/auth/login', {  // a null return in a authController ends fetch early
             method: 'POST',                                    // options request doesnt make it to POST when credentials are wrong
@@ -146,7 +151,7 @@ function Signup() {
                 <div className="signupHeaderContainer">
                     <p className="signupHeaderText">Sign Up</p>
                 </div>
-                <div className="signupBodyContainer">
+                {isSigningUp ? <LoadingSpinner /> : <div className="signupBodyContainer">
                     <div className="signupInputContainer">
                         <p className="signupUsernameText">Username</p>
                         <input className="signupInput" maxLength="32" placeholder="johndoe" id="signupInput1" pattern="[a-z]{3,}" ref={usernameInputRef}></input>
@@ -175,7 +180,7 @@ function Signup() {
                             <button className="demosignupButton" onClick={demoLoginUserHandlerSignup}>Demo Login</button>
                         </Link>
                     </div>
-                </div>
+                </div>}
                 <div className="signupFooterContainer">
                     <p className="signupFooterText">Already Have an Account?</p>
                     <Link className="signupFooterLoginLink" to="/auth/login">Log In</Link>

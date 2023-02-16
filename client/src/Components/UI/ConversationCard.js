@@ -41,7 +41,7 @@ function ConversationCard(props) {
                 </div>
             </div>
             <div className="unreadMessageContainer">
-                {(!conversationData.latestMessageSent.messageOpened && auth.username !== conversationData.latestMessageSent.createdUsername) ? <i class="fa-solid fa-circle"></i> : null}
+                {(!conversationData.latestMessageSent.messageOpened && auth.username !== conversationData.latestMessageSent.createdUsername) ? <i className="fa-solid fa-circle"></i> : null}
             </div>
         </div>
     )

@@ -7,6 +7,7 @@ import ScrollToBottom, { useAnimatingToEnd, useAnimating } from 'react-scroll-to
 
 import HomeSearchDropDown from "./HomeSearchDropDown";
 import MessageCard from "./MessageCard";
+import LoadingSpinner from "./LoadingSpinner";
 
 import './MessagesBody.css'
 import personal from './Images/personal.jpg'
@@ -261,6 +262,7 @@ function MessagesBody() {
                             {!fetchingConversationUsers ? currentlySearchingBool && <HomeSearchDropDown fetchedUsersArr={receivedConversationUsers} dmClass={true}/> : null}
                         </div>}
                         <div className={!showSearchContainer ? "conversationsListContainer" : "conversationsListContainer2"}>
+                            {fetchingConversations && <LoadingSpinner height={"50%"} padding={"50px"}/>}
                             {!showUserBanner ? !fetchingConversations ?
                                 listOfConversations.length ?
                                     listOfConversations.map((conversation, i) =>

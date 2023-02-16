@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/auth-context";
 import ErrorAuthModal from "./UI/ErrorAuthModal";
+import LoadingSpinner from "./UI/LoadingSpinner";
 
 import './Login.css'
 
@@ -12,14 +13,16 @@ function Login() {
 
     let [showError, setShowError] = useState(false)
     let [errorsArr, setErrorsArr] = useState([])
+    let [loggingIn, setLoggingIn] = useState(false)
 
     const auth = useContext(AuthContext)
 
     async function loginUserHandler(event) {
         event.preventDefault()
+        setLoggingIn(true)
 
-        const response = await fetch('http://localhost:5000/auth/login', {  // a null return in a authController ends fetch early
-            method: 'POST',                                      // options request doesnt make it to POST when credentials are wrong
+        const response = await fetch('http://localhost:5000/auth/login', {// a null return in a authController ends fetch early
+            method: 'POST',
             body: JSON.stringify({
                 'username': usernameInputRef2.current.value,
                 'password': passwordInputRef2.current.value
@@ -38,9 +41,11 @@ function Login() {
         else {
             auth.login(data.userId, data.token, data.username, data.following, data.verified, data.profilePicture)
         }
+        setLoggingIn(false)
     }
     async function demoLoginUserHandler(event) {
         event.preventDefault()
+        setLoggingIn(true)
 
         const response = await fetch('http://localhost:5000/auth/login', {  // a null return in a authController ends fetch early
             method: 'POST',                                      // options request doesnt make it to POST when credentials are wrong
@@ -56,7 +61,7 @@ function Login() {
         const data = await response.json()
 
         auth.login(data.userId, data.token, data.username, data.following, data.verified, data.profilePicture)
-
+        setLoggingIn(false)
     }
 
     function closeError() {
@@ -71,6 +76,7 @@ function Login() {
                 <div className="loginHeaderContainer">
                     <p className="loginHeaderText">Login</p>
                 </div>
+                {loggingIn ? <LoadingSpinner /> :
                 <div className="loginBodyContainer">
                     <div className="loginInputContainer">
                         <p className="loginUsernameText">Username</p>
@@ -89,6 +95,7 @@ function Login() {
                         </Link>
                     </div>
                 </div>
+                }
                 <div className="loginFooterContainer">
                     <p className="loginFooterText">Don't Have an Account?</p>
                     <Link className="loginFooterSignupLink" to="/auth/signup">Sign Up</Link>

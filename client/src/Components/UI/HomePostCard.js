@@ -8,7 +8,6 @@ import personal from './Images/personal.jpg'
 import HomeOptionsPostDropDown from "./HomeOptionsPostDropDown";
 
 function HomePostCard(props) {
-    console.log(props.homePostCardData)
     const auth = useContext(AuthContext)
 
     let [currentPostCardData, setCurrentPostCardData] = useState(props.homePostCardData)

@@ -9,6 +9,7 @@ import HomeDetailedPostCard from "./HomeDetailedPostCard";
 import HomeDropDown from "./HomeDropDown";
 import HomeSearchDropDown from "./HomeSearchDropDown";
 import SettingsModal from "./SettingsModal";
+import LoadingSpinner from "./LoadingSpinner";
 
 import { AuthContext } from "../../context/auth-context";
 
@@ -30,6 +31,7 @@ function HomeMainBody(props) {
     let [allUsersArr, setAllUsersArr] = useState([])
     let [fetchingUsers, setFetchingUsers] = useState(false)
     let [topCreatorsArr, setTopCreatorsArr] = useState([])
+    let [fetchingPosts, setFetchingPosts] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -82,6 +84,7 @@ function HomeMainBody(props) {
 
         const data = await response.json()
         console.log(data)
+        setAddingPost(false)
         window.location.reload()
     }
 
@@ -132,6 +135,7 @@ function HomeMainBody(props) {
     }, [searchTerm])
 
     async function fetchPosts() {
+        setFetchingPosts(true)
         // if followers array empty, fetch any recent posts
         const response = await fetch("http://localhost:5000/home/fetchPosts", {
             method: "POST",
@@ -146,6 +150,7 @@ function HomeMainBody(props) {
         })
 
         const data = await response.json()
+        setFetchingPosts(false)
         return data
     }
 
@@ -185,6 +190,7 @@ function HomeMainBody(props) {
                     <button className="postStatusButton" onClick={addPostHandler}>Post</button>
                 </div>
                 <div className="homeFeedContainer">
+                    {(fetchingPosts || addingPost) && <LoadingSpinner height={"10%"}/>}
                     {cardClick && <HomeDetailedPostCard onCloseCard={closeCard} detailedCardData={detailedData} likedCardData={likedData}/>}
                     {!addingPost ? (listOfPosts.map((post, index) => <HomePostCard onShowCard={detailedCard} homePostCardData={post} onDetailedCardDataHandler={detailedCardDataHandler} key={index}/>)) : null}
                 </div>
@@ -205,12 +211,17 @@ function HomeMainBody(props) {
                     {!fetchingUsers ? searchingBool && <HomeSearchDropDown fetchedUsersArr={receivedUsers} dmClass={false}/> : null}
                 </div>
                 <div className="topCreatorsContainer">
-                    <div className="topCreatorsTitleContainer">
-                        <p className="topCreatorsTitleText">Top Creators</p>
-                    </div>
-                    <div className="topCreatorsListContainer">
-                        {!fetchingUsers ? topCreatorsArr.map((user, i) => <TopCreatorContainer currentUser={user} currentIndex={i + 1} key={user._id}/>) : null}
-                    </div>
+                    {fetchingPosts && <LoadingSpinner height={"100%"}/>}
+                    {!fetchingPosts &&
+                        <div className="topCreatorsTitleContainer">
+                            <p className="topCreatorsTitleText">Top Creators</p>
+                        </div>
+                    }
+                    {!fetchingPosts &&
+                        <div className="topCreatorsListContainer">
+                            {!fetchingUsers ? topCreatorsArr.map((user, i) => <TopCreatorContainer currentUser={user} currentIndex={i + 1} key={user._id}/>) : null}
+                        </div>
+                    }
                 </div>
             </div>
         </div>

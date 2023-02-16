@@ -10,6 +10,7 @@ import HomeDetailedPostCard from "../Components/UI/HomeDetailedPostCard"
 import { AuthContext } from "../context/auth-context";
 import SettingsModal from "../Components/UI/SettingsModal";
 import FollowersModal from "../Components/UI/FollowersModal";
+import LoadingSpinner from "../Components/UI/LoadingSpinner";
 
 function Profile(props) {
     let [cardClick2, setCardClick2] = useState(false)
@@ -55,6 +56,7 @@ function Profile(props) {
         })
 
         const data = await response.json()
+        setIsFetchingPosts(false)
         return data
     }
 
@@ -62,7 +64,6 @@ function Profile(props) {
         const fetchedPosts = await cb()
 
         setListOfPosts2([...fetchedPosts])
-        setIsFetchingPosts(false)
     }
 
     useEffect(() => {
@@ -228,6 +229,7 @@ function Profile(props) {
                 <div className="exitProfileContainer">
                     <Link to="/home" className="fa-solid fa-arrow-left"></Link>
                 </div>
+                {!dataFetched ? <LoadingSpinner height={"20%"}/> :
                 <div className="mainProfileBodyIntroContainer">
                     <img className="mainProfileIntroPic" src={dataFetched ? userData ? "http://localhost:5000/" + userData.profilePicture : null : null} alt=""></img>
                     <div className="mainProfileIntroCredentialsContainer">
@@ -255,6 +257,7 @@ function Profile(props) {
                         </div>
                     </div>
                 </div>
+                }
                 <div className="mainProfileBodyFollowContainer">
                     {dataFetched ?
                             !isSelfProfile &&
@@ -269,7 +272,7 @@ function Profile(props) {
 
                     {dataFetched ? !isLikedPostsPrivate ? (!isShowingFeed ? <button className="showFeedPostsButton" onClick={showFeedPostsHandler}>Show Posts Feed</button> : <button className="showLikedPostsButton" onClick={showLikedPostsHandler}>Show Liked Posts</button>) : null : null}
                 </div>
-                {dataFetched ?
+                {(isFetchingPosts || isFetchingLikedPosts) ? <LoadingSpinner height={"50%"}/> : dataFetched ?
                     isShowingFeed ?
                         <div className="mainProfilePostsFeedContainer">
                             {cardClick2 && <HomeDetailedPostCard onCloseCard={closeCard2} likedCardData={likedData2} detailedCardData={detailedCardData2}/>}

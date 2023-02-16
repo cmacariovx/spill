@@ -6,17 +6,18 @@ import profilePicDetailed from './Images/personal.jpg'
 
 import HomeCommentCard from "./HomeCommentCard";
 import { AuthContext } from "../../context/auth-context";
+import LoadingSpinner from "./LoadingSpinner";
 
 function HomeDetailedPostCard(props) {
     let [detailedCardData, setDetailedCardData] = useState(props.detailedCardData)
     let [likedData, setLikedData] = useState(props.likedCardData)
     let [likedStatus, setLikedStatus] = useState(props.likedCardData.likedStatus) // not receiving liked card data
     let [listOfComments, setListOfComments] = useState([])
+    let [fetchingComments, setFetchingComments] = useState(true)
 
     let currentCommentData = useRef()
 
     const auth = useContext(AuthContext)
-    console.log(auth)
 
     async function fetchComments() {
         const response = await fetch("http://localhost:5000/home/fetchComments", {
@@ -31,6 +32,7 @@ function HomeDetailedPostCard(props) {
         })
 
         const data = await response.json()
+        setFetchingComments(false)
         return data
     }
 
@@ -45,9 +47,11 @@ function HomeDetailedPostCard(props) {
     }, [])
 
     async function addCommentHandler() {
+        setFetchingComments(true)
         detailedCardData.commentCount += 1
         setDetailedCardData(detailedCardData)
 
+        // problem is no id here
         let newComment = {
             'postId': detailedCardData._id,
             'postCreatorId': detailedCardData.userId,
@@ -73,10 +77,12 @@ function HomeDetailedPostCard(props) {
 
         const data = await response.json()
 
+        newComment._id = data.response1.insertedId
         setListOfComments(prevListOfComments => {
             return [newComment, ...prevListOfComments]
         })
 
+        setFetchingComments(false)
         return data
     }
 
@@ -119,7 +125,8 @@ function HomeDetailedPostCard(props) {
                         <i className="fa-solid fa-xmark medium-x" onClick={props.onCloseCard}></i>
                     </div>
                     <div className="homeDetailedCommentsFeedContainer">
-                        {listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} homePostData={detailedCardData} onUpdateListOfComments={updateListOfComments} key={index}/>)}
+                        {fetchingComments && <LoadingSpinner />}
+                        {!fetchingComments ? listOfComments.map((comment, index) => <HomeCommentCard commentData={comment} homePostData={detailedCardData} onUpdateListOfComments={updateListOfComments} key={comment._id}/>) : null}
                     </div>
                     <div className="homeDetailedCommentsInputContainer">
                         <input className="homeDetailedCommentsInput" maxLength="64" placeholder="Add a Comment" ref={currentCommentData}></input>

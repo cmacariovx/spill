@@ -6,12 +6,15 @@ import './HomeCommentCard.css'
 import userProfilePic from './Images/personal.jpg'
 
 function HomeCommentCard(props) {
+
+    // update state -------------- lowest commment gets duplicated
     let [currentCommentData, setCurrentCommentData] = useState(props.commentData)
 
     const auth = useContext(AuthContext)
 
     async function deleteCommentHandler() {
         props.onUpdateListOfComments()
+        console.log(currentCommentData)
 
         const response = await fetch("http://localhost:5000/home/deleteComment", {
             method: "POST",
