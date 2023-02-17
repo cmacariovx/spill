@@ -1,9 +1,10 @@
 .homeContainer {
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: rgb(14, 14, 14);
 }

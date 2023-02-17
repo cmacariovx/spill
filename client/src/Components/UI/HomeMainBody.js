@@ -10,6 +10,7 @@ import HomeDropDown from "./HomeDropDown";
 import HomeSearchDropDown from "./HomeSearchDropDown";
 import SettingsModal from "./SettingsModal";
 import LoadingSpinner from "./LoadingSpinner";
+import SideMenu from "./SideMenu";
 
 import { AuthContext } from "../../context/auth-context";
 
@@ -33,6 +34,7 @@ function HomeMainBody(props) {
     let [topCreatorsArr, setTopCreatorsArr] = useState([])
     let [fetchingPosts, setFetchingPosts] = useState(false)
     let [showInvalidPostButton, setShowInvalidPostButton] = useState(false)
+    let [showMenu, setShowMenu] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -182,11 +184,21 @@ function HomeMainBody(props) {
         navigate("/messages")
     }
 
+    function showMenuHandler() {
+        setShowMenu(true)
+    }
+
+    function closeMenuHandler() {
+        setShowMenu(false)
+    }
+
     return (
         <div className="homeMainBodyContainer">
+            {showMenu && <SideMenu allUsers={allUsersArr} onCloseMenu={closeMenuHandler}/>}
             <div className="homeMainBodyLeft">
                 <div className="homeTextContainer">
                     <p className="homeText">Home</p>
+                    <i className="fa-solid fa-bars" onClick={showMenuHandler}></i>
                 </div>
                 <div className="statusUpdateContainer">
                     <div className="statusUpdateInputContainer">
