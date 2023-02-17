@@ -221,6 +221,9 @@ async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) 
 
     let findAllResponse
     let findOneResponse
+    let findRecommendedResponse
+    let findDuplicateArr
+    let arr = []
 
     try {
         const db = client.db()
@@ -234,12 +237,30 @@ async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) 
         const cursor2 = db.collection("posts").find({"creatorUsername": loggedInUsername}).sort({_id: -1}).limit(1)
 
         findOneResponse = await cursor2.toArray()
+
+        const cursor3 = collection.find({}).sort({likeCount: -1}).limit(20)
+
+        findRecommendedResponse = await cursor3.toArray()
+
+        let idSet = new Set()
+
+        findDuplicateArr = [...findOneResponse, ...findAllResponse, ...findRecommendedResponse]
+
+        for (let i = 0; i < findDuplicateArr.length; i++) {
+            let post = findDuplicateArr[i]
+            let id = post._id.toString()
+
+            if (!idSet.has(id)) {
+                arr.push(post)
+            }
+            idSet.add(id)
+        }
     }
     finally {
         await client.close()
     }
 
-    res.json({findOneResponse: findOneResponse, findAllResponse: findAllResponse})
+    res.json(arr)
 }
 
 async function fetchCommentsMongo(req, res, next, postId) {

@@ -1,5 +1,5 @@
 .homeContainer {
-    height: 2000px;
+    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
