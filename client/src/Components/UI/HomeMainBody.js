@@ -59,7 +59,7 @@ function HomeMainBody(props) {
     async function addPostHandler() {
         setAddingPost(true)
         let postTextDataMain = postTextData.current.value
-        if (postTextDataMain === "") {
+        if (postTextDataMain.trim() === "") {
             setAddingPost(false)
             return
         }
