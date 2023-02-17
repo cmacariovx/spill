@@ -32,6 +32,7 @@ function HomeMainBody(props) {
     let [fetchingUsers, setFetchingUsers] = useState(false)
     let [topCreatorsArr, setTopCreatorsArr] = useState([])
     let [fetchingPosts, setFetchingPosts] = useState(false)
+    let [showInvalidPostButton, setShowInvalidPostButton] = useState(false)
 
     const auth = useContext(AuthContext)
 
@@ -58,6 +59,10 @@ function HomeMainBody(props) {
     async function addPostHandler() {
         setAddingPost(true)
         let postTextDataMain = postTextData.current.value
+        if (postTextDataMain === "") {
+            setAddingPost(false)
+            return
+        }
         let newPost = {
             'userId': auth.userId,
             'creatorUsername': auth.username,
@@ -157,7 +162,6 @@ function HomeMainBody(props) {
     async function getFetchedPosts(cb) {
         const fetchedPosts = await cb()
 
-        // [...fetchedPosts.findOneResponse, ...fetchedPosts.findAllResponse, ...fetchedPosts.findRecommendedResponse]
         setListOfPosts([...fetchedPosts])
     }
 
@@ -188,7 +192,7 @@ function HomeMainBody(props) {
                     <div className="statusUpdateInputContainer">
                         <textarea className="statusUpdateInput" rows='4' cols='40' maxLength="204" placeholder="How's your day been?" ref={postTextData}></textarea>
                     </div>
-                    <button className="postStatusButton" onClick={addPostHandler}>Post</button>
+                    <button className={!showInvalidPostButton ? "postStatusButton" : "postStatusButton2"} onClick={!showInvalidPostButton ? addPostHandler : null}>Post</button>
                 </div>
                 <div className="homeFeedContainer">
                     {(fetchingPosts || addingPost) && <LoadingSpinner height={"10%"}/>}
