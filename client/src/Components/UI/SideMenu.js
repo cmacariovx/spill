@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 
 import './SideMenu.css'
 
+import SettingsModal from "./SettingsModal";
+
 function SideMenu(props) {
     const [allUsers, setAllUsers] = useState(props.allUsers)
     const [searchTerm, setSearchTerm] = useState("")
@@ -50,8 +52,13 @@ function SideMenu(props) {
         auth.logout()
     }
 
+    function closeCardHandler(event) {
+        if (event.target.className === "settingsModalBackdrop" || event.target.className === "fa-solid fa-xmark xmark") setShowSettings(false)
+    }
+
     return (
         <div className="sideMenuContainer">
+            {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
             <div className="sideMenuMain">
                 <div className="sideMenuHeaderContainer">
                     <p className="sideMenuHeader">Menu</p>

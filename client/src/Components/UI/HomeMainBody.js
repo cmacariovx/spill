@@ -47,7 +47,7 @@ function HomeMainBody(props) {
     }
 
     function closeCard(event) {
-        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark medium-x") setCardClick(false)
+        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark medium-x" || event.target.className === "fa-solid fa-xmark medium-x2") setCardClick(false)
     }
 
     function dropdownHandler(event) {
@@ -202,7 +202,7 @@ function HomeMainBody(props) {
                 </div>
                 <div className="statusUpdateContainer">
                     <div className="statusUpdateInputContainer">
-                        <textarea className="statusUpdateInput" rows='4' cols='40' maxLength="204" placeholder="How's your day been?" ref={postTextData}></textarea>
+                        <textarea className="statusUpdateInput" rows='4' cols='40' maxLength="160" placeholder="How's your day been?" ref={postTextData}></textarea>
                     </div>
                     <button className={!showInvalidPostButton ? "postStatusButton" : "postStatusButton2"} onClick={!showInvalidPostButton ? addPostHandler : null}>Post</button>
                 </div>

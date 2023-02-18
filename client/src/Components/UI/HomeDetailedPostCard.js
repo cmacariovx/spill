@@ -7,6 +7,7 @@ import profilePicDetailed from './Images/personal.jpg'
 import HomeCommentCard from "./HomeCommentCard";
 import { AuthContext } from "../../context/auth-context";
 import LoadingSpinner from "./LoadingSpinner";
+import { useNavigate } from "react-router";
 
 function HomeDetailedPostCard(props) {
     let [detailedCardData, setDetailedCardData] = useState(props.detailedCardData)
@@ -18,6 +19,7 @@ function HomeDetailedPostCard(props) {
     let currentCommentData = useRef()
 
     const auth = useContext(AuthContext)
+    const navigate = useNavigate()
 
     async function fetchComments() {
         const response = await fetch("http://localhost:5000/home/fetchComments", {
@@ -103,13 +105,18 @@ function HomeDetailedPostCard(props) {
         setLikedStatus(false)
     }
 
+    function toProfileHandler(event) {
+        if (event.target.className !== "fa-solid fa-xmark medium-x2" && event.target.className !== "fa-solid fa-xmark medium-x") navigate("/profile/" + detailedCardData.creatorUsername)
+    }
+
     return (
         <div className="backdrop" onClick={props.onCloseCard}>
             <div className="homeDetailedPostCard">
                 <div className="homeDetailedLeftBody">
-                    <div className="homeDetailedProfileContainer">
+                    <div className="homeDetailedProfileContainer" onClick={toProfileHandler}>
                         <img src={"http://localhost:5000/" + detailedCardData.creatorProfilePicture} className="homeDetailedProfilePic" alt=""></img>
                         <p className="homeDetailedProfileUsername">{"@" + detailedCardData.creatorUsername}</p>
+                        <i className="fa-solid fa-xmark medium-x2" onClick={props.onCloseCard}></i>
                     </div>
                     <div className="homeDetailedPostContainer">
                         <p className="homeDetailedPostText">{detailedCardData.mainText}</p>

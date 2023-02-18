@@ -39,7 +39,7 @@ function Profile(props) {
     }
 
     function closeCard2(event) {
-        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark medium-x") setCardClick2(false)
+        if (event.target.className === "backdrop" || event.target.className === "fa-solid fa-xmark medium-x" || event.target.className === "fa-solid fa-xmark medium-x2") setCardClick2(false)
     }
 
     async function fetchProfilePosts() {
