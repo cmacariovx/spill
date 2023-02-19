@@ -90,7 +90,6 @@ function HomeMainBody(props) {
         })
 
         const data = await response.json()
-        console.log(data)
         setAddingPost(false)
         window.location.reload()
     }
