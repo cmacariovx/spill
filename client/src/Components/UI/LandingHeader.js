@@ -7,7 +7,7 @@ function LandingHeader() {
     return (
         <div className="landingHeaderContainer">
             <div className="landingLogoContainer">
-                <p className="landingLogoText">Socia</p>
+                <p className="landingLogoText">Spill</p>
             </div>
             <div className="landingNavContainer">
                 <ul className="landingNav">
