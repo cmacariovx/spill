@@ -23,7 +23,7 @@ function LandingBody() {
         // Create an array to hold the snowflakes
         let snowflakes = []
 
-        // Define a Snowflake class
+        // Define a Snowflake
         function Snowflake() {
             this.x = Math.random() * canvas.width // initial x position
             this.y = Math.random() * canvas.height // initial y position

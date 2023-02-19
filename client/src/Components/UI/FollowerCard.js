@@ -16,7 +16,7 @@ function FollowerCard(props) {
 
     return (
         <div className="followerCardContainer" onClick={toProfileHandler}>
-            <img src={followersMode ? "http://localhost:5000/" + userData.loggedInUserProfilePicture : "http://localhost:5000/" + userData.followedUserProfilePicture} className="followerCardImg"/>
+            <img src={followersMode ? (process.env.REACT_APP_BACKEND_URL + userData.loggedInUserProfilePicture) : (process.env.REACT_APP_BACKEND_URL + userData.followedUserProfilePicture)} className="followerCardImg"/>
             <div className="followerCardUsernameContainer">
                 <p className="followerCardUsername">{followersMode ? "@" + userData.loggedInUsername : userData.followedUsername}</p>
                 {followersMode ? userData.loggedInUserverified : userData.followedUserVerified ? <i className="fa-solid fa-square-check followerCardCheck"></i> : null}

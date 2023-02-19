@@ -11,7 +11,7 @@ function HomeOptionsPostDropDown(props) {
     async function deletePostHandler(event) {
         event.preventDefault()
 
-        const response = await fetch("http://localhost:5000/home/deletePost", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/deletePost", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,

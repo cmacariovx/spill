@@ -13,7 +13,7 @@ function HomeSearchDropDownItem(props) {
     async function createNewConversationHandler(event) {
         event.preventDefault()
 
-        const response = await fetch("http://localhost:5000/message/createConversation", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "message/createConversation", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,
@@ -37,7 +37,7 @@ function HomeSearchDropDownItem(props) {
 
     return (
         <Link className="homeSearchDropDownItem" to={!dmClass ? "/profile/" + userData.username : ""} onClick={dmClass ?createNewConversationHandler : null}>
-            <img src={"http://localhost:5000/" + userData.profilePicture} className="dropDownImg"/>
+            <img src={process.env.REACT_APP_BACKEND_URL + userData.profilePicture} className="dropDownImg"/>
             <div className="dropDownUsernameContainer">
                 <p className="dropDownUsername">{"@" + userData.username}</p>
                 {userData.verified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}

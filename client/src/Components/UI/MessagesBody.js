@@ -17,7 +17,7 @@ function MessagesBody() {
     const auth = useContext(AuthContext)
     const navigate = useNavigate()
 
-    let socket = io.connect("http://localhost:5001") // set to mainbody so we can get messages outside of just messagebody and just pass down all the way through props
+    let socket = io.connect(process.env.REACT_APP_SOCKET_URL) // set to mainbody so we can get messages outside of just messagebody and just pass down all the way through props
 
     const messageInput = useRef()
 
@@ -43,7 +43,7 @@ function MessagesBody() {
                 // fetch convo data
                 async function loadConvo() {
                     async function fetchConvo() {
-                        let response = await fetch('http://localhost:5000/message/fetchConvo', {
+                        let response = await fetch(process.env.REACT_APP_BACKEND_URL + 'message/fetchConvo', {
                             method: 'POST',
                             body: JSON.stringify({
                                 conversationId: convoId
@@ -75,7 +75,7 @@ function MessagesBody() {
             setShowUserBanner(true)
 
             async function readMessage() {
-                let response = await fetch('http://localhost:5000/message/readMessage', {
+                let response = await fetch(process.env.REACT_APP_BACKEND_URL + 'message/readMessage', {
                     method: 'POST',
                     body: JSON.stringify({
                         conversationId: conversationId
@@ -113,7 +113,7 @@ function MessagesBody() {
 
         messageInput.current.value = ""
 
-        const response = await fetch('http://localhost:5000/message/createMessage', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+ 'message/createMessage', {
             method: 'POST',
             body: JSON.stringify({
                 conversationId: conversationId,
@@ -150,7 +150,7 @@ function MessagesBody() {
 
     async function fetchConversationUsers() {
         setFetchingConversationUsers(true)
-        let response = await fetch('http://localhost:5000/home/searchUsers', {
+        let response = await fetch(process.env.REACT_APP_BACKEND_URL + 'home/searchUsers', {
             method: 'POST',
             body: JSON.stringify({
                 'searchTerm': searchInput
@@ -186,7 +186,7 @@ function MessagesBody() {
 
     async function fetchAllConversations() {
         setFetchingConversations(true)
-        const response = await fetch("http://localhost:5000/message/fetchAllConversations", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "message/fetchAllConversations", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId
@@ -283,7 +283,7 @@ function MessagesBody() {
                     <div className={!showUserBanner ? "mainMessagesContainerRight" : "mainMessagesContainerRight2"}>
                         {showUserBanner ? conversationData ? <div className="messageUserBanner">
                             <div className="messageUserBannerUser">
-                                <img src={conversationData.createdUsername !== auth.username ? "http://localhost:5000/" + conversationData.createdCreatorProfilePicture : "http://localhost:5000/" + conversationData.receivingCreatorProfilePicture} className="messageUserBannerPic" />
+                                <img src={conversationData.createdUsername !== auth.username ? (process.env.REACT_APP_BACKEND_URL + conversationData.createdCreatorProfilePicture) : (process.env.REACT_APP_BACKEND_URL + conversationData.receivingCreatorProfilePicture)} className="messageUserBannerPic" />
                                 <p onClick={fetchProfileHandler} className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
                             </div>
                             <i className="fa-solid fa-xmark messageX" onClick={closeConversationHandler}></i>

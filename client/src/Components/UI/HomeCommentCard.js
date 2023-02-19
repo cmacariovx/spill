@@ -16,7 +16,7 @@ function HomeCommentCard(props) {
         props.onUpdateListOfComments()
         console.log(currentCommentData)
 
-        const response = await fetch("http://localhost:5000/home/deleteComment", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/deleteComment", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,
@@ -36,7 +36,7 @@ function HomeCommentCard(props) {
     return (
         <div className="homeCommentCardContainer">
             <div className="homeCommentProfileContainer">
-                <img className="homeCommentProfilePic" src={"http://localhost:5000/" + props.commentData.creatorProfilePicture} alt=""></img>
+                <img className="homeCommentProfilePic" src={process.env.REACT_APP_BACKEND_URL + props.commentData.creatorProfilePicture} alt=""></img>
                 <p className="homeCommentUsername">{props.commentData.commentUsername}</p>
                 {currentCommentData.creatorVerified ? <i className="fa-solid fa-square-check commentCheck"></i> : null}
             </div>

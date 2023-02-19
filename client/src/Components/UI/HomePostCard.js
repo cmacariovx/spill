@@ -31,7 +31,7 @@ function HomePostCard(props) {
         setCurrentPostCardData(currentPostCardData)
         setLikedStatus(true)
 
-        const response = await fetch("http://localhost:5000/home/likePost", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/likePost", {
             method: "POST",
             body: JSON.stringify({
                 loggedInUserId: auth.userId,
@@ -54,7 +54,7 @@ function HomePostCard(props) {
         setCurrentPostCardData(currentPostCardData)
         setLikedStatus(false)
 
-        const response = await fetch("http://localhost:5000/home/unlikePost", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/unlikePost", {
             method: "POST",
             body: JSON.stringify({
                 loggedInUserId: auth.userId,
@@ -91,7 +91,7 @@ function HomePostCard(props) {
         <div className="homePostCardContainer" onClick={openCardHandler}>
             <div className="postCardUserContainer">
                 <Link to={"/profile/" + props.homePostCardData.creatorUsername} className="postCardUserContainer1">
-                    <img className="postCardUserPic" src={"http://localhost:5000/" + props.homePostCardData.creatorProfilePicture} alt=""/>
+                    <img className="postCardUserPic" src={process.env.REACT_APP_BACKEND_URL + props.homePostCardData.creatorProfilePicture} alt=""/>
                     <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
                     {currentPostCardData.creatorVerified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}
                 </Link>

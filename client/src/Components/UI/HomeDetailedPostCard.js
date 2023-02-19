@@ -22,7 +22,7 @@ function HomeDetailedPostCard(props) {
     const navigate = useNavigate()
 
     async function fetchComments() {
-        const response = await fetch("http://localhost:5000/home/fetchComments", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/fetchComments", {
             method: "POST",
             body: JSON.stringify({
                 postId: detailedCardData._id
@@ -68,7 +68,7 @@ function HomeDetailedPostCard(props) {
 
         currentCommentData.current.value = ""
 
-        const response = await fetch("http://localhost:5000/home/createComment", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/createComment", {
             method: "POST",
             body: JSON.stringify(newComment),
             headers: {
@@ -114,7 +114,7 @@ function HomeDetailedPostCard(props) {
             <div className="homeDetailedPostCard">
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer" onClick={toProfileHandler}>
-                        <img src={"http://localhost:5000/" + detailedCardData.creatorProfilePicture} className="homeDetailedProfilePic" alt=""></img>
+                        <img src={process.env.REACT_APP_BACKEND_URL + detailedCardData.creatorProfilePicture} className="homeDetailedProfilePic" alt=""></img>
                         <p className="homeDetailedProfileUsername">{"@" + detailedCardData.creatorUsername}</p>
                         <i className="fa-solid fa-xmark medium-x2" onClick={props.onCloseCard}></i>
                     </div>

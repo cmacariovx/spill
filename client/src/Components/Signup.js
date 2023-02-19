@@ -102,7 +102,7 @@ function Signup() {
 
             setIsSigningUp(true)
 
-            const response = await fetch('http://localhost:5000/auth/signup', {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/signup', {
                 method: 'POST',
                 body: formData
             })
@@ -124,7 +124,7 @@ function Signup() {
         event.preventDefault()
         setIsSigningUp(true)
 
-        const response = await fetch('http://localhost:5000/auth/login', {  // a null return in a authController ends fetch early
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {  // a null return in a authController ends fetch early
             method: 'POST',                                    // options request doesnt make it to POST when credentials are wrong
             body: JSON.stringify({
                 'username': 'demo',

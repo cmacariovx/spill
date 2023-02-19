@@ -80,7 +80,7 @@ function HomeMainBody(props) {
 
         postTextData.current.value = ""
 
-        const response = await fetch('http://localhost:5000/home/createPost', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'home/createPost', {
             method: 'POST',
             body: JSON.stringify(newPost),
             headers: {
@@ -105,7 +105,7 @@ function HomeMainBody(props) {
 
     async function fetchAllUsers() {
         setFetchingUsers(true)
-        let response = await fetch('http://localhost:5000/home/searchUsers', {
+        let response = await fetch(process.env.REACT_APP_BACKEND_URL + 'home/searchUsers', {
             method: 'POST',
             body: JSON.stringify({
                 'searchTerm': searchTerm
@@ -143,7 +143,7 @@ function HomeMainBody(props) {
     async function fetchPosts() {
         setFetchingPosts(true)
         // if followers array empty, fetch any recent posts
-        const response = await fetch("http://localhost:5000/home/fetchPosts", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/fetchPosts", {
             method: "POST",
             body: JSON.stringify({
                 followingArr: auth.following,
@@ -214,7 +214,7 @@ function HomeMainBody(props) {
             <div className="homeMainBodyRight">
                 <div className="profileContainer" onClick={dropdownHandler} onMouseLeave={dropdownHandlerClose}>
                     <p className="profileUsername">{"@" + auth.username}</p>
-                    <img src={"http://localhost:5000/" + auth.profilePicture} className="profileImg" alt=""/>
+                    <img src={process.env.REACT_APP_BACKEND_URL + auth.profilePicture} className="profileImg" alt=""/>
                     {dropdownBool && <HomeDropDown onCaptureSettingsClick={captureSettingsClick}/>}
                     {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
                 </div>

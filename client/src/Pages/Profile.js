@@ -44,7 +44,7 @@ function Profile(props) {
 
     async function fetchProfilePosts() {
         setIsFetchingPosts(true)
-        const response = await fetch("http://localhost:5000/profile/fetchProfilePosts", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "profile/fetchProfilePosts", {
             method: "POST",
             body: JSON.stringify({
                 profileUsername: profileUsername
@@ -80,7 +80,7 @@ function Profile(props) {
     }
 
     async function fetchUserProfile(profileUsername) {
-        let response = await fetch("http://localhost:5000/profile/" + profileUsername, {
+        let response = await fetch(process.env.REACT_APP_BACKEND_URL + "profile/" + profileUsername, {
             method: "POST",
             body: JSON.stringify({profileUsername: profileUsername}),
             headers: {
@@ -109,7 +109,7 @@ function Profile(props) {
     async function followHandler(event) {
         event.preventDefault()
 
-        const response = await fetch("http://localhost:5000/home/follow", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/follow", {
             method: "POST",
             body: JSON.stringify({
                 "loggedInUserId": auth.userId,
@@ -136,7 +136,7 @@ function Profile(props) {
     async function unfollowHandler(event) {
         event.preventDefault()
 
-        const response = await fetch("http://localhost:5000/home/unfollow", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/unfollow", {
             method: "POST",
             body: JSON.stringify({
                 "loggedInUserId": auth.userId,
@@ -162,7 +162,7 @@ function Profile(props) {
 
     async function fetchLikedPosts() {
         setIsFetchingLikedPosts(true)
-        const response = await fetch("http://localhost:5000/profile/fetchLikedPosts", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "profile/fetchLikedPosts", {
             method: "POST",
             body: JSON.stringify({
                 profileUsername: profileUsername,
@@ -233,7 +233,7 @@ function Profile(props) {
                 <div className="mainProfileBodyIntroContainer">
                     <div className="mainProfileIntroContainer">
                         <div className="mainProfileIntroPicContainer">
-                            <img className="mainProfileIntroPic" src={dataFetched ? userData ? "http://localhost:5000/" + userData.profilePicture : null : null} alt=""></img>
+                            <img className="mainProfileIntroPic" src={dataFetched ? userData ? (process.env.REACT_APP_BACKEND_URL + userData.profilePicture) : null : null} alt=""></img>
                         </div>
                         <div className="mainProfileIntroCredentialsContainer">
                             <div className="userCredentialsBox">

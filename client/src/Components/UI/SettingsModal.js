@@ -15,7 +15,7 @@ function SettingsModal(props) {
         event.preventDefault()
         setFetchingSettings(true)
 
-        const response = await fetch("http://localhost:5000/profile/likedPostsPrivate", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "profile/likedPostsPrivate", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId
@@ -36,7 +36,7 @@ function SettingsModal(props) {
         event.preventDefault()
         setFetchingSettings(true)
 
-        const response = await fetch("http://localhost:5000/profile/likedPostsPublic", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "profile/likedPostsPublic", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId
@@ -55,7 +55,7 @@ function SettingsModal(props) {
 
     // fetches entire user object
     async function fetchSettings() {
-        const response = await fetch("http://localhost:5000/profile/fetchSettings", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "profile/fetchSettings", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId
