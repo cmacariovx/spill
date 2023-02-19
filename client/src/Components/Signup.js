@@ -112,6 +112,7 @@ function Signup() {
             if (data.message) {
                 setErrorsArr([data.message])
                 setShowError(true)
+                setIsSigningUp(false)
             }
             else {
                 auth.login(data.userId, data.token, data.username, data.following, data.verified, data.profilePicture)

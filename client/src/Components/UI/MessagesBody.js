@@ -8,6 +8,7 @@ import ScrollToBottom, { useAnimatingToEnd, useAnimating } from 'react-scroll-to
 import HomeSearchDropDown from "./HomeSearchDropDown";
 import MessageCard from "./MessageCard";
 import LoadingSpinner from "./LoadingSpinner";
+import SmallUsersSearch from "./SmallUsersSearch";
 
 import './MessagesBody.css'
 import personal from './Images/personal.jpg'
@@ -34,6 +35,7 @@ function MessagesBody() {
     const [conversationMessages, setConversationMessages] = useState([])
     const [showUserBanner, setShowUserBanner] = useState(false)
     const [conversationUsersList, setConversationUsersList] = useState([])
+    const [smallSearchClick, setSmallSearchClick] = useState(false)
 
     useEffect(() => {
         if (convoId) {
@@ -143,6 +145,7 @@ function MessagesBody() {
 
     function showContainerHandler() {
         setShowSearchContainer(true)
+        setSmallSearchClick(true)
     }
 
     async function fetchConversationUsers() {
@@ -239,8 +242,16 @@ function MessagesBody() {
         navigate(nav)
     }
 
+    function closeCardHandlerSmallSearch(event) {
+        if (event.target.className === "smallUsersSearchBackdrop" || event.target.className === "fa-solid fa-xmark smallSearchx") {
+            setSmallSearchClick(false)
+            setShowSearchContainer(false)
+        }
+    }
+
     return (
         <div className="messagesBodyContainer">
+            {(smallSearchClick && !fetchingConversationUsers && !fetchingConversationUsers) && <SmallUsersSearch allConversationUsersArr={allConversationUsersArr} conversationUsersList={conversationUsersList} closeCardHandler={closeCardHandlerSmallSearch}/>}
             <div className="messagesBody">
                 <div className="messagesBodyTitleContainer">
                     <p className="messagesBodyTitle">Messages</p>
@@ -258,7 +269,7 @@ function MessagesBody() {
                             </div>
                         </div> :
                         <div className="searchUsersContainer">
-                            <input className="searchUsersInput" onChange={(e) => setSearchInput(e.target.value)}></input>
+                            <input className="searchUsersInput" placeholder="Find a user" onChange={(e) => setSearchInput(e.target.value)}></input>
                             {!fetchingConversationUsers ? currentlySearchingBool && <HomeSearchDropDown fetchedUsersArr={receivedConversationUsers} dmClass={true}/> : null}
                         </div>}
                         <div className={!showSearchContainer ? "conversationsListContainer" : "conversationsListContainer2"}>
@@ -281,7 +292,7 @@ function MessagesBody() {
                             {conversationMessages.length ? conversationMessages.map((message, i) => <MessageCard message={message} key={i}/>) : null}
                         </ScrollToBottom>
                         {showUserBanner ? conversationData ? <div className="mainInputContainer">
-                            <input className="messageInput" ref={messageInput}></input>
+                            <input className="messageInput" maxLength="64" ref={messageInput}></input>
                             <button className="sendMessageButton" onClick={sendMessageHandler}>
                                 <i className="fa-solid fa-paper-plane"></i>
                             </button>

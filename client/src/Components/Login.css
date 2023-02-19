@@ -1,5 +1,6 @@
 .loginBackdrop {
-    height: 100vh;
+    min-height: 100vh;
+    height: 1200px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -118,3 +119,27 @@
                 color: rgb(45, 157, 255);
                 margin-left: 8px;
             }
+
+@media screen and (max-width: 550px) {
+    .loginContainer {
+        width: 400px;
+        padding: 40px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .loginContainer {
+        width: 350px;
+    }
+
+    .loginInput {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .loginContainer {
+        width: 300px;
+        padding: 30px;
+    }
+}

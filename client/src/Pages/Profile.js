@@ -231,14 +231,18 @@ function Profile(props) {
                 </div>
                 {!dataFetched ? <LoadingSpinner height={"20%"}/> :
                 <div className="mainProfileBodyIntroContainer">
-                    <img className="mainProfileIntroPic" src={dataFetched ? userData ? "http://localhost:5000/" + userData.profilePicture : null : null} alt=""></img>
-                    <div className="mainProfileIntroCredentialsContainer">
-                        <div className="userCredentialsBox">
-                            <p className="mainProfileNameText">{dataFetched && userData && userData.fullName}</p>
+                    <div className="mainProfileIntroContainer">
+                        <div className="mainProfileIntroPicContainer">
+                            <img className="mainProfileIntroPic" src={dataFetched ? userData ? "http://localhost:5000/" + userData.profilePicture : null : null} alt=""></img>
                         </div>
-                        <div className="userCredentialsBox">
-                            <p className="mainProfileUsernameText">{dataFetched && userData && "@" + userData.username}</p>
-                            {dataFetched ? userData ? userData.verified ? <i className="fa-solid fa-square-check"></i> : null : null : null}
+                        <div className="mainProfileIntroCredentialsContainer">
+                            <div className="userCredentialsBox">
+                                <p className="mainProfileNameText">{dataFetched && userData && userData.fullName}</p>
+                            </div>
+                            <div className="userCredentialsBox">
+                                <p className="mainProfileUsernameText">{dataFetched && userData && "@" + userData.username}</p>
+                                {dataFetched ? userData ? userData.verified ? <i className="fa-solid fa-square-check"></i> : null : null : null}
+                            </div>
                         </div>
                     </div>
                     <div className="mainProfileIntroStatsContainer">

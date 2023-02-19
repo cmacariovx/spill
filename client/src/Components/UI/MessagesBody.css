@@ -1,5 +1,6 @@
 .messagesBodyContainer {
-    height: 100vh;
+    min-height: 100vh;
+    height: 1100px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -9,6 +10,8 @@
 }
 
     .messagesBody {
+        min-height: 1000px;
+        min-width: 1000px;
         height: 1000px;
         width: 1000px;
         display: flex;
@@ -18,6 +21,7 @@
         background-color: rgb(28, 28, 28);
         border-radius: 10px;
         padding: 40px 60px;
+        overflow-x: hidden;
     }
 
         .messagesBodyTitleContainer {
@@ -339,3 +343,260 @@
                         .fa-paper-plane {
                             font-size: 18px;
                         }
+
+@media screen and (max-width: 1100px) {
+    .messagesBody {
+        width: 900px;
+        min-width: 900px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .messagesBody {
+        width: 800px;
+        min-width: 800px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .messagesBody {
+        width: 700px;
+        min-width: 700px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .messagesBody {
+        width: 500px;
+        min-width: 500px;
+    }
+
+    .mainMessagesContainer {
+        flex-direction: column;
+    }
+
+    .mainMessagesContainerLeft {
+        height: 40%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        border-right: none;
+    }
+
+    .mainMessagesContainerRight {
+        height: 60%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .mainMessagesContainerRight2 {
+        height: 60%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: rgb(20, 20, 20);
+    }
+
+    .mainMessagesContainerLeftTitleContainer {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+        .mainMessagesContainerLeftTitle {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .addMessageContainer {
+        height: 25%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .addMessageContainer2 {
+        height: 70%;
+        width: 40%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(81, 164, 228);
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .addMessageText {
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .fa-envelope {
+            font-size: 20px;
+        }
+
+    .searchUsersContainer {
+        display: none;
+    }
+
+        .searchUsersInput {
+            display: none;
+        }
+
+    .conversationsListContainer {
+        height: 55%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow-y: auto;
+        padding-top: 20px;
+    }
+
+    .conversationsListContainer2 {
+        height: 55%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow-y: auto;
+        padding-top: 20px;
+    }
+
+    .messageUserBanner {
+        height: 15%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: rgb(34, 34, 34);
+        box-shadow: none;
+        border-radius: 5px;
+    }
+
+        .messageUserBannerUser {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .messageUserBannerPic {
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                margin-right: 15px;
+            }
+
+            .messageUserBannerUsername {
+                font-size: 18px;
+                font-weight: bold;
+                transition: 0.1s linear;
+                cursor: pointer;
+            }
+
+            .messageUserBannerUsername:hover {
+                transition: 0.1s linear;
+                color: rgb(112, 193, 255);
+            }
+
+            .messageX {
+                font-size: 30px;
+            }
+
+    .mainMessagesContainerRight2 {
+        border-radius: 5px;
+        padding-bottom: 10px;
+    }
+
+    .addMessageContainer2 {
+        height: 70%;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .messagesBody {
+        width: 400px;
+        padding: 30px;
+        min-width: 400px;
+    }
+
+    .mainInputContainer {
+        height: 10%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        padding: 0 10px;
+    }
+
+        .messageInput {
+            height: 50px;
+            width: 75%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 0 20px;
+        }
+
+        .sendMessageButton {
+            height: 40px;
+            width: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            transition: 0.1s linear;
+            background-color: rgb(81, 164, 228);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+}
+
+@media screen and (max-width: 450px) {
+    .messagesBody {
+        width: 350px;
+        padding: 30px;
+        min-width: 350px;
+    }
+
+    .messageFeedText {
+        font-size: 14px;
+    }
+
+    .messageFeedPic {
+        max-height: 35px;
+        max-width: 35px;
+    }
+}
