@@ -34,9 +34,9 @@ app.use("/profile", profileRouter)
 
 app.use("/message", messageRouter)
 
-app.get("*", function (request, response) {
-    response.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
-  });
+// app.get("*", function (request, response) {
+//     response.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+// });
 
 app.use((req, res, next) => {
     const error = new Error("Could not find this route.")
