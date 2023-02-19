@@ -12,7 +12,7 @@ const messageRouter = require('./routes/messageRoutes')
 
 const app = express()
 
-app.listen(5000)
+app.listen(process.env.PORT || 5000)
 
 app.use(bodyParser.json())
 
@@ -74,4 +74,4 @@ io.on("connection", (socket) => {
     })
 })
 
-server.listen(5001)
+server.listen(process.env.PORT || 5001)
