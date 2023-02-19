@@ -253,6 +253,7 @@ async function fetchPostsMongo(req, res, next, followingData, loggedInUsername) 
             if (!idSet.has(id)) {
                 arr.push(post)
             }
+            
             idSet.add(id)
         }
     }
