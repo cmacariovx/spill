@@ -5,10 +5,10 @@ const aws = require('aws-sdk')
 const multerS3 = require('multer-s3')
 require("dotenv").config()
 
-const s3Config = new aws.S3({
+aws.config.update({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    Bucket: process.env.AWS_BUCKET_NAME
+    region: 'us-east-2'
 });
 
 const s3 = new aws.S3()
@@ -21,7 +21,7 @@ const MIME_TYPE_MAP = {
 
 const fileUpload = multer({
     storage: multerS3({
-        s3: s3Config,
+        s3: s3,
         acl: 'public-read',
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
