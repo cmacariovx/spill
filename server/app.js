@@ -56,7 +56,7 @@ const server = http.createServer(app)
 const io = socketio(server, {
     cors: {
         // ----------------------------- changed
-        origin: "https://spill-7cae7.web.app",
+        origin: "*",
         headers: ["Content-Type", "Authorization", "Origin", "X-Requested-With", "Accept"],
         methods: ["GET", "POST"]
     }
@@ -77,4 +77,4 @@ io.on("connection", (socket) => {
 })
 
 // ----------------------------- changed
-server.listen(process.env.PORT || 5001)
+server.listen(5001)
