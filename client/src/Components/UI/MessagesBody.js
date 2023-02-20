@@ -135,6 +135,7 @@ function MessagesBody() {
     }
 
     useEffect(() => {
+        console.log("hi")
         socket.on("showMessage", (data) => {
             console.log(data)
             setConversationMessages((prevList) => {
