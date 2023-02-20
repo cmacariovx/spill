@@ -1,11 +1,8 @@
 const express = require("express")
 const authControllers = require('../controllers/authControllers')
 const fileUpload = require("../middleware/file-upload")
-const bodyParser = require("body-parser")
 
 const router = express.Router()
-
-router.use(bodyParser.json())
 
 router.post('/signup', fileUpload.single('image'), authControllers.userSignup)
 
