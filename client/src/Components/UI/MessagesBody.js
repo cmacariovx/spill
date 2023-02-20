@@ -17,7 +17,7 @@ function MessagesBody() {
     const auth = useContext(AuthContext)
     const navigate = useNavigate()
 
-    let socket = io.connect(process.env.REACT_APP_SOCKET_URL) // set to mainbody so we can get messages outside of just messagebody and just pass down all the way through props
+    let socket = io.connect(process.env.REACT_APP_SOCKET_URL)
 
     const messageInput = useRef()
 
