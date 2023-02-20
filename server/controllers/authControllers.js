@@ -66,7 +66,7 @@ async function userLoginMain (req, res, next, signup = null) {
     const { username, password } = req.body || signup
 
     let userCredentials = {
-        "username": username,
+        "username": username.toLowerCase(),
         "password": password
     }
 
