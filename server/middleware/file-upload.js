@@ -22,7 +22,6 @@ const MIME_TYPE_MAP = {
 const fileUpload = multer({
     storage: multerS3({
         s3: s3,
-        acl: 'public-read',
         bucket: 'spillimages',
         key: function (req, file, cb) {
             console.log(file);
