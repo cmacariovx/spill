@@ -75,4 +75,4 @@ io.on("connection", (socket) => {
 })
 
 // ----------------------------- connection to port causing problem
-server.listen(5001)
+server.listen(process.env.PORT || 5001)
