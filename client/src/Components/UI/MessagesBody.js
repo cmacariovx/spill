@@ -70,7 +70,7 @@ function MessagesBody() {
     function joinRoom(conversationId, conversationData1) {
         if (conversationId !== "") {
             setConversationId(conversationId)
-            socket.emit("joinConversation", conversationId) // this creates the multiple message error because its changing switch
+            socket.emit("joinConversation", conversationId)
             setConversationData(conversationData1)
             setConversationMessages(conversationData1.messages)
             setShowUserBanner(true)
