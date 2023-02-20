@@ -17,7 +17,8 @@ function MessagesBody() {
     const auth = useContext(AuthContext)
     const navigate = useNavigate()
 
-    let socket = io.connect(process.env.REACT_APP_SOCKET_URL)
+    // let socket = io.connect(process.env.REACT_APP_SOCKET_URL)
+    let socket = io.connect()
 
     const messageInput = useRef()
 
