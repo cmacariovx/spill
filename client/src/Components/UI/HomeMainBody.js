@@ -212,9 +212,10 @@ function HomeMainBody(props) {
                 </div>
             </div>
             <div className="homeMainBodyRight">
+            {/* process.env.REACT_APP_BACKEND_URL + auth.profilePicture */}
                 <div className="profileContainer" onClick={dropdownHandler} onMouseLeave={dropdownHandlerClose}>
                     <p className="profileUsername">{"@" + auth.username}</p>
-                    <img src={process.env.REACT_APP_BACKEND_URL + auth.profilePicture} className="profileImg" alt=""/>
+                    <img src={"https://spillimages.s3.us-east-2.amazonaws.com/" + 1676932410812} className="profileImg" alt=""/>
                     {dropdownBool && <HomeDropDown onCaptureSettingsClick={captureSettingsClick}/>}
                     {showSettings && <SettingsModal onCloseCard={closeCardHandler}/>}
                 </div>

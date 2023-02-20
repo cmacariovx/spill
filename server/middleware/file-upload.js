@@ -19,25 +19,26 @@ const MIME_TYPE_MAP = {
     'image/jpeg': 'jpeg'
 }
 
+const imageId = Date.now().toString()
+
 const fileUpload = multer({
     storage: multerS3({
         s3: s3,
         acl: 'public-read',
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
-            console.log(file);
-            cb(null, Date.now().toString()); //use Date.now() for unique file keys
+            cb(null, imageId)
         }
     }),
-    // fileFilter: (req, file, cb) => {
-    //     const isValid = !!MIME_TYPE_MAP[file.mimetype]
-    //     let error = isValid ? null : new Error('Invalid mime type')
+    fileFilter: (req, file, cb) => {
+        const isValid = !!MIME_TYPE_MAP[file.mimetype]
+        let error = isValid ? null : new Error('Invalid mime type')
 
-    //     cb(error, isValid)
-    // },
-    // limits: {
-    //     fileSize: 1024 * 1024
-    // },
+        cb(error, isValid)
+    },
+    limits: {
+        fileSize: 1024 * 1024
+    },
 });
 
 // const fileUpload = multer({
