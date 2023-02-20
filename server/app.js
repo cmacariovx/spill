@@ -12,7 +12,7 @@ const messageRouter = require('./routes/messageRoutes')
 
 const app = express()
 
-let expressServer = app.listen(process.env.PORT || 5000)
+// let expressServer = app.listen(process.env.PORT || 5000)
 
 app.use(bodyParser.json())
 
@@ -50,7 +50,7 @@ app.use((error, req, res, next) => {
 
 app.use(cors())
 
-const server = http.createServer(expressServer)
+const server = http.createServer(app)
 
 const io = new Server (server, {
     cors: {
@@ -75,4 +75,4 @@ io.on("connection", (socket) => {
 })
 
 // ----------------------------- connection to port causing problem
-// server.listen(process.env.PORT || 5001)
+server.listen(process.env.PORT || 5000)
