@@ -62,14 +62,12 @@ const io = new Server (server, {
 
 io.on("connection", (socket) => {
     socket.on("joinConversation", (data) => {
-        console.log(socket.id + "is connected")
         socket.join(data)
     })
     socket.on("leaveConversation", (data) => {
         socket.leave(data)
     })
     socket.on("sendMessage", (data) => {
-        console.log(socket.id + "sent message")
         socket.to(data.conversationId).emit("showMessage", data)
     })
 })
