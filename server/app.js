@@ -20,7 +20,7 @@ app.use('/uploads/images', express.static(path.join('uploads', 'images')))
 
 app.use((req, res, next) => {
     // ----------------------------- changed
-    res.setHeader('Access-Control-Allow-Origin', 'https://spill-7cae7.web.app/')
+    res.setHeader('Access-Control-Allow-Origin', 'https://spill-7cae7.web.app')
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
 
@@ -56,7 +56,7 @@ const server = http.createServer(app)
 const io = socketio(server, {
     cors: {
         // ----------------------------- changed
-        origin: "https://spill-7cae7.web.app/",
+        origin: "https://spill-7cae7.web.app",
         headers: ["Content-Type", "Authorization", "Origin", "X-Requested-With", "Accept"],
         methods: ["GET", "POST"]
     }
