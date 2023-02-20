@@ -77,4 +77,4 @@ io.on("connection", (socket) => {
 })
 
 // ----------------------------- changed
-server.listen(process.env.PORT || 5001)
+server.listen(5001)
