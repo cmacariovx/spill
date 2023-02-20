@@ -9,7 +9,7 @@ function MessageCard(props) {
     return (
         <div className="messageFeedCard">
             <div className="messageFeedPicContainer">
-                <img src={process.env.REACT_APP_BACKEND_URL + props.message.creatorProfilePicture} className="messageFeedPic"/>
+                <img src={process.env.REACT_APP_AWS_IMAGE_URL + props.message.creatorProfilePicture} className="messageFeedPic"/>
             </div>
             <div className="messageFeedBodyContainer">
                 <div className="messageFeedUsernameContainer">

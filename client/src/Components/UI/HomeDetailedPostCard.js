@@ -114,7 +114,7 @@ function HomeDetailedPostCard(props) {
             <div className="homeDetailedPostCard">
                 <div className="homeDetailedLeftBody">
                     <div className="homeDetailedProfileContainer" onClick={toProfileHandler}>
-                        <img src={process.env.REACT_APP_BACKEND_URL + detailedCardData.creatorProfilePicture} className="homeDetailedProfilePic" alt=""></img>
+                        <img src={process.env.REACT_APP_AWS_IMAGE_URL + detailedCardData.creatorProfilePicture} className="homeDetailedProfilePic" alt=""></img>
                         <p className="homeDetailedProfileUsername">{"@" + detailedCardData.creatorUsername}</p>
                         <i className="fa-solid fa-xmark medium-x2" onClick={props.onCloseCard}></i>
                     </div>

@@ -14,7 +14,7 @@ function TopCreatorContainer(props) {
                 <p className="topCreatorPositionText">{"#" + props.currentIndex + " Creator"}</p>
             </div>
             <div className="topCreatorUserContainer">
-                <img className="topCreatorPic" src={process.env.REACT_APP_BACKEND_URL + currentUser.profilePicture} alt=""/>
+                <img className="topCreatorPic" src={process.env.REACT_APP_AWS_IMAGE_URL + currentUser.profilePicture} alt=""/>
                 <p className="topCreatorUserText">{"@" + currentUser.username}</p>
                 {currentUser.verified ? <i className="fa-solid fa-square-check topCreatorCheck"></i> : null}
             </div>

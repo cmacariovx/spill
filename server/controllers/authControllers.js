@@ -6,7 +6,7 @@ require("dotenv").config()
 const jwtSecret = process.env.JWT_SECRET
 
 async function userSignup (req, res, next) {
-    const { username, fullName, email, password } = req.body
+    const { username, fullName, email, password, imageId } = req.body
 
     // replacement for flawed js regex engine ------------- virtually zero effect on performance given O(username|fullName.length) time
     if (username.trim().length < 3) return res.json({message: 'Invalid input data.'})
@@ -42,7 +42,7 @@ async function userSignup (req, res, next) {
         'verified': false,
         'likedPosts': [],
         'privateLikedPosts': false,
-        'profilePicture': req.file.path
+        'profilePicture': imageId
     }
 
     let mongoConnect = await mongoConnections.userSignup(req, res, next, createdUser)

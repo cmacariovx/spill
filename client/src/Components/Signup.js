@@ -92,13 +92,16 @@ function Signup() {
 
         let validated = await callValidateInputs()
 
+        const date = Date.now().toString()
+
         if (validated) {
             const formData = new FormData()
             formData.append('username', usernameInputRef.current.value)
             formData.append('fullName', fullNameInputRef.current.value)
             formData.append('email', emailInputRef.current.value)
             formData.append('password', passwordInputRef.current.value)
-            formData.append('image', image)
+            formData.append('imageId', date)
+            formData.append('image', image, date)
 
             setIsSigningUp(true)
 

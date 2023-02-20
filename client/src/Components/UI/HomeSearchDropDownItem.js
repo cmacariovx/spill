@@ -37,7 +37,7 @@ function HomeSearchDropDownItem(props) {
 
     return (
         <Link className="homeSearchDropDownItem" to={!dmClass ? "/profile/" + userData.username : ""} onClick={dmClass ?createNewConversationHandler : null}>
-            <img src={process.env.REACT_APP_BACKEND_URL + userData.profilePicture} className="dropDownImg"/>
+            <img src={process.env.REACT_APP_AWS_IMAGE_URL + userData.profilePicture} className="dropDownImg"/>
             <div className="dropDownUsernameContainer">
                 <p className="dropDownUsername">{"@" + userData.username}</p>
                 {userData.verified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}

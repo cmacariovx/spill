@@ -19,15 +19,14 @@ const MIME_TYPE_MAP = {
     'image/jpeg': 'jpeg'
 }
 
-const imageId = Date.now().toString()
-
 const fileUpload = multer({
     storage: multerS3({
         s3: s3,
         acl: 'public-read',
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
-            cb(null, imageId)
+            console.log(file)
+            cb(null, file.originalname)
         }
     }),
     fileFilter: (req, file, cb) => {

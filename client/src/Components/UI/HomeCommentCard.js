@@ -36,7 +36,7 @@ function HomeCommentCard(props) {
     return (
         <div className="homeCommentCardContainer">
             <div className="homeCommentProfileContainer">
-                <img className="homeCommentProfilePic" src={process.env.REACT_APP_BACKEND_URL + props.commentData.creatorProfilePicture} alt=""></img>
+                <img className="homeCommentProfilePic" src={process.env.REACT_APP_AWS_IMAGE_URL + props.commentData.creatorProfilePicture} alt=""></img>
                 <p className="homeCommentUsername">{props.commentData.commentUsername}</p>
                 {currentCommentData.creatorVerified ? <i className="fa-solid fa-square-check commentCheck"></i> : null}
             </div>

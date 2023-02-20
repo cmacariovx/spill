@@ -66,7 +66,7 @@ function SideMenu(props) {
                 </div>
                 <div className="sideMenuBodyContainer">
                     <div className="sideMenuProfileBanner" onClick={() => toProfileHandler(auth.username)}>
-                        <img className="sideMenuPic" src={process.env.REACT_APP_BACKEND_URL + auth.profilePicture}/>
+                        <img className="sideMenuPic" src={process.env.REACT_APP_AWS_IMAGE_URL + auth.profilePicture}/>
                         <p className="sideMenuUsername">{"@" + auth.username}</p>
                     </div>
                     <div className="sideMenuOptionContainer" onClick={toMessagesHandler}>
@@ -86,7 +86,7 @@ function SideMenu(props) {
                         <div className="sideMenuUsersContainer">
                             {searchingBool ? receivedUsers.map((user, i) => (
                                 <div key={user._id} className="sideMenuUserContainer" onClick={() => toProfileHandler(user.username)}>
-                                    <img className="sideMenuPic2" src={process.env.REACT_APP_BACKEND_URL + user.profilePicture}/>
+                                    <img className="sideMenuPic2" src={process.env.REACT_APP_AWS_IMAGE_URL + user.profilePicture}/>
                                     <p className="sideMenuUsername2">{"@" + user.username}</p>
                                 </div>
                             )) : null}

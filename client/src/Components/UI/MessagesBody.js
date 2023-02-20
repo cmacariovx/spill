@@ -283,7 +283,7 @@ function MessagesBody() {
                     <div className={!showUserBanner ? "mainMessagesContainerRight" : "mainMessagesContainerRight2"}>
                         {showUserBanner ? conversationData ? <div className="messageUserBanner">
                             <div className="messageUserBannerUser">
-                                <img src={conversationData.createdUsername !== auth.username ? (process.env.REACT_APP_BACKEND_URL + conversationData.createdCreatorProfilePicture) : (process.env.REACT_APP_BACKEND_URL + conversationData.receivingCreatorProfilePicture)} className="messageUserBannerPic" />
+                                <img src={conversationData.createdUsername !== auth.username ? (process.env.REACT_APP_AWS_IMAGE_URL + conversationData.createdCreatorProfilePicture) : (process.env.REACT_APP_AWS_IMAGE_URL + conversationData.receivingCreatorProfilePicture)} className="messageUserBannerPic" />
                                 <p onClick={fetchProfileHandler} className="messageUserBannerUsername">{conversationData.createdUsername !== auth.username ? "@" + conversationData.createdUsername : "@" + conversationData.receivingUsername}</p>
                             </div>
                             <i className="fa-solid fa-xmark messageX" onClick={closeConversationHandler}></i>

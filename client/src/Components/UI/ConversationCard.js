@@ -26,7 +26,7 @@ function ConversationCard(props) {
     return (
         <div className="conversationCard" onClick={openConversationHandler}>
             <div className="conversationPicContainer">
-                <img src={conversationData.createdUsername !== auth.username ? (process.env.REACT_APP_BACKEND_URL + conversationData.createdCreatorProfilePicture) : (process.env.REACT_APP_BACKEND_URL + conversationData.receivingCreatorProfilePicture)} className="conversationPreviewImg"/>
+                <img src={conversationData.createdUsername !== auth.username ? (process.env.REACT_APP_AWS_IMAGE_URL + conversationData.createdCreatorProfilePicture) : (process.env.REACT_APP_AWS_IMAGE_URL + conversationData.receivingCreatorProfilePicture)} className="conversationPreviewImg"/>
             </div>
             <div className="conversationPreviewContainer">
                 <div className="conversationPreviewUsernameContainer">

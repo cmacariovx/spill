@@ -91,7 +91,7 @@ function HomePostCard(props) {
         <div className="homePostCardContainer" onClick={openCardHandler}>
             <div className="postCardUserContainer">
                 <Link to={"/profile/" + props.homePostCardData.creatorUsername} className="postCardUserContainer1">
-                    <img className="postCardUserPic" src={process.env.REACT_APP_BACKEND_URL + props.homePostCardData.creatorProfilePicture} alt=""/>
+                    <img className="postCardUserPic" src={process.env.REACT_APP_AWS_IMAGE_URL + props.homePostCardData.creatorProfilePicture} alt=""/>
                     <p className="postCardUsername">{"@" + props.homePostCardData.creatorUsername}</p>
                     {currentPostCardData.creatorVerified ? <i className="fa-solid fa-square-check searchMenuCheck"></i> : null}
                 </Link>
