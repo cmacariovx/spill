@@ -18,11 +18,7 @@ function MessagesBody() {
     const navigate = useNavigate()
 
     // let socket = io.connect(process.env.REACT_APP_SOCKET_URL)
-    let socket
-
-    useEffect(() => {
-        socket = io.connect()
-    })
+    let socket = io.connect(process.env.REACT_APP_SOCKET_URL)
 
     const messageInput = useRef()
 
@@ -140,7 +136,6 @@ function MessagesBody() {
 
     useEffect(() => {
         socket.on("showMessage", (data) => {
-            console.log(data)
             setConversationMessages((prevList) => {
                 return [...prevList, data]
             })
