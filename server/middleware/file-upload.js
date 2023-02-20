@@ -19,7 +19,7 @@ const MIME_TYPE_MAP = {
     'image/jpeg': 'jpeg'
 }
 
-const upload = multer({
+const fileUpload = multer({
     storage: multerS3({
         s3: s3,
         acl: 'public-read',
