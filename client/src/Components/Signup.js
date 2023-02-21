@@ -127,8 +127,8 @@ function Signup() {
         event.preventDefault()
         setIsSigningUp(true)
 
-        const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {  // a null return in a authController ends fetch early
-            method: 'POST',                                    // options request doesnt make it to POST when credentials are wrong
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {
+            method: 'POST',
             body: JSON.stringify({
                 'username': 'demo',
                 'password': 'demologin1'
