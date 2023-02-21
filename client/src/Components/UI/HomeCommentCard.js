@@ -14,7 +14,6 @@ function HomeCommentCard(props) {
 
     async function deleteCommentHandler() {
         props.onUpdateListOfComments()
-        console.log(currentCommentData)
 
         const response = await fetch(process.env.REACT_APP_BACKEND_URL + "home/deleteComment", {
             method: "POST",

@@ -262,7 +262,7 @@ function MessagesBody() {
                         <div className="mainMessagesContainerLeftTitleContainer">
                             <p className="mainMessagesContainerLeftTitle">Conversations</p>
                         </div>
-                        {!showSearchContainer ? <div className="addMessageContainer" onClick={showContainerHandler}>
+                        {!showUserBanner ? !showSearchContainer ? <div className="addMessageContainer" onClick={showContainerHandler}>
                             <div className="addMessageContainer2">
                                 <p className="addMessageText">New Message</p>
                                 <i className="fa-solid fa-envelope"></i>
@@ -271,7 +271,7 @@ function MessagesBody() {
                         <div className="searchUsersContainer">
                             <input className="searchUsersInput" placeholder="Find a user" onChange={(e) => setSearchInput(e.target.value)}></input>
                             {!fetchingConversationUsers ? currentlySearchingBool && <HomeSearchDropDown fetchedUsersArr={receivedConversationUsers} dmClass={true}/> : null}
-                        </div>}
+                        </div> : null}
                         <div className={!showSearchContainer ? "conversationsListContainer" : "conversationsListContainer2"}>
                             {fetchingConversations && <LoadingSpinner height={"50%"} padding={"50px"}/>}
                             {!showUserBanner ? !fetchingConversations ?

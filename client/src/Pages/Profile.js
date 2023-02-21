@@ -233,7 +233,7 @@ function Profile(props) {
                 <div className="mainProfileBodyIntroContainer">
                     <div className="mainProfileIntroContainer">
                         <div className="mainProfileIntroPicContainer">
-                            <img className="mainProfileIntroPic" src={dataFetched ? userData ? (process.env.REACT_APP_BACKEND_URL + userData.profilePicture) : null : null} alt=""></img>
+                            <img className="mainProfileIntroPic" src={dataFetched ? userData ? (process.env.REACT_APP_AWS_IMAGE_URL + userData.profilePicture) : null : null} alt=""></img>
                         </div>
                         <div className="mainProfileIntroCredentialsContainer">
                             <div className="userCredentialsBox">
