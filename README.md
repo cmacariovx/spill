@@ -1,7 +1,7 @@
 [Spill](https://spill-7cae7.web.app/ "Spill")
 =======
 
-Spill is a simple way to connect. A React, Express, MongoDB, AWS S3, & NodeJS Application with features including posting, commenting, realtime direct messaging, following, etc.
+Spill is a simple way to connect. A React, Express, MongoDB, AWS S3, Socket.io & NodeJS Application with features including posting, commenting, realtime direct messaging, following, etc.
 
 ## Stay Updated With a Streamlined Post Feed
 
