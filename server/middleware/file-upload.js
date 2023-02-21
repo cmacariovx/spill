@@ -36,7 +36,7 @@ const fileUpload = multer({
         cb(error, isValid)
     },
     limits: {
-        fileSize: 1024 * 1024
+        fileSize: 1024 * 1024 * 5
     },
 });
 
