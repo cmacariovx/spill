@@ -27,4 +27,4 @@ Spill is a simple way to connect. A React, Express, MongoDB, AWS S3, Socket.io &
 
 <img width="800" alt="spill6" src="https://user-images.githubusercontent.com/96849420/220242261-7d486f78-b672-4e29-b2eb-afe4cadb3bd0.png">
 
-## Join Spill Now Through Title Link!
+## [Join Spill Now!](https://spill-7cae7.web.app/ "Join Spill Now!")
